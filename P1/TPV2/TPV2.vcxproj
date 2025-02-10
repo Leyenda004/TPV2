@@ -19,28 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\game\AIPaddle.cpp" />
-    <ClCompile Include="..\src\game\BounceOnBorder.cpp" />
-    <ClCompile Include="..\src\game\Containter.cpp" />
-    <ClCompile Include="..\src\game\DeAcceleration.cpp" />
-    <ClCompile Include="..\src\game\EmptyRectangleRenderer.cpp" />
-    <ClCompile Include="..\src\game\FighterCtrl.cpp" />
-    <ClCompile Include="..\src\game\Game.cpp" />
-    <ClCompile Include="..\src\game\GameCtrl.cpp" />
-    <ClCompile Include="..\src\game\GameManager.cpp" />
-    <ClCompile Include="..\src\game\ImageRenderer.cpp" />
-    <ClCompile Include="..\src\game\InfoMsgs.cpp" />
-    <ClCompile Include="..\src\game\MovePaddleWithKeyBoard.cpp" />
-    <ClCompile Include="..\src\game\MovePaddleWithMouse.cpp" />
-    <ClCompile Include="..\src\game\RectangleRenderer.cpp" />
-    <ClCompile Include="..\src\game\ScoreRenderer.cpp" />
-    <ClCompile Include="..\src\game\ShowAtOppositeSide.cpp" />
-    <ClCompile Include="..\src\game\SimpleMove.cpp" />
-    <ClCompile Include="..\src\game\StopOnBorder.cpp" />
     <ClCompile Include="..\SRC\json\JSON.cpp" />
     <ClCompile Include="..\SRC\json\JSONValue.cpp" />
     <ClCompile Include="..\SRC\json\json_demo.cpp" />
-    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\SRC\main.cpp" />
     <ClCompile Include="..\SRC\sdlutils\SDLNetUtils.cpp" />
     <ClCompile Include="..\SRC\sdlutils\SDLUtils.cpp" />
     <ClCompile Include="..\SRC\sdlutils\SDLUtilsError.cpp" />
@@ -51,29 +33,6 @@
     <ClCompile Include="..\SRC\utils\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\game\AIPaddle.h" />
-    <ClInclude Include="..\src\game\BounceOnBorder.h" />
-    <ClInclude Include="..\src\game\Component.h" />
-    <ClInclude Include="..\src\game\Container.h" />
-    <ClInclude Include="..\src\game\DeAcceleration.h" />
-    <ClInclude Include="..\src\game\EmptyRectangleRenderer.h" />
-    <ClInclude Include="..\src\game\FighterCtrl.h" />
-    <ClInclude Include="..\src\game\Game.h" />
-    <ClInclude Include="..\src\game\GameCtrl.h" />
-    <ClInclude Include="..\src\game\GameManager.h" />
-    <ClInclude Include="..\src\game\GameObject.h" />
-    <ClInclude Include="..\src\game\ImageRenderer.h" />
-    <ClInclude Include="..\src\game\InfoMsgs.h" />
-    <ClInclude Include="..\src\game\InputComponent.h" />
-    <ClInclude Include="..\src\game\MovePaddleWithKeyBoard.h" />
-    <ClInclude Include="..\src\game\MovePaddleWithMouse.h" />
-    <ClInclude Include="..\src\game\PhysicsComponent.h" />
-    <ClInclude Include="..\src\game\RectangleRenderer.h" />
-    <ClInclude Include="..\src\game\RenderComponent.h" />
-    <ClInclude Include="..\src\game\ScoreRenderer.h" />
-    <ClInclude Include="..\src\game\ShowAtOppositeSide.h" />
-    <ClInclude Include="..\src\game\SimpleMove.h" />
-    <ClInclude Include="..\src\game\StopOnBorder.h" />
     <ClInclude Include="..\SRC\json\JSON.h" />
     <ClInclude Include="..\SRC\json\JSONValue.h" />
     <ClInclude Include="..\SRC\json\json_demo.h" />

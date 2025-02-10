@@ -9,11 +9,11 @@
   "leftpaddle" : 
     { 
        "type" : "rect",
-       "ctrl" : "auto", 
+       "ctrl" : "mouse", 
       "color": "0x0000ffff",
        "keys" : [ 26,22,4 ]
     },
-
+    
   "rightpaddle" : 
     { 
        "type" : "erect",
