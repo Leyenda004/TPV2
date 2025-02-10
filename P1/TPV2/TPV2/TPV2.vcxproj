@@ -19,6 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\components\BounceOnBorders.cpp" />
+    <ClCompile Include="..\src\components\GameInfoMsgs.cpp" />
+    <ClCompile Include="..\src\components\GameState.cpp" />
+    <ClCompile Include="..\src\components\Image.cpp" />
+    <ClCompile Include="..\src\components\PaddleAICtrl.cpp" />
+    <ClCompile Include="..\src\components\PaddleKBCtrl.cpp" />
+    <ClCompile Include="..\src\components\PaddleMouseCtrl.cpp" />
+    <ClCompile Include="..\src\components\RectangleViewer.cpp" />
+    <ClCompile Include="..\src\components\StopOnBorders.cpp" />
+    <ClCompile Include="..\src\ecs\Manager.cpp" />
+    <ClCompile Include="..\src\game\Game.cpp" />
     <ClCompile Include="..\SRC\json\JSON.cpp" />
     <ClCompile Include="..\SRC\json\JSONValue.cpp" />
     <ClCompile Include="..\SRC\json\json_demo.cpp" />
@@ -33,6 +44,23 @@
     <ClCompile Include="..\SRC\utils\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\components\BounceOnBorders.h" />
+    <ClInclude Include="..\src\components\GameInfoMsgs.h" />
+    <ClInclude Include="..\src\components\GameState.h" />
+    <ClInclude Include="..\src\components\Image.h" />
+    <ClInclude Include="..\src\components\PaddleAICtrl.h" />
+    <ClInclude Include="..\src\components\PaddleKBCtrl.h" />
+    <ClInclude Include="..\src\components\PaddleMouseCtrl.h" />
+    <ClInclude Include="..\src\components\RectangleViewer.h" />
+    <ClInclude Include="..\src\components\StopOnBorders.h" />
+    <ClInclude Include="..\src\components\Transform.h" />
+    <ClInclude Include="..\src\ecs\Component.h" />
+    <ClInclude Include="..\src\ecs\ecs.h" />
+    <ClInclude Include="..\src\ecs\ecs_defs_example.h" />
+    <ClInclude Include="..\src\ecs\Entity.h" />
+    <ClInclude Include="..\src\ecs\Manager.h" />
+    <ClInclude Include="..\src\game\ecs_defs.h" />
+    <ClInclude Include="..\src\game\Game.h" />
     <ClInclude Include="..\SRC\json\JSON.h" />
     <ClInclude Include="..\SRC\json\JSONValue.h" />
     <ClInclude Include="..\SRC\json\json_demo.h" />
@@ -55,6 +83,11 @@
     <ClInclude Include="..\SRC\utils\ptr_iterator.h" />
     <ClInclude Include="..\SRC\utils\Singleton.h" />
     <ClInclude Include="..\SRC\utils\Vector2D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\ecs\RAEDME.md" />
+    <None Include="..\src\json\RAEDME.md" />
+    <None Include="..\src\sdlutils\RAEDME.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
