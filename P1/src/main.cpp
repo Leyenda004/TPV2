@@ -4,12 +4,19 @@
 
 #include "game/Game.h"
 
-int main(int, char**) {
+
+
+void start() {
+	Game g;
+
+	g.init();
+	g.start();
+}
+
+int main(int, char **) {
 
 	try {
-		Game g;
-		g.init();
-		g.start();
+		start();
 	} catch (const std::string &e) { // catch exceptions thrown as strings
 		std::cerr << e << std::endl;
 	} catch (const char *e) { // catch exceptions thrown as char*

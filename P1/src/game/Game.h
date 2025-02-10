@@ -4,12 +4,12 @@
 
 #include <vector>
 
-namespace ecs {
-class Manager;
-}
+#include "GameManager.h"
 
-class Transform;
-class GameState;
+// when you are not using the methods of a class, just
+// say that it exists, that saves time when parsing files
+class Container;
+class GameManager;
 
 class Game {
 public:
@@ -19,9 +19,14 @@ public:
 	void start();
 private:
 	void checkCollisions();
-	ecs::Manager *_mngr;
 
-	Transform *_ballTr;
-	GameState *_gameState;
+	//GameManager *_gm;
+	//Container *_leftPaddle;
+	//Container *_rightPaddle;
+	//Container *_ball;
+	std::vector<GameObject*> _objs;
+
+	// Codigo practica
+	Container* _fighter;
 };
 
