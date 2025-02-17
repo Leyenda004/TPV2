@@ -2,44 +2,25 @@
 
 #include "Game.h"
 
+#include "../components/GameCtrl.h"
+#include "../components/Image.h"
+#include "../components/PacManCtrl.h"
+#include "../components/StopOnBorders.h"
+#include "../components/Transform.h"
+#include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
+#include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
 
-#include "Container.h"
-#include "GameManager.h"
-#include "AIPaddle.h"
-#include "BounceOnBorder.h"
-#include "EmptyRectangleRenderer.h"
-#include "GameCtrl.h"
-#include "ImageRenderer.h"
-#include "InfoMsgs.h"
-#include "MovePaddleWithKeyBoard.h"
-#include "MovePaddleWithMouse.h"
-#include "RectangleRenderer.h"
-#include "ScoreRenderer.h"
-#include "SimpleMove.h"
-#include "StopOnBorder.h"
-// Practica
-#include "FighterCtrl.h"
-#include "DeAcceleration.h"
-#include "ShowAtOppositeSide.h"
-#include "Health.h"	
-#include "Transform.h"
+using ecs::Manager;
 
-Game::Game() //:
-		//_gm(nullptr), //
-		//_leftPaddle(nullptr), //
-		//_rightPaddle(nullptr), //
-		//_ball(nullptr)
-{
+Game::Game() :
+		_mngr(nullptr) {
 }
 
 Game::~Game() {
-	// delete all game objects
-	for (GameObject *o : _objs) {
-		delete o;
-	}
+	delete _mngr;
 
 	// release InputHandler if the instance was created correctly.
 	if (InputHandler::HasInstance())
@@ -53,101 +34,42 @@ Game::~Game() {
 void Game::init() {
 
 	// initialize the SDL singleton
-	if (!SDLUtils::Init("Ping Pong", 800, 600,
-		"resources/config/test.resources.json")) {
+	if (!SDLUtils::Init("PacMan, Stars, ...", 800, 600,
+			"resources/config/resources.json")) {
 
 		std::cerr << "Something went wrong while initializing SDLUtils"
-			<< std::endl;
+				<< std::endl;
 		return;
 	}
 
 	// initialize the InputHandler singleton
 	if (!InputHandler::Init()) {
 		std::cerr << "Something went wrong while initializing SDLHandler"
-			<< std::endl;
+				<< std::endl;
 		return;
 
 	}
-	//
-	//	// the ball
-	//	_ball = new Container();
-	//	_ball->addComponent(new SimpleMove());
-	//	_ball->addComponent(new BounceOnBorder());
-	////	ball_->addComponent(new RectangleRenderer(build_sdlcolor(0xff0000ff)));
-	//	_ball->addComponent(
-	//			new ImageRenderer(&sdlutils().images().at("tennis_ball")));
-	//
-	//	_ball->setWidth(10.0f);
-	//	_ball->setHeight(10.0f);
-	//	_ball->getPos().set(sdlutils().width() / 2 - 5,
-	//			sdlutils().height() / 2 - 5);
-	//
-	//
-	//
-	//	// the left paddle
-	//	_leftPaddle = new Container();
-	//	_leftPaddle->setWidth(10.0f);
-	//	_leftPaddle->setHeight(50.0f);
-	//	_leftPaddle->getPos().set(10, sdlutils().height() / 2 - 25);
-	//
-	////	auto leftPaddle_ic = new MovePaddleWithKeyBoard();
-	////	leftPaddle_ic->setKeys(SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A);
-	////	leftPaddle_->addComponent(leftPaddle_ic);
-	//	_leftPaddle->addComponent(new AIPaddle(_ball));
-	//
-	//	_leftPaddle->addComponent(
-	//			new RectangleRenderer(build_sdlcolor(0xff0000ff)));
-	//	_leftPaddle->addComponent(new SimpleMove());
-	//	_leftPaddle->addComponent(new StopOnBorder());
-	//
-	//	// the right paddle
-	//	_rightPaddle = new Container();
-	//	_rightPaddle->setWidth(10.0f);
-	//	_rightPaddle->setHeight(50.0f);
-	//	_rightPaddle->getPos().set(sdlutils().width() - 15,
-	//			sdlutils().height() / 2 - 25);
-	//
-	////	rightPaddle_->addComponent(new MovePaddleWithMouse());
-	//	_rightPaddle->addComponent(new AIPaddle(_ball));
-	//
-	//	_rightPaddle->addComponent(
-	//			new EmptyRectangleRenderer(build_sdlcolor(0x00ff00ff)));
-	//
-	//	_rightPaddle->addComponent(new SimpleMove());
-	//	_rightPaddle->addComponent(new StopOnBorder());
-	//
-	//	// game manager
-	//	_gm = new GameManager(_ball);
-	//	_gm->addComponent(new GameCtrl());
-	//	_gm->addComponent(new ScoreRenderer());
-	//	_gm->addComponent(new InfoMsgs());
-	//
-	//	// add them all to the list of game objects
-	//	_objs.push_back(_ball);
-	//	_objs.push_back(_leftPaddle);
-	//	_objs.push_back(_rightPaddle);
-	//	_objs.push_back(_gm);
 
-	_fighter = new Container();
+	// Create the manager
+	_mngr = new Manager();
 
-	_fighter->getPos().setX(sdlutils().width() / 2);
-	_fighter->getPos().setY(sdlutils().height() / 2);
+	// create the PacMan entity
+	//
+	auto pacman = _mngr->addEntity();
+	_mngr->setHandler(ecs::hdlr::PACMAN, pacman);
+	auto tr = _mngr->addComponent<Transform>(pacman);
+	auto s = 50.0f;
+	auto x = (sdlutils().width() - s) / 2.0f;
+	auto y = (sdlutils().height() - s) / 2.0f;
+	tr->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
+	_mngr->addComponent<Image>(pacman, &sdlutils().images().at("pacman"));
+	_mngr->addComponent<PacManCtrl>(pacman);
+	_mngr->addComponent<StopOnBorders>(pacman);
 
-	_fighter->setWidth(50);
-	_fighter->setHeight(50);
-
-	_fighter->addComponent(new ImageRenderer(&sdlutils().images().at("fighter")));
-	//_fighter->addComponent(new ImageRenderer(new Texture(sdlutils().renderer(), "fighter")));
-
-	_objs.push_back(_fighter);
-	_fighter->setRotation(90);
-
-	_fighter->addComponent(new Transform());
-	_fighter->addComponent(new FighterCtrl());
-	_fighter->addComponent(new SimpleMove());
-	_fighter->addComponent(new DeAcceleration());
-	_fighter->addComponent(new ShowAtOppositeSide());
-	_fighter->addComponent(new Health());
+	// create the game info entity
+	auto ginfo = _mngr->addEntity();
+	_mngr->setHandler(ecs::hdlr::GAMEINFO, ginfo);
+	_mngr->addComponent<GameCtrl>(ginfo);
 }
 
 void Game::start() {
@@ -157,12 +79,16 @@ void Game::start() {
 
 	auto &ihdlr = ih();
 
-	while (!exit) {
+	// reset the time before starting - so we calculate correct
+	// delta-time in the first iteration
+	//
+	sdlutils().resetTime();
 
+	while (!exit) {
 		// store the current time -- all game objects should use this time when
 		// then need to the current time. They also have accessed to the time elapsed
 		// between the last two calls to regCurrTime().
-		Uint32 startTime = sdlutils().currRealTime();
+		Uint32 startTime = sdlutils().regCurrTime();
 
 		// refresh the input handler
 		ihdlr.refresh();
@@ -172,55 +98,59 @@ void Game::start() {
 			continue;
 		}
 
-		for (auto &o : _objs) {
-			o->handleInput();
-		}
+		_mngr->update();
+		_mngr->refresh();
 
-		// update
-		for (auto &o : _objs) {
-			o->update();
-		}
-
-		//checkCollisions();
+		checkCollisions();
 
 		sdlutils().clearRenderer();
-
-		// render
-		for (auto &o : _objs) {
-			o->render();
-		}
-
+		_mngr->render();
 		sdlutils().presentRenderer();
+
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 
-		if (frameTime < 20)
-			SDL_Delay(20 - frameTime);
+		if (frameTime < 10)
+			SDL_Delay(10 - frameTime);
 	}
 
 }
 
-//void Game::checkCollisions() {
-//	if (_gm->getState() != GameManager::RUNNING)
-//		return;
-//
-//	// check if ball hits paddles
-//	if (Collisions::collides(_leftPaddle->getPos(), _leftPaddle->getWidth(),
-//			_leftPaddle->getHeight(), _ball->getPos(), _ball->getWidth(),
-//			_ball->getHeight())
-//			|| Collisions::collides(_rightPaddle->getPos(),
-//					_rightPaddle->getWidth(), _rightPaddle->getHeight(),
-//					_ball->getPos(), _ball->getWidth(), _ball->getHeight())) {
-//
-//		// change the direction of the ball, and increment the speed
-//		auto &vel = _ball->getVel(); // the use of & is important, so the changes goes directly to the ball
-//		vel.setX(-vel.getX());
-//		vel = vel * 1.2f;
-//
-//		// play some sound
-//		sdlutils().soundEffects().at("paddle_hit").play();
-//	} else if (_ball->getPos().getX() < 0)
-//		_gm->onBallExit(GameManager::LEFT);
-//	else if (_ball->getPos().getX() + _ball->getWidth() > sdlutils().width())
-//		_gm->onBallExit(GameManager::RIGHT);
-//}
+void Game::checkCollisions() {
 
+	// the PacMan's Transform
+	//
+	auto pacman = _mngr->getHandler(ecs::hdlr::PACMAN);
+	auto pTR = _mngr->getComponent<Transform>(pacman);
+
+	// the GameCtrl component
+	auto ginfo = _mngr->getHandler(ecs::hdlr::GAMEINFO);
+	auto gctrl = _mngr->getComponent<GameCtrl>(ginfo);
+
+	// For safety, we traverse with a normal loop until the current size. In this
+	// particular case we could use a for-each loop since the list stars is not
+	// modified.
+	//
+	auto &stars = _mngr->getEntities(ecs::grp::STARS);
+	auto n = stars.size();
+	for (auto i = 0u; i < n; i++) {
+		auto e = stars[i];
+		if (_mngr->isAlive(e)) { // if the star is active (it might have died in this frame)
+
+			// the Star's Transform
+			//
+			auto eTR = _mngr->getComponent<Transform>(e);
+
+			// check if PacMan collides with the Star (i.e., eat it)
+			if (Collisions::collides(pTR->getPos(), pTR->getWidth(),
+					pTR->getHeight(), //
+					eTR->getPos(), eTR->getWidth(), eTR->getHeight())) {
+				_mngr->setAlive(e, false);
+				gctrl->onStarEaten();
+
+				// play sound on channel 1 (if there is something playing there
+				// it will be cancelled
+				sdlutils().soundEffects().at("pacman_eat").play(0, 1);
+			}
+		}
+	}
+}

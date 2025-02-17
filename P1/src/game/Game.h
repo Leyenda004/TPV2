@@ -2,14 +2,9 @@
 
 #pragma once
 
-#include <vector>
-
-#include "GameManager.h"
-
-// when you are not using the methods of a class, just
-// say that it exists, that saves time when parsing files
-class Container;
-class GameManager;
+namespace ecs {
+class Manager;
+}
 
 class Game {
 public:
@@ -19,14 +14,6 @@ public:
 	void start();
 private:
 	void checkCollisions();
-
-	//GameManager *_gm;
-	//Container *_leftPaddle;
-	//Container *_rightPaddle;
-	//Container *_ball;
-	std::vector<GameObject*> _objs;
-
-	// Codigo practica
-	Container* _fighter;
+	ecs::Manager *_mngr;
 };
 
