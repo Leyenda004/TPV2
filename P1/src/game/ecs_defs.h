@@ -23,5 +23,6 @@
 //
 #define _HDLRS_LIST_ \
     PACMAN, \
-	GAMEINFO
+	GAMEINFO, \
+	FIGHTER
 

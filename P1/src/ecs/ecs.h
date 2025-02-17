@@ -44,7 +44,11 @@ namespace cmp {
 // first number is 0 in C/C++ standard
 enum cmpId : cmpId_t {
 	_CMPS_LIST_, /* taken from ../game/ecs_defs */
-
+	DEACCELERATION,
+	FIGHTERCTRL,
+	GUN,
+	HEALTH,
+	SHOWATOPPOSITESIDE,
 	// do not remove this
 	_LAST_CMP_ID
 };
@@ -56,7 +60,7 @@ namespace grp {
 enum grpId : cmpId_t {
 	DEFAULT,
 	_GRPS_LIST_, /* taken from ../game/ecs_defs */
-
+	
 	// do not remove this
 	_LAST_GRP_ID
 };
@@ -67,7 +71,6 @@ namespace hdlr {
 // first number is 0 in C/C++ standard
 enum hdlrId : hdlrId_t {
 	_HDLRS_LIST_, /* taken from ../game/ecs_defs */
-
 	// do not remove this
 	_LAST_HDLR_ID
 };

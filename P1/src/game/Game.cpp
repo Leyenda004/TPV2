@@ -13,6 +13,12 @@
 #include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
 
+// PRACTICA
+
+#include "../components/DeAcceleration.h"
+#include "../components/FighterCtrl.h"
+#include "../components/ShowAtOppositeSide.h"
+
 using ecs::Manager;
 
 Game::Game() :
@@ -54,22 +60,35 @@ void Game::init() {
 	_mngr = new Manager();
 
 	// create the PacMan entity
-	//
-	auto pacman = _mngr->addEntity();
-	_mngr->setHandler(ecs::hdlr::PACMAN, pacman);
-	auto tr = _mngr->addComponent<Transform>(pacman);
+	
+	//auto pacman = _mngr->addEntity();
+	//_mngr->setHandler(ecs::hdlr::PACMAN, pacman);
+	//auto tr = _mngr->addComponent<Transform>(pacman);
+	//auto s = 50.0f;
+	//auto x = (sdlutils().width() - s) / 2.0f;
+	//auto y = (sdlutils().height() - s) / 2.0f;
+	//tr->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
+	//_mngr->addComponent<Image>(pacman, &sdlutils().images().at("pacman"));
+	//_mngr->addComponent<PacManCtrl>(pacman);
+	//_mngr->addComponent<StopOnBorders>(pacman);
+
+	//// create the game info entity
+	//auto ginfo = _mngr->addEntity();
+	//_mngr->setHandler(ecs::hdlr::GAMEINFO, ginfo);
+	//_mngr->addComponent<GameCtrl>(ginfo);
+
+	auto fighter = _mngr->addEntity();
+	_mngr->setHandler(ecs::hdlr::FIGHTER, fighter);
+	auto tr = _mngr->addComponent<Transform>(fighter);
 	auto s = 50.0f;
 	auto x = (sdlutils().width() - s) / 2.0f;
 	auto y = (sdlutils().height() - s) / 2.0f;
 	tr->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
-	_mngr->addComponent<Image>(pacman, &sdlutils().images().at("pacman"));
-	_mngr->addComponent<PacManCtrl>(pacman);
-	_mngr->addComponent<StopOnBorders>(pacman);
+	_mngr->addComponent<DeAcceleration>(fighter);
+	_mngr->addComponent<Image>(fighter, &sdlutils().images().at("fighter"));
+	_mngr->addComponent<FighterCtrl>(fighter);
+	_mngr->addComponent<ShowAtOppositeSide>(fighter);
 
-	// create the game info entity
-	auto ginfo = _mngr->addEntity();
-	_mngr->setHandler(ecs::hdlr::GAMEINFO, ginfo);
-	_mngr->addComponent<GameCtrl>(ginfo);
 }
 
 void Game::start() {
@@ -101,7 +120,7 @@ void Game::start() {
 		_mngr->update();
 		_mngr->refresh();
 
-		checkCollisions();
+		// checkCollisions();
 
 		sdlutils().clearRenderer();
 		_mngr->render();
