@@ -14,7 +14,10 @@ void FighterCtrl::handleInput(Container* o) {
 			std::cout << "rot right" << std::endl;
 			o->setRotation(o->getRotation() + 5.0f);
 		}
-		if (ihdlr.isKeyDown(SDLK_UP/*DUDA, SDL_ARROW_UP?*/)) {
+		if (ihdlr.isKeyDown(SDLK_s)) {
+			// !!!!!!!!
+		}
+		if (ihdlr.isKeyDown(SDLK_UP/*DUDA, SDL_ARROW_UP???*/)) {
 			Vector2D newVel = o->getVel() + Vector2D(0, -1).rotate(o->getRotation()) * thrust;
 
 			if (newVel.magnitude() > speedLimit) {

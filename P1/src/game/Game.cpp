@@ -24,6 +24,8 @@
 #include "FighterCtrl.h"
 #include "DeAcceleration.h"
 #include "ShowAtOppositeSide.h"
+#include "Health.h"	
+#include "Transform.h"
 
 Game::Game() //:
 		//_gm(nullptr), //
@@ -140,10 +142,12 @@ void Game::init() {
 	_objs.push_back(_fighter);
 	_fighter->setRotation(90);
 
+	_fighter->addComponent(new Transform());
 	_fighter->addComponent(new FighterCtrl());
 	_fighter->addComponent(new SimpleMove());
 	_fighter->addComponent(new DeAcceleration());
 	_fighter->addComponent(new ShowAtOppositeSide());
+	_fighter->addComponent(new Health());
 }
 
 void Game::start() {
