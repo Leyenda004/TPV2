@@ -14,16 +14,21 @@ void ShowAtOppositeSide::initComponent() {
 
 void ShowAtOppositeSide::update() {
 	// Esto esta mal!!!!!!!!
-	if (_tr->getPos().getY() >= sdlutils().height()) {
-		_tr->getPos().setY(0 - _tr->getHeight());
+	if (_tr->getPos().getY() >= sdlutils().height() && _tr->getVel().getY() > 0) 
+	{
+		_tr->getPos().setY(-_tr->getHeight());
 	}
-	else if (_tr->getPos().getY() <= 0) {
+	else if (_tr->getPos().getY() <= 0 && _tr->getVel().getY() < 0) 
+	{
 		_tr->getPos().setY(sdlutils().height());
 	}
-	if (_tr->getPos().getX() >= sdlutils().width()) {
+
+	if (_tr->getPos().getX() >= sdlutils().width() && _tr->getVel().getX() > 0) 
+	{
 		_tr->getPos().setX(0 - _tr->getWidth());
 	}
-	else if (_tr->getPos().getX() <= 0) {
+	else if (_tr->getPos().getX() <= 0 && _tr->getVel().getX() < 0)
+	{
 		_tr->getPos().setX(sdlutils().width());
 	}
 }
