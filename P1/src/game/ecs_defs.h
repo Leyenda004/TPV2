@@ -11,7 +11,12 @@
 	PACMANCTRL, \
 	STARMOTION, \
 	GAMECTRL, \
-	STOPONBORDER
+	STOPONBORDER, \
+	DEACCELERATION, \
+	FIGHTERCTRL, \
+	GUN, \
+	HEALTH, \
+	SHOWATOPPOSITESIDE
 
 
 // Groups list - must have at least one element

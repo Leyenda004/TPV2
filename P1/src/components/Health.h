@@ -4,13 +4,12 @@
 class Health : public ecs::Component
 {
 public:
+	__CMPID_DECL__(ecs::cmp::HEALTH)
 
-	//Health();
-	//Health(int lifeMax);
+	Health();
+	Health(int lifeMax);
 
-	void initComponent() override;
-
-	void displayLife();
+	//void displayLife();
 
 	inline int getLifeValue() {
 		return _lifeNum;
