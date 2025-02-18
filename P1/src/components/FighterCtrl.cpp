@@ -29,6 +29,7 @@ void FighterCtrl::handleInput() {
 			_tr->setRot(_tr->getRot() + 5.0f);
 		}
 		if (ihdlr.isKeyDown(SDLK_UP/*DUDA, SDL_ARROW_UP?*/)) {
+			sdlutils().soundEffects().at("thrust").play(0, 1);
 			Vector2D newVel = _tr->getVel() + Vector2D(0, -1).rotate(_tr->getRot()) * thrust;
 
 			if (newVel.magnitude() > speedLimit) {

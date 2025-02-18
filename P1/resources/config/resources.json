@@ -50,6 +50,10 @@
         {
             "id": "pacman_intro",
             "file": "resources/sound/pacman_intro.wav"
+        },
+        {
+            "id": "thrust",
+            "file": "resources/sound/thrust.wav"
         }
     ],
 
