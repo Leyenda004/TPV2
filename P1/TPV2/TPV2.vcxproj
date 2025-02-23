@@ -47,6 +47,7 @@
     <ClInclude Include="..\src\components\DeAcceleration.h" />
     <ClInclude Include="..\src\components\FighterCtrl.h" />
     <ClInclude Include="..\src\components\GameCtrl.h" />
+    <ClInclude Include="..\src\components\Gun.h" />
     <ClInclude Include="..\src\components\Health.h" />
     <ClInclude Include="..\src\components\Image.h" />
     <ClInclude Include="..\src\components\PacManCtrl.h" />

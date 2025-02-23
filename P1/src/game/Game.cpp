@@ -38,7 +38,7 @@ Game::~Game() {
 		SDLUtils::Release();
 }
 
-void Game::init() {
+bool Game::init() {
 
 	// initialize the SDL singleton
 	if (!SDLUtils::Init("PacMan, Stars, ...", 800, 600,
@@ -46,51 +46,40 @@ void Game::init() {
 
 		std::cerr << "Something went wrong while initializing SDLUtils"
 				<< std::endl;
-		return;
+		return false;
 	}
 
 	// initialize the InputHandler singleton
 	if (!InputHandler::Init()) {
 		std::cerr << "Something went wrong while initializing SDLHandler"
 				<< std::endl;
-		return;
+		return false;
 
 	}
 
 	// Create the manager
 	_mngr = new Manager();
 
-	// create the PacMan entity
-	
-	//auto pacman = _mngr->addEntity();
-	//_mngr->setHandler(ecs::hdlr::PACMAN, pacman);
-	//auto tr = _mngr->addComponent<Transform>(pacman);
-	//auto s = 50.0f;
-	//auto x = (sdlutils().width() - s) / 2.0f;
-	//auto y = (sdlutils().height() - s) / 2.0f;
-	//tr->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
-	//_mngr->addComponent<Image>(pacman, &sdlutils().images().at("pacman"));
-	//_mngr->addComponent<PacManCtrl>(pacman);
-	//_mngr->addComponent<StopOnBorders>(pacman);
+	return true;
+}
 
-	//// create the game info entity
-	//auto ginfo = _mngr->addEntity();
-	//_mngr->setHandler(ecs::hdlr::GAMEINFO, ginfo);
-	//_mngr->addComponent<GameCtrl>(ginfo);
-
+void Game::initGame()
+{
 	auto fighter = _mngr->addEntity();
 	_mngr->setHandler(ecs::hdlr::FIGHTER, fighter);
+
 	auto tr = _mngr->addComponent<Transform>(fighter);
+
 	auto s = 50.0f;
 	auto x = (sdlutils().width() - s) / 2.0f;
 	auto y = (sdlutils().height() - s) / 2.0f;
+
 	tr->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
 	_mngr->addComponent<DeAcceleration>(fighter);
 	_mngr->addComponent<Image>(fighter, &sdlutils().images().at("fighter"));
 	_mngr->addComponent<FighterCtrl>(fighter);
 	_mngr->addComponent<ShowAtOppositeSide>(fighter);
 	_mngr->addComponent<Health>(fighter);
-
 }
 
 void Game::start() {
@@ -103,7 +92,8 @@ void Game::start() {
 	// reset the time before starting - so we calculate correct
 	// delta-time in the first iteration
 	//
-	sdlutils().resetTime();
+	auto& vt = sdlutils().virtualTimer();
+	vt.resetTime();
 
 	while (!exit) {
 		// store the current time -- all game objects should use this time when
@@ -119,14 +109,16 @@ void Game::start() {
 			continue;
 		}
 
-		_mngr->update();
-		_mngr->refresh();
+		// _state->update() >>>>>>>>>>>>>>>>>>>>>>>>> TODO
+			_mngr->update();
+			_mngr->refresh();
 
-		// checkCollisions();
+			// checkCollisions();
 
-		sdlutils().clearRenderer();
-		_mngr->render();
-		sdlutils().presentRenderer();
+			sdlutils().clearRenderer();
+			_mngr->render();
+			sdlutils().presentRenderer();
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 
