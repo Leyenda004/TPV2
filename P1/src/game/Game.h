@@ -26,7 +26,7 @@ public:
 		_state->leave();
 		switch (s) {
 		case RUNNING:
-			_state = _runing_state;
+			_state = _running_state;
 			break;
 		case PAUSED:
 			_state = _paused_state;
@@ -60,7 +60,7 @@ private:
 
 	GameState* _state;
 	GameState* _paused_state;
-	GameState* _runing_state;
+	GameState* _running_state;
 	GameState* _newgame_state;
 	GameState* _newround_state;
 	GameState* _gameover_state;

@@ -19,6 +19,7 @@
 #include "../components/FighterCtrl.h"
 #include "../components/ShowAtOppositeSide.h"
 #include "../components/Health.h"
+#include "RunningState.h"
 
 using ecs::Manager;
 
@@ -65,6 +66,13 @@ bool Game::init() {
 
 void Game::initGame()
 {
+	_paused_state;
+	_running_state = new RunningState();
+	_newgame_state;
+	_newround_state;
+	_gameover_state;
+	_state = _running_state;
+
 	auto fighter = _mngr->addEntity();
 	_mngr->setHandler(ecs::hdlr::FIGHTER, fighter);
 
@@ -109,16 +117,7 @@ void Game::start() {
 			continue;
 		}
 
-		// _state->update() >>>>>>>>>>>>>>>>>>>>>>>>> TODO
-			_mngr->update();
-			_mngr->refresh();
-
-			// checkCollisions();
-
-			sdlutils().clearRenderer();
-			_mngr->render();
-			sdlutils().presentRenderer();
-		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		_state->update(); 
 
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 

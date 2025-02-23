@@ -2,6 +2,8 @@
 #include "GameState.h"
 class RunningState : public GameState
 {
+public:
+
 	RunningState(){}
 	~RunningState(){}
 
