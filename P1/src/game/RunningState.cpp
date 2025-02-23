@@ -4,6 +4,8 @@
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Collisions.h"
+#include "../sdlutils/InputHandler.h"
+#include <SDL.h>
 
 void RunningState::enter()
 {
@@ -24,14 +26,13 @@ void RunningState::update()
 		Game::Instance()->setState(Game::GameOverState);
 		return;
 	}
-	
-	if(ih().isKeyDown(SDL_Keycode::SDLK_p))
+	*/
+	if(ih().isKeyDown(SDLK_p)) // Handle Pause
 	{
-		Game::Instance()->setState(Game::PauseState);
+		Game::Instance()->setState(Game::PAUSED);
 		return;
 	}
-	*/
-
+	
 	Game::Instance()->getMngr()->update();
 	Game::Instance()->getMngr()->refresh();
 

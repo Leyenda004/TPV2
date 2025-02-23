@@ -19,7 +19,9 @@
 #include "../components/FighterCtrl.h"
 #include "../components/ShowAtOppositeSide.h"
 #include "../components/Health.h"
+
 #include "RunningState.h"
+#include "PausedState.h"
 
 using ecs::Manager;
 
@@ -66,7 +68,7 @@ bool Game::init() {
 
 void Game::initGame()
 {
-	_paused_state;
+	_paused_state = new PausedSate();
 	_running_state = new RunningState();
 	_newgame_state;
 	_newround_state;
