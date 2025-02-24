@@ -16,7 +16,8 @@
 	FIGHTERCTRL, \
 	GUN, \
 	HEALTH, \
-	SHOWATOPPOSITESIDE
+	SHOWATOPPOSITESIDE, \
+	IMAGE_WITH_FRAMES
 
 
 // Groups list - must have at least one element

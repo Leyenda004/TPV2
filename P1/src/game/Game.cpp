@@ -19,6 +19,7 @@
 #include "../components/FighterCtrl.h"
 #include "../components/ShowAtOppositeSide.h"
 #include "../components/Health.h"
+#include "../components//ImageWithFrames.h"
 
 #include "RunningState.h"
 #include "PausedState.h"
@@ -86,7 +87,7 @@ void Game::initGame()
 
 	tr->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
 	_mngr->addComponent<DeAcceleration>(fighter);
-	_mngr->addComponent<Image>(fighter, &sdlutils().images().at("fighter"));
+	_mngr->addComponent<ImageWithFrames>(fighter/*, &sdlutils().images().at("fighter")*/);
 	_mngr->addComponent<FighterCtrl>(fighter);
 	_mngr->addComponent<ShowAtOppositeSide>(fighter);
 	_mngr->addComponent<Health>(fighter);

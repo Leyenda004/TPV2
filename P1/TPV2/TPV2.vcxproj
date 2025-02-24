@@ -24,6 +24,7 @@
     <ClCompile Include="..\src\components\GameCtrl.cpp" />
     <ClCompile Include="..\src\components\Health.cpp" />
     <ClCompile Include="..\src\components\Image.cpp" />
+    <ClCompile Include="..\src\components\ImageWithFrames.cpp" />
     <ClCompile Include="..\src\components\PacManCtrl.cpp" />
     <ClCompile Include="..\src\components\ShowAtOppositeSide.cpp" />
     <ClCompile Include="..\src\components\StarMotion.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="..\src\components\Gun.h" />
     <ClInclude Include="..\src\components\Health.h" />
     <ClInclude Include="..\src\components\Image.h" />
+    <ClInclude Include="..\src\components\ImageWithFrames.h" />
     <ClInclude Include="..\src\components\PacManCtrl.h" />
     <ClInclude Include="..\src\components\ShowAtOppositeSide.h" />
     <ClInclude Include="..\src\components\StarMotion.h" />

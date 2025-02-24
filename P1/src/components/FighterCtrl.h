@@ -5,7 +5,7 @@ class Transform;
 
 class FighterCtrl : public ecs::Component {
 public:
-	__CMPID_DECL__(ecs::cmp::PACMANCTRL)
+	__CMPID_DECL__(ecs::cmp::FIGHTERCTRL)
 	float thrust = 0.2f;
 	float speedLimit = 3.0f;
 

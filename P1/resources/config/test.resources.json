@@ -13,7 +13,8 @@
     { "id" : "pacman", "file" : "resources/images/pacman.png"},
     { "id" : "sprites", "file" : "resources/images/pacman_sprites.png"},
     { "id" : "heart", "file" : "resources/images/heart.png"},
-    { "id" : "fighter", "file" : "resources/images/fighter.png"}
+    { "id" : "fighter", "file" : "resources/images/fighter.png"},
+    { "id" : "asteroids", "file" : "resources/images/asteroid.png"}
   ],
   
   "messages" : [
