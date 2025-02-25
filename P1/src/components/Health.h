@@ -1,5 +1,6 @@
 #pragma once
 #include "../ecs/Component.h"
+#include "../sdlutils/SDLUtils.h"
 
 class Health : public ecs::Component
 {
@@ -9,7 +10,8 @@ public:
 	Health();
 	Health(int lifeMax);
 
-	//void displayLife();
+	void initComponent() override;
+	void render() override;
 
 	inline int getLifeValue() {
 		return _lifeNum;
@@ -28,5 +30,7 @@ private:
 
 	int _lifeNum;
 	int _lifeMax;
+	
+	Texture* _healthTex;
 };
 
