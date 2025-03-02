@@ -17,7 +17,8 @@
 	GUN, \
 	HEALTH, \
 	SHOWATOPPOSITESIDE, \
-	IMAGE_WITH_FRAMES
+	IMAGE_WITH_FRAMES, \
+	FOLLOW
 
 
 // Groups list - must have at least one element
