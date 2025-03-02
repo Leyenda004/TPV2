@@ -20,6 +20,7 @@
 #include "../components/ShowAtOppositeSide.h"
 #include "../components/Health.h"
 #include "../components//ImageWithFrames.h"
+#include "../components/Gun.h"
 
 #include "RunningState.h"
 #include "PausedState.h"
@@ -45,7 +46,7 @@ Game::~Game() {
 bool Game::init() {
 
 	// initialize the SDL singleton
-	if (!SDLUtils::Init("PacMan, Stars, ...", 800, 600,
+	if (!SDLUtils::Init("STAR FIGHTER", 800, 600,
 			"resources/config/resources.json")) {
 
 		std::cerr << "Something went wrong while initializing SDLUtils"
@@ -91,6 +92,7 @@ void Game::initGame()
 	_mngr->addComponent<FighterCtrl>(fighter);
 	_mngr->addComponent<ShowAtOppositeSide>(fighter);
 	_mngr->addComponent<Health>(fighter);
+	_mngr->addComponent<Gun>(fighter);
 }
 
 void Game::start() {
