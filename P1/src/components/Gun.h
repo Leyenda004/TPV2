@@ -16,7 +16,9 @@ public:
 	virtual ~Gun() {};
 
 	void initComponent() override;
-	void update() override;
+	void update() override;	
+	void reset();
+	void render() override;
 
 	struct Bullet {
 		bool used = false;
@@ -31,9 +33,6 @@ public:
 
 	typedef std::array<Bullet, _max_bullets> bullets_array_t;
 	typedef bullets_array_t::iterator iterator;
-
-	void reset();
-	void render() override;
 
 
 	int itNum = 0;
@@ -52,5 +51,6 @@ private:
 	bullets_array_t _bullets;
 
 	int nextShoot = 0;
+	bool allBulletsUsed();
 
 };

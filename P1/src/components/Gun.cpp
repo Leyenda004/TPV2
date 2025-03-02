@@ -30,7 +30,7 @@ void Gun::update() {
 void Gun::handleInput() {
 	auto& ihdlr = ih();
 	if (ihdlr.keyDownEvent()) {
-		if (ihdlr.isKeyDown(SDLK_s) && sdlutils().virtualTimer().currRealTime() >= nextShoot) {
+		if (ihdlr.isKeyDown(SDLK_s) && sdlutils().virtualTimer().currRealTime() >= nextShoot && !allBulletsUsed()) {
 			std::cout << "SHOOT" << std::endl;
 
 			int bw = 5;
@@ -43,6 +43,12 @@ void Gun::handleInput() {
 			shoot(bp/*body_position*/, bv/*body_vel*/, bw/*body_width*/, bh/*body_height*/, br/*body_rotation*/);
 
 			nextShoot = sdlutils().virtualTimer().currRealTime() + 250;
+
+			std::cout << "[";
+			for (Gun::Bullet& bala : _bullets) {
+				std::cout << (bala.used ? "1 " : "0 ");
+			}
+			std::cout << "]" << std::endl;
 		}
 	}
 }
@@ -54,33 +60,32 @@ void Gun::reset() {
 }
 
 void Gun::render() {
-
-	std::cout << "[";
 	for (Gun::Bullet& bala : _bullets) {
 		assert(_bulletTex != nullptr);
-		std::cout << (bala.used ? "1 " : "0 ");
 		if (bala.used) {
 			SDL_Rect dest = build_sdlrect(bala.pos, bala.width, bala.height);
 			_bulletTex->render(dest, _tr->getRot());
 		}
 	}
-	std::cout << "]" << std::endl;
 }
 
 void Gun::shoot(Vector2D p, Vector2D v, int width, int height, float r) {
-
-	_bullets[itNum].used = true;
-
-	for (auto i : _bullets) {
-		if (!_bullets[itNum].used) {
-			break;
-		}
+	while (_bullets[itNum].used) {
 		itNum = (itNum + 1) % _max_bullets;
 	}
-
 	_bullets[itNum].pos = p;
 	_bullets[itNum].vel = v;
 	_bullets[itNum].width = width;
 	_bullets[itNum].height = height;
 	_bullets[itNum].rot = r;
+	_bullets[itNum].used = true;
+}
+
+bool Gun::allBulletsUsed() {
+	for (auto& b : _bullets) {
+		if (!b.used) {
+			return false;
+		}
+	}
+	return true;
 }
