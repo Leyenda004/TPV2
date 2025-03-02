@@ -18,7 +18,8 @@
 	HEALTH, \
 	SHOWATOPPOSITESIDE, \
 	IMAGE_WITH_FRAMES, \
-	FOLLOW
+	FOLLOW, \
+	GENERATIONS
 
 
 // Groups list - must have at least one element
