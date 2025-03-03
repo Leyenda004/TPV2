@@ -1,7 +1,6 @@
 #include "FighterUtils.h"
 
 #include "Game.h"
-#include "../components/Transform.h"
 
 #include "../components/DeAcceleration.h"
 #include "../components/FighterCtrl.h"
@@ -13,9 +12,7 @@
 
 FighterUtils::FighterUtils()
 {
-	std::cout << "antes de constructor fighterutils" << std::endl;
 	_mngr = Game::Instance()->getMngr();
-	std::cout << "después de constructor fighterutils" << std::endl;
 }
 
 void FighterUtils::create_fighter()
@@ -23,7 +20,7 @@ void FighterUtils::create_fighter()
 	auto fighter = _mngr->addEntity();
 	_mngr->setHandler(ecs::hdlr::FIGHTER, fighter);
 
-	auto* tr = _mngr->addComponent<Transform>(fighter);
+	tr = _mngr->addComponent<Transform>(fighter);
 
 	auto s = 50.0f;
 	auto x = (sdlutils().width() - s) / 2.0f;
@@ -41,15 +38,18 @@ void FighterUtils::create_fighter()
 
 void FighterUtils::reset_fighter()
 {
-
+	tr->getPos().set(sdlutils().width() / 2.0f, sdlutils().height() / 2.0f);
+	_mngr->getComponent<Gun>(_mngr->getHandler(ecs::hdlr::FIGHTER))->reset();
 }
 
 void FighterUtils::reset_lives()
 {
-
+	_mngr->getComponent<Health>(_mngr->getHandler(ecs::hdlr::FIGHTER))->lifeReset();
 }
 
 int FighterUtils::update_lives(int n)
 {
-	return 0;
+	Health* h = _mngr->getComponent<Health>(_mngr->getHandler(ecs::hdlr::FIGHTER));
+	h->lifeUpdate(n);
+	return h->getLifeValue();
 }
