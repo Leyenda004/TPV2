@@ -26,7 +26,6 @@ void Follow::update()
 
 	// Indicaciones del Campus Virtual
 	// v.rotate(v.angle(q-p) > 0 ? 1.0f : -1.0f)     p su posición, y q la posición del caza
-
-	_mTransform->getVel().rotate(
-		_mTransform->getVel().angle(_fighterTr->getVel() - _mTransform->getVel()) > 0 ? 1.0f : -1.0f);
+	_mTransform->getVel() = _mTransform->getVel().rotate(
+		_mTransform->getVel().angle(_fighterTr->getPos() - _mTransform->getPos()) > 0 ? 1.0f : -1.0f);
 }

@@ -21,6 +21,7 @@
 #include "../components/Health.h"
 #include "../components//ImageWithFrames.h"
 #include "../components/Gun.h"
+#include "../components/Follow.h"
 
 #include "RunningState.h"
 #include "PausedState.h"
@@ -86,13 +87,17 @@ void Game::initGame()
 	auto x = (sdlutils().width() - s) / 2.0f;
 	auto y = (sdlutils().height() - s) / 2.0f;
 
-	tr->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
+	tr->init(Vector2D(x, y), Vector2D(5,0), s, s, 0.0f);
 	_mngr->addComponent<DeAcceleration>(fighter);
 	_mngr->addComponent<ImageWithFrames>(fighter/*, &sdlutils().images().at("fighter")*/);
 	_mngr->addComponent<FighterCtrl>(fighter);
 	_mngr->addComponent<ShowAtOppositeSide>(fighter);
 	_mngr->addComponent<Health>(fighter);
 	_mngr->addComponent<Gun>(fighter);
+
+	Transform* fllwtr = new Transform(Vector2D(0,0), Vector2D(0,0), 1.0f, 1.0f, 1.0f);
+
+	_mngr->addComponent<Follow>(fighter, fllwtr);
 }
 
 void Game::start() {
