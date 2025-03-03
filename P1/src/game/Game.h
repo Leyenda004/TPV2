@@ -4,6 +4,7 @@
 #include "../utils/Singleton.h"
 
 #include "GameState.h"
+#include "FighterUtils.h"
 
 namespace ecs {
 class Manager;
@@ -64,5 +65,7 @@ private:
 	GameState* _newgame_state;
 	GameState* _newround_state;
 	GameState* _gameover_state;
+
+	FighterUtils* fu;
 };
 

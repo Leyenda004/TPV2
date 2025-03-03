@@ -34,6 +34,8 @@
     <ClCompile Include="..\src\components\StopOnBorders.cpp" />
     <ClCompile Include="..\src\components\TowardDestination.cpp" />
     <ClCompile Include="..\src\ecs\Manager.cpp" />
+    <ClCompile Include="..\src\game\FighterFacade.cpp" />
+    <ClCompile Include="..\src\game\FighterUtils.cpp" />
     <ClCompile Include="..\src\game\Game.cpp" />
     <ClCompile Include="..\src\game\PausedState.cpp" />
     <ClCompile Include="..\src\game\RunningState.cpp" />
@@ -72,6 +74,8 @@
     <ClInclude Include="..\src\ecs\Entity.h" />
     <ClInclude Include="..\src\ecs\Manager.h" />
     <ClInclude Include="..\src\game\ecs_defs.h" />
+    <ClInclude Include="..\src\game\FighterFacade.h" />
+    <ClInclude Include="..\src\game\FighterUtils.h" />
     <ClInclude Include="..\src\game\Game.h" />
     <ClInclude Include="..\src\game\GameState.h" />
     <ClInclude Include="..\src\game\PausedState.h" />
