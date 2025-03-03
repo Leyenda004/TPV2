@@ -14,14 +14,6 @@
 #include "../utils/Collisions.h"
 
 // PRACTICA
-
-#include "../components/DeAcceleration.h"
-#include "../components/FighterCtrl.h"
-#include "../components/ShowAtOppositeSide.h"
-#include "../components/Health.h"
-#include "../components//ImageWithFrames.h"
-#include "../components/Gun.h"
-
 #include "RunningState.h"
 #include "PausedState.h"
 
@@ -29,6 +21,7 @@ using ecs::Manager;
 
 Game::Game() :
 		_mngr(nullptr) {
+	
 }
 
 Game::~Game() {
@@ -70,6 +63,9 @@ bool Game::init() {
 
 void Game::initGame()
 {
+	fu = new FighterUtils();
+	fu->create_fighter();
+
 	_paused_state = new PausedSate();
 	_running_state = new RunningState();
 	_newgame_state;
@@ -77,22 +73,7 @@ void Game::initGame()
 	_gameover_state;
 	_state = _running_state;
 
-	auto fighter = _mngr->addEntity();
-	_mngr->setHandler(ecs::hdlr::FIGHTER, fighter);
 
-	auto tr = _mngr->addComponent<Transform>(fighter);
-
-	auto s = 50.0f;
-	auto x = (sdlutils().width() - s) / 2.0f;
-	auto y = (sdlutils().height() - s) / 2.0f;
-
-	tr->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
-	_mngr->addComponent<DeAcceleration>(fighter);
-	_mngr->addComponent<ImageWithFrames>(fighter/*, &sdlutils().images().at("fighter")*/);
-	_mngr->addComponent<FighterCtrl>(fighter);
-	_mngr->addComponent<ShowAtOppositeSide>(fighter);
-	_mngr->addComponent<Health>(fighter);
-	_mngr->addComponent<Gun>(fighter);
 }
 
 void Game::start() {

@@ -21,8 +21,9 @@ public:
 		_lifeNum = _lifeMax;
 	}
 
-	inline void subtractLife() {
-		--_lifeNum;
+	inline void lifeUpdate(int n) {
+		_lifeNum += n;
+		if (_lifeNum > _lifeMax) _lifeNum = _lifeMax;
 		if (_lifeNum < 0) _lifeNum = 0;
 	}
 
