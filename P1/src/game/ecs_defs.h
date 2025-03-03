@@ -19,7 +19,8 @@
 	SHOWATOPPOSITESIDE, \
 	IMAGE_WITH_FRAMES, \
 	FOLLOW, \
-	GENERATIONS
+	GENERATIONS, \
+	TOWARD_DESTINATION
 
 
 // Groups list - must have at least one element

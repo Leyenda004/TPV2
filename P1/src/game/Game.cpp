@@ -22,6 +22,7 @@
 #include "../components//ImageWithFrames.h"
 #include "../components/Gun.h"
 #include "../components/Follow.h"
+#include "../components/TowardDestination.h"
 
 #include "RunningState.h"
 #include "PausedState.h"
@@ -97,7 +98,7 @@ void Game::initGame()
 
 	Transform* fllwtr = new Transform(Vector2D(0,0), Vector2D(0,0), 1.0f, 1.0f, 1.0f);
 
-	_mngr->addComponent<Follow>(fighter, fllwtr);
+	_mngr->addComponent<TowardDestination>(fighter);
 }
 
 void Game::start() {
