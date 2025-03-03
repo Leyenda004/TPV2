@@ -55,8 +55,6 @@ private:
 	Game();
 	virtual ~Game();
 
-	void checkCollisions();
-
 	ecs::Manager *_mngr;
 
 	GameState* _state;
