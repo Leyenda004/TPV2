@@ -7,12 +7,6 @@
 #include "../sdlutils/InputHandler.h"
 #include <SDL.h>
 
-RunningState::RunningState()
-{
-	_mngr = Game::Instance()->getMngr();
-	fighter = Game::Instance()->getMngr()->getHandler(ecs::hdlr::FIGHTER);
-}
-
 void RunningState::enter()
 {
 
@@ -49,35 +43,15 @@ void RunningState::update()
 	sdlutils().presentRenderer();
 }
 
-void RunningState::checkCollisions() {
+void RunningState::checkCollisions()
+{
+	ecs::entity_t fighter = Game::Instance()->getMngr()->getHandler(ecs::hdlr::FIGHTER);
+	std::vector<ecs::entity_t> asteroids = Game::Instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS);
 
-	// Transform
-	auto tr = _mngr->getComponent<Transform>(fighter);
-
-	// the GameCtrl component
-	//auto ginfo = _mngr->getHandler(ecs::hdlr::GAMEINFO);
-	//auto gctrl = _mngr->getComponent<GameCtrl>(ginfo);
-
-	// For safety, we traverse with a normal loop until the current size.
-	std::vector<ecs::entity_t> asteroids = _mngr->getEntities(ecs::grp::ASTEROIDS);
 	int nAsteroids = asteroids.size();
+
 	for (int i = 0; i < nAsteroids; ++i)
 	{
-		auto asEn = asteroids[i];
-		if (_mngr->isAlive(asEn)) {
-			auto asTr = _mngr->getComponent<Transform>(asEn);
-
-			if ( Collisions::collides( tr->getPos(), tr->getWidth(), tr->getHeight(), asTr->getPos(), asTr->getWidth(), asTr->getHeight() ) ) {
-
-				_mngr->setAlive(asEn, false);
-
-				std::cout << "Asteroid hit player!" << std::endl;
-				//gctrl->onStarEaten();
-
-				// play sound on channel 1 (if there is something playing there
-				// it will be cancelled
-				//sdlutils().soundEffects().at("pacman_eat").play(0, 1);
-			}
-		}
+		
 	}
 }

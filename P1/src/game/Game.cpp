@@ -75,6 +75,7 @@ void Game::initGame()
 	_newround_state;
 	_gameover_state;
 	_state = _running_state;
+
 }
 
 void Game::start() {
@@ -112,4 +113,44 @@ void Game::start() {
 			SDL_Delay(10 - frameTime);
 	}
 
+}
+
+void Game::checkCollisions() {
+
+	// the PacMan's Transform
+	//
+	auto pacman = _mngr->getHandler(ecs::hdlr::PACMAN);
+	auto pTR = _mngr->getComponent<Transform>(pacman);
+
+	// the GameCtrl component
+	auto ginfo = _mngr->getHandler(ecs::hdlr::GAMEINFO);
+	auto gctrl = _mngr->getComponent<GameCtrl>(ginfo);
+
+	// For safety, we traverse with a normal loop until the current size. In this
+	// particular case we could use a for-each loop since the list stars is not
+	// modified.
+	//
+	auto &stars = _mngr->getEntities(ecs::grp::STARS);
+	auto n = stars.size();
+	for (auto i = 0u; i < n; i++) {
+		auto e = stars[i];
+		if (_mngr->isAlive(e)) { // if the star is active (it might have died in this frame)
+
+			// the Star's Transform
+			//
+			auto eTR = _mngr->getComponent<Transform>(e);
+
+			// check if PacMan collides with the Star (i.e., eat it)
+			if (Collisions::collides(pTR->getPos(), pTR->getWidth(),
+					pTR->getHeight(), //
+					eTR->getPos(), eTR->getWidth(), eTR->getHeight())) {
+				_mngr->setAlive(e, false);
+				gctrl->onStarEaten();
+
+				// play sound on channel 1 (if there is something playing there
+				// it will be cancelled
+				sdlutils().soundEffects().at("pacman_eat").play(0, 1);
+			}
+		}
+	}
 }
