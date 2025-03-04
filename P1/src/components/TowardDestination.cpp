@@ -25,5 +25,8 @@ void TowardDestination::update()
 
 void TowardDestination::setRandomDestination()
 {
-	_targetPos = Vector2D();
+	int randomX = sdlutils().rand().nextInt(0, sdlutils().width());
+	int randomY = sdlutils().rand().nextInt(0, sdlutils().height());
+
+	_targetPos = Vector2D(randomX, randomY);
 }

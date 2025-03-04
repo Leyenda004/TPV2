@@ -66,6 +66,9 @@ void Game::initGame()
 	fu = new FighterUtils();
 	fu->create_fighter();
 
+	asteroidUtils = new AsteroidsUtils();
+	asteroidUtils->create_asteroids(10);
+
 	_paused_state = new PausedSate();
 	_running_state = new RunningState();
 	_newgame_state;

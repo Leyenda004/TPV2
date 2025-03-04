@@ -10,8 +10,7 @@ class ImageWithFrames : public ecs::Component
 public:
 	__CMPID_DECL__(ecs::cmp::IMAGE_WITH_FRAMES)
 
-	ImageWithFrames();
-	ImageWithFrames(Texture* tex);
+	ImageWithFrames(Texture* tex, int frames, int rows, int cols);
 	virtual ~ImageWithFrames(){}
 
 	void setTexture(Texture* tex) {
@@ -28,6 +27,8 @@ private:
 	Texture* _tex;
 
 	Uint32 _frameInitTime;
-	int frame;
-	int nFrames;
+	int _frame;
+	int _nFrames;
+	int _rows;
+	int _cols;
 };

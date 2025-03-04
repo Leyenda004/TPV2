@@ -5,6 +5,7 @@
 
 #include "GameState.h"
 #include "FighterUtils.h"
+#include "AsteroidsUtils.h"
 
 namespace ecs {
 class Manager;
@@ -67,5 +68,6 @@ private:
 	GameState* _gameover_state;
 
 	FighterUtils* fu;
+	AsteroidsUtils* asteroidUtils;
 };
 
