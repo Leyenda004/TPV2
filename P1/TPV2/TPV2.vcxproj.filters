@@ -31,6 +31,10 @@
     <ClCompile Include="..\src\components\Follow.cpp" />
     <ClCompile Include="..\src\components\Generations.cpp" />
     <ClCompile Include="..\src\components\TowardDestination.cpp" />
+    <ClCompile Include="..\src\game\AsteroidsUtils.cpp" />
+    <ClCompile Include="..\src\game\FighterFacade.cpp" />
+    <ClCompile Include="..\src\game\FighterUtils.cpp" />
+    <ClCompile Include="..\src\game\NewGameState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\components\DeAcceleration.h" />
@@ -80,6 +84,11 @@
     <ClInclude Include="..\src\components\Follow.h" />
     <ClInclude Include="..\src\components\Generations.h" />
     <ClInclude Include="..\src\components\TowardDestination.h" />
+    <ClInclude Include="..\src\game\AsteroidsFacade.h" />
+    <ClInclude Include="..\src\game\AsteroidsUtils.h" />
+    <ClInclude Include="..\src\game\FighterFacade.h" />
+    <ClInclude Include="..\src\game\FighterUtils.h" />
+    <ClInclude Include="..\src\game\NewGameState.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\ecs\RAEDME.md" />

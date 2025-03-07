@@ -38,6 +38,7 @@
     <ClCompile Include="..\src\game\FighterFacade.cpp" />
     <ClCompile Include="..\src\game\FighterUtils.cpp" />
     <ClCompile Include="..\src\game\Game.cpp" />
+    <ClCompile Include="..\src\game\NewGameState.cpp" />
     <ClCompile Include="..\src\game\PausedState.cpp" />
     <ClCompile Include="..\src\game\RunningState.cpp" />
     <ClCompile Include="..\SRC\json\JSON.cpp" />
@@ -81,6 +82,7 @@
     <ClInclude Include="..\src\game\FighterUtils.h" />
     <ClInclude Include="..\src\game\Game.h" />
     <ClInclude Include="..\src\game\GameState.h" />
+    <ClInclude Include="..\src\game\NewGameState.h" />
     <ClInclude Include="..\src\game\PausedState.h" />
     <ClInclude Include="..\src\game\RunningState.h" />
     <ClInclude Include="..\SRC\json\JSON.h" />
