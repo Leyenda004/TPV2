@@ -25,8 +25,11 @@ void NewGameState::update()
 {
 	sdlutils().clearRenderer();
 
-	if (ih().keyDownEvent()) {
-		Game::Instance()->setState(Game::RUNNING); // TODO Change state
+	if (ih().keyDownEvent()) 
+	{
+		Game::Instance()->fighterUtils()->reset_lives();
+
+		Game::Instance()->setState(Game::NEWROUND);
 		return;
 	}
 

@@ -48,6 +48,9 @@ public:
 		_state->enter();
 	}
 
+	FighterUtils* fighterUtils() { return fu; }
+
+	AsteroidsUtils* asteroidsUtils() { return asteroidUtils; }
 
 private:
 
