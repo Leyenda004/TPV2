@@ -14,8 +14,11 @@
 #include "../utils/Collisions.h"
 
 // PRACTICA
+#include "NewGameState.h"
+#include "NewRoundState.h"
 #include "RunningState.h"
 #include "PausedState.h"
+#include "GameOverState.h"
 
 using ecs::Manager;
 
@@ -25,6 +28,13 @@ Game::Game() :
 }
 
 Game::~Game() {
+
+	if(_paused_state != nullptr)   delete _paused_state;
+	if(_running_state != nullptr)  delete _running_state;
+	if(_newgame_state != nullptr)  delete _newgame_state;
+	if(_newround_state != nullptr) delete _newround_state;
+	if(_gameover_state != nullptr) delete _gameover_state;
+
 	delete _mngr;
 
 	// release InputHandler if the instance was created correctly.
@@ -71,10 +81,11 @@ void Game::initGame()
 
 	_paused_state = new PausedSate();
 	_running_state = new RunningState();
-	_newgame_state;
-	_newround_state;
-	_gameover_state;
-	_state = _running_state;
+	_newgame_state = new NewGameState();
+	_newround_state = new NewRoundState();
+	_gameover_state = new GameOverState();
+
+	_state = _newgame_state;
 }
 
 void Game::start() {

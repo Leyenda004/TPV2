@@ -25,14 +25,14 @@ void RunningState::leave()
 
 void RunningState::update()
 {
-	// TODO
-	/*
+	int nAsteroids = Game::Instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS).size();
+
 	if(nAsteroids == 0)
 	{
-		Game::Instance()->setState(Game::GameOverState);
+		Game::Instance()->setState(Game::GAMEOVER);
 		return;
 	}
-	*/
+	
 	if(ih().isKeyDown(SDLK_p)) // Handle Pause
 	{
 		Game::Instance()->setState(Game::PAUSED);
