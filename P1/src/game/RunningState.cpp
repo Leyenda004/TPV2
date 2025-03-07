@@ -5,6 +5,7 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Collisions.h"
 #include "../sdlutils/InputHandler.h"
+#include "../components/Gun.h"
 #include <SDL.h>
 
 RunningState::RunningState()
@@ -54,30 +55,48 @@ void RunningState::checkCollisions() {
 	// Transform
 	auto tr = _mngr->getComponent<Transform>(fighter);
 
-	// the GameCtrl component
-	//auto ginfo = _mngr->getHandler(ecs::hdlr::GAMEINFO);
-	//auto gctrl = _mngr->getComponent<GameCtrl>(ginfo);
-
 	// For safety, we traverse with a normal loop until the current size.
 	std::vector<ecs::entity_t> asteroids = _mngr->getEntities(ecs::grp::ASTEROIDS);
+
 	int nAsteroids = asteroids.size();
+	
 	for (int i = 0; i < nAsteroids; ++i)
 	{
-		auto asEn = asteroids[i];
-		if (_mngr->isAlive(asEn)) {
-			auto asTr = _mngr->getComponent<Transform>(asEn);
+		auto asteroidEnt = asteroids[i];
 
-			if ( Collisions::collides( tr->getPos(), tr->getWidth(), tr->getHeight(), asTr->getPos(), asTr->getWidth(), asTr->getHeight() ) ) {
+		if (_mngr->isAlive(asteroidEnt)) 
+		{
+			auto astTr = _mngr->getComponent<Transform>(asteroidEnt);
 
-				_mngr->setAlive(asEn, false);
+			if ( Collisions::collides( tr->getPos(), tr->getWidth(), tr->getHeight(), astTr->getPos(), astTr->getWidth(), astTr->getHeight() ) ) {
+
+				_mngr->setAlive(asteroidEnt, false);
 
 				std::cout << "Asteroid hit player!" << std::endl;
-				//gctrl->onStarEaten();
-
-				// play sound on channel 1 (if there is something playing there
-				// it will be cancelled
-				//sdlutils().soundEffects().at("pacman_eat").play(0, 1);
+				
 			}
+
+			// Check collision with bullets
+			Gun* gun = _mngr->getComponent<Gun>(fighter);
+
+			Gun::iterator bulletIt = gun->begin();
+			bool btCollision = false;
+
+			while (bulletIt != gun->end() && !btCollision)
+			{
+				btCollision = Collisions::collides(
+					astTr->getPos(), astTr->getWidth(), astTr->getHeight(),
+					bulletIt->pos, bulletIt->width, bulletIt->height);
+
+				++bulletIt;
+			}
+
+			if (bulletIt != gun->end())
+			{
+				bulletIt->used = false;
+				Game::Instance()->asteroidsUtils()->split_astroid(asteroidEnt);
+			}
+				
 		}
 	}
 }

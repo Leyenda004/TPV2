@@ -82,10 +82,11 @@ void AsteroidsUtils::split_astroid(ecs::Entity* a)
 		int r = sdlutils().rand().nextInt(0, 360);
 		Vector2D pos = tr->getPos() + tr->getVel().rotate(r) * 2 * std::max(tr->getWidth(), tr->getHeight());
 		Vector2D vel = tr->getVel().rotate(r) * 1.1f;
+		int newGens = generations - 1;
 
 		auto newAsteroid = a->getMngr()->addEntity(ecs::grp::ASTEROIDS);
-		newAsteroid->getMngr()->addComponent<Generations>(newAsteroid, generations);
-		newAsteroid->getMngr()->addComponent<Transform>(newAsteroid, pos, vel, 10 * generations, 10 * generations, 0);
+		newAsteroid->getMngr()->addComponent<Generations>(newAsteroid, newGens);
+		newAsteroid->getMngr()->addComponent<Transform>(newAsteroid, pos, vel, 10 * newGens, 10 * newGens, 0);
 		newAsteroid->getMngr()->addComponent<ImageWithFrames>(newAsteroid, &sdlutils().images().at("asteroids"), 30, 5, 6);
 		newAsteroid->getMngr()->addComponent<ShowAtOppositeSide>(newAsteroid);
 	}
