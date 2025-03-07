@@ -35,6 +35,7 @@
     <ClCompile Include="..\src\game\FighterFacade.cpp" />
     <ClCompile Include="..\src\game\FighterUtils.cpp" />
     <ClCompile Include="..\src\game\NewGameState.cpp" />
+    <ClCompile Include="..\src\game\NewRoundState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\components\DeAcceleration.h" />
@@ -89,6 +90,7 @@
     <ClInclude Include="..\src\game\FighterFacade.h" />
     <ClInclude Include="..\src\game\FighterUtils.h" />
     <ClInclude Include="..\src\game\NewGameState.h" />
+    <ClInclude Include="..\src\game\NewRoundState.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\ecs\RAEDME.md" />
