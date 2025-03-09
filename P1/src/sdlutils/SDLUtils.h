@@ -85,7 +85,7 @@ public:
 	}
 
 	// clear the renderer with a given SDL_Color
-	inline void clearRenderer(SDL_Color bg = build_sdlcolor(0xAAAAAFF)) {
+	inline void clearRenderer(SDL_Color bg = build_sdlcolor(0x161240FF)/*cambiado bg !!*/) {
 		SDL_SetRenderDrawColor(_renderer, COLOREXP(bg));
 		SDL_RenderClear(_renderer);
 	}
