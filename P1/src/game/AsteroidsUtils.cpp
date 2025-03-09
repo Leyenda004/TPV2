@@ -26,6 +26,16 @@ void AsteroidsUtils::create_asteroids(int n)
 	float posY = sdlutils().rand().nextInt(0, sdlutils().height());
 	Vector2D randomAsteroidPos = Vector2D(posX, posY);
 
+	int borderPosConfig = sdlutils().rand().nextInt(0, 4);
+	
+	switch (borderPosConfig)
+	{
+		case 0: randomAsteroidPos.setX(10); break;
+		case 1: randomAsteroidPos.setY(10); break;
+		case 2: randomAsteroidPos.setX(sdlutils().width() - 10);  break;
+		case 3: randomAsteroidPos.setY(sdlutils().height() - 10); break;
+	}
+
 	float targetX = sdlutils().rand().nextInt(-100, 100) + sdlutils().width() / 2;
 	float targetY = sdlutils().rand().nextInt(-100, 100) + sdlutils().height() / 2;
 	Vector2D randomTargetPos = Vector2D(targetX, targetY);
