@@ -16,7 +16,7 @@ void GameOverState::enter()
 
 	std::string playerState = playerWon? "Champion" : "Loser";
 
-	_gameOverMessage = new Texture(sdlutils().renderer(), "Game Over " + playerState + "!Press ENTER to continue.",
+	_gameOverMessage = new Texture(sdlutils().renderer(), "Game Over " + playerState + "! Press ENTER to continue.",
 		sdlutils().fonts().at("ARIAL24"), SDL_Color{ 255, 255, 255, 255 }, SDL_Color{ 127, 127, 127, 230 });
 }
 
@@ -29,7 +29,7 @@ void GameOverState::update()
 {
 	sdlutils().clearRenderer();
 
-	if (ih().keyDownEvent())
+	if (ih().isKeyDown(SDLK_RETURN))
 	{
 		Game::Instance()->fighterUtils()->reset_fighter();
 		Game::Instance()->asteroidsUtils()->remove_all_asteroids();

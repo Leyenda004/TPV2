@@ -25,7 +25,7 @@ void NewRoundState::update()
 {
 	sdlutils().clearRenderer();
 
-	if (ih().keyDownEvent())// && ih().isKeyDown(SDLK_KP_ENTER))
+	if (ih().isKeyDown(SDLK_RETURN))
 	{
 		Game::Instance()->fighterUtils()->reset_fighter();
 		Game::Instance()->asteroidsUtils()->remove_all_asteroids();

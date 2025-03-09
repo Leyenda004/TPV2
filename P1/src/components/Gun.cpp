@@ -22,9 +22,14 @@ void Gun::update() {
 	for (auto& b : _bullets) {
 		if (b.used) {
 			b.pos = b.pos + b.vel;
+
+			// Check if the bullet is out of the screen
+			if (b.pos.getX() < 0 || b.pos.getX() > sdlutils().width() ||
+			b.pos.getY() < 0 || b.pos.getY() > sdlutils().height()) {
+				b.used = false;
+			}
 		}
 	}
-
 }
 
 void Gun::handleInput() {
@@ -41,7 +46,7 @@ void Gun::handleInput() {
 			float br = Vector2D(0, -1).angle(bv);
 
 			shoot(bp/*body_position*/, bv/*body_vel*/, bw/*body_width*/, bh/*body_height*/, br/*body_rotation*/);
-
+			sdlutils().soundEffects().at("fire").play(0, 1);
 			nextShoot = sdlutils().virtualTimer().currRealTime() + 250;
 
 			std::cout << "[";

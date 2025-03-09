@@ -25,7 +25,7 @@ void NewGameState::update()
 {
 	sdlutils().clearRenderer();
 
-	if (ih().keyDownEvent()) 
+	if (ih().keyDownEvent() && !ih().isKeyDown(SDLK_RETURN)) 
 	{
 		Game::Instance()->fighterUtils()->reset_lives();
 

@@ -74,12 +74,9 @@ void RunningState::checkCollisions() {
 				_mngr->setAlive(asteroidEnt, false);
 
 				std::cout << "Asteroid hit player!" << std::endl;
-				_mngr->getComponent<Health>(fighter)->lifeUpdate(-1);
-
-				if(_mngr->getComponent<Health>(fighter)->getLifeValue() > 0)
-					Game::Instance()->setState(Game::NEWROUND);
-				else
-					Game::Instance()->setState(Game::GAMEOVER);
+				Game::Instance()->fighterUtils()->update_lives(-1);
+				if (_mngr->getComponent<Health>(fighter)->getLifeValue() > 0) Game::Instance()->setState(Game::NEWROUND);
+				
 			}
 
 			// Check collision with bullets
