@@ -2,16 +2,8 @@
 
 #include "Game.h"
 
-#include "../components/GameCtrl.h"
-#include "../components/Image.h"
-#include "../components/PacManCtrl.h"
-#include "../components/StopOnBorders.h"
-#include "../components/Transform.h"
-#include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
-#include "../utils/Vector2D.h"
-#include "../utils/Collisions.h"
 
 // PRACTICA
 #include "NewGameState.h"
@@ -115,7 +107,7 @@ void Game::start() {
 			continue;
 		}
 
-		_state->update(); 
+		_state->update();
 
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 

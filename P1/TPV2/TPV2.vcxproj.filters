@@ -3,15 +3,11 @@
   <ItemGroup>
     <ClCompile Include="..\src\components\DeAcceleration.cpp" />
     <ClCompile Include="..\src\components\FighterCtrl.cpp" />
-    <ClCompile Include="..\src\components\GameCtrl.cpp" />
     <ClCompile Include="..\src\components\Gun.cpp" />
     <ClCompile Include="..\src\components\Health.cpp" />
     <ClCompile Include="..\src\components\Image.cpp" />
     <ClCompile Include="..\src\components\ImageWithFrames.cpp" />
-    <ClCompile Include="..\src\components\PacManCtrl.cpp" />
     <ClCompile Include="..\src\components\ShowAtOppositeSide.cpp" />
-    <ClCompile Include="..\src\components\StarMotion.cpp" />
-    <ClCompile Include="..\src\components\StopOnBorders.cpp" />
     <ClCompile Include="..\src\ecs\Manager.cpp" />
     <ClCompile Include="..\src\game\Game.cpp" />
     <ClCompile Include="..\src\game\PausedState.cpp" />
@@ -41,15 +37,11 @@
   <ItemGroup>
     <ClInclude Include="..\src\components\DeAcceleration.h" />
     <ClInclude Include="..\src\components\FighterCtrl.h" />
-    <ClInclude Include="..\src\components\GameCtrl.h" />
     <ClInclude Include="..\src\components\Gun.h" />
     <ClInclude Include="..\src\components\Health.h" />
     <ClInclude Include="..\src\components\Image.h" />
     <ClInclude Include="..\src\components\ImageWithFrames.h" />
-    <ClInclude Include="..\src\components\PacManCtrl.h" />
     <ClInclude Include="..\src\components\ShowAtOppositeSide.h" />
-    <ClInclude Include="..\src\components\StarMotion.h" />
-    <ClInclude Include="..\src\components\StopOnBorders.h" />
     <ClInclude Include="..\src\components\Transform.h" />
     <ClInclude Include="..\src\ecs\Component.h" />
     <ClInclude Include="..\src\ecs\ecs.h" />

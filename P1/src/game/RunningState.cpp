@@ -98,6 +98,7 @@ void RunningState::checkCollisions() {
 			{
 				bulletIt->used = false;
 				Game::Instance()->asteroidsUtils()->split_astroid(asteroidEnt);
+				sdlutils().soundEffects().at("asteroidexplode").play();
 			}
 				
 		}
