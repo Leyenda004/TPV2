@@ -6,6 +6,7 @@
 #include "../utils/Collisions.h"
 #include "../sdlutils/InputHandler.h"
 #include "../components/Gun.h"
+#include "../components/Health.h"
 #include <SDL.h>
 
 RunningState::RunningState()
@@ -28,7 +29,7 @@ void RunningState::update()
 {
 	int nAsteroids = Game::Instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS).size();
 
-	if(nAsteroids == 0)
+	if(nAsteroids == 0 || _mngr->getComponent<Health>(fighter)->getLifeValue() <= 0)
 	{
 		Game::Instance()->setState(Game::GAMEOVER);
 		return;
@@ -73,6 +74,7 @@ void RunningState::checkCollisions() {
 				_mngr->setAlive(asteroidEnt, false);
 
 				std::cout << "Asteroid hit player!" << std::endl;
+				_mngr->getComponent<Health>(fighter)->lifeUpdate(-1);
 				
 			}
 
