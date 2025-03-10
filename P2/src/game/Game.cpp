@@ -13,6 +13,10 @@
 #include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
 
+// PRACTICA
+
+#include "../systems/FoodSystem.h"
+
 using ecs::Manager;
 
 Game::Game() :
@@ -65,6 +69,10 @@ void Game::init() {
 	_gameCtrlSys = _mngr->addSystem<GameCtrlSystem>();
 	_renderSys = _mngr->addSystem<RenderSystem>();
 	_collisionSys = _mngr->addSystem<CollisionsSystem>();
+	
+	// PRACTICA
+
+	_foodSys = _mngr->addSystem<FoodSystem>();
 }
 
 void Game::start() {
@@ -89,6 +97,7 @@ void Game::start() {
 		_startsSys->update();
 		_gameCtrlSys->update();
 		_collisionSys->update();
+		_foodSys->update();
 
 		_mngr->refresh();
 

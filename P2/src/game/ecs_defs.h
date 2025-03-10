@@ -18,7 +18,8 @@ struct Points;
 // Groups list - must have at least one element
 //
 #define _GRPS_LIST_ \
-	STARS
+	STARS, \
+	FOOD
 
 // Handlers list - must have at least one element
 //
@@ -32,11 +33,13 @@ class RenderSystem;
 class PacManSystem;
 class GameCtrlSystem;
 class CollisionsSystem;
+class FoodSystem;
 
 #define _SYS_LIST_ \
     StarsSystem, \
 	RenderSystem, \
 	PacManSystem, \
 	GameCtrlSystem, \
-	CollisionsSystem
+	CollisionsSystem, \
+	FoodSystem
 

@@ -32,6 +32,7 @@
     <ClCompile Include="..\SRC\sdlutils\SoundEffect.cpp" />
     <ClCompile Include="..\SRC\sdlutils\Texture.cpp" />
     <ClCompile Include="..\src\systems\CollisionsSystem.cpp" />
+    <ClCompile Include="..\src\systems\FoodSystem.cpp" />
     <ClCompile Include="..\src\systems\GameCtrlSystem.cpp" />
     <ClCompile Include="..\src\systems\PacManSystem.cpp" />
     <ClCompile Include="..\src\systems\RenderSystem.cpp" />
@@ -71,6 +72,7 @@
     <ClInclude Include="..\SRC\sdlutils\Texture.h" />
     <ClInclude Include="..\SRC\sdlutils\VirtualTimer.h" />
     <ClInclude Include="..\src\systems\CollisionsSystem.h" />
+    <ClInclude Include="..\src\systems\FoodSystem.h" />
     <ClInclude Include="..\src\systems\GameCtrlSystem.h" />
     <ClInclude Include="..\src\systems\PacManSystem.h" />
     <ClInclude Include="..\src\systems\RenderSystem.h" />
