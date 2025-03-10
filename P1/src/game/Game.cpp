@@ -2,10 +2,7 @@
 
 #include "Game.h"
 
-#include "../components/GameCtrl.h"
 #include "../components/Image.h"
-#include "../components/PacManCtrl.h"
-#include "../components/StopOnBorders.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
