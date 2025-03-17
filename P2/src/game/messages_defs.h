@@ -34,5 +34,8 @@ struct Message {
 			unsigned int n;
 		} create_stars_data;
 
+		struct {
+			bool playerWon;
+		} game_over_data;
 	};
 };
