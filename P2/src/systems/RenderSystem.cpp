@@ -22,13 +22,23 @@ void RenderSystem::initSystem() {
 
 void RenderSystem::update() {
 	drawMsgs();
-	drawStars();
+	//drawStars();
+	drawFood(); // !!
 	drawPacMan();
 }
 
 void RenderSystem::drawStars() {
 	// draw stars
 	for (auto e : _mngr->getEntities(ecs::grp::STARS)) {
+
+		auto tr = _mngr->getComponent<Transform>(e);
+		auto tex = _mngr->getComponent<Image>(e)->_tex;
+		draw(tr, tex);
+	}
+}
+
+void RenderSystem::drawFood() {
+	for (auto e : _mngr->getEntities(ecs::grp::FOOD)) {
 
 		auto tr = _mngr->getComponent<Transform>(e);
 		auto tex = _mngr->getComponent<Image>(e)->_tex;
