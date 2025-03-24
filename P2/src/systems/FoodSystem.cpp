@@ -17,16 +17,31 @@ void FoodSystem::initSystem()
 }
 
 void FoodSystem::update() {
-	auto currTime = sdlutils().currRealTime();
+	auto currTime = sdlutils().virtualTimer().currTime();
 	auto foods = _mngr->getEntities(ecs::grp::FOOD);
-	auto n = foods.size();
+	//auto n = foods.size();
+
+	for (auto e : foods) {
+		auto milagrosa = _mngr->getComponent<Milagrosa>(e);
+		if (milagrosa->milagrosa){
+			std::cout << "N: " << milagrosa->N << " M: " << milagrosa->M << std::endl;
+			if (currTime > milagrosa->N && currTime < milagrosa->M){
+				_mngr->getComponent<ImageWithFrames>(e)->setFrame(15);
+			}
+			else if (currTime > milagrosa->M) {
+				_mngr->getComponent<ImageWithFrames>(e)->setFrame(12);
+			}
+		}
+	}
+	
 }
 
 void FoodSystem::spawnFood() {
 
 	int spaceBetweenX = sdlutils().width() / 8; //px
 	int spaceBetweenY = sdlutils().height() / 6; //px
-	int s = 25; //px
+	// !! modificar para tamaño 25
+	int s = 50; //px
 
 	for (int i = 0; i < 8; i++) {
 		auto x = (s / 2) + spaceBetweenX * i;
@@ -46,7 +61,8 @@ void FoodSystem::spawnFood() {
 			
 			// IMAGE_WITH_FRAMES
 			auto foodImage = _mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 48, 8, 8);
-			foodImage->setFrame(milagrosa->milagrosa == false ? 12 : 15);
+			//foodImage->setFrame(milagrosa->milagrosa == false ? 12 : 15);
+			foodImage->setFrame(12);
 		}
 	}
 }
