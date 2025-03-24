@@ -11,10 +11,8 @@
 class Game : public Singleton<Game>
 {
 public:
-
-	Game();
-	virtual ~Game();
-	void init();
+	
+	bool init();
 	void start();
 
 	ecs::Manager* getMngr() { return _mngr; }
@@ -48,6 +46,11 @@ public:
 	}
 
 private:
+
+	friend Singleton<Game>;
+	
+	Game();
+	virtual ~Game();
 
 	ecs::Manager *_mngr;
 

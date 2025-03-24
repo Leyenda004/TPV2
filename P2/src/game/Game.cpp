@@ -14,6 +14,7 @@
 #include "../utils/Collisions.h"
 
 // PRACTICA
+#include "../game/RunningState.h"
 
 #include "../systems/FoodSystem.h"
 
@@ -41,7 +42,7 @@ Game::~Game() {
 		SDLUtils::Release();
 }
 
-void Game::init() {
+bool Game::init() {
 
 	// initialize the SDL singleton
 	if (!SDLUtils::Init("PacMan, Stars, ...", 800, 600,
@@ -49,14 +50,14 @@ void Game::init() {
 
 		std::cerr << "Something went wrong while initializing SDLUtils"
 				<< std::endl;
-		return;
+		return false;
 	}
 
 	// initialize the InputHandler singleton
 	if (!InputHandler::Init()) {
 		std::cerr << "Something went wrong while initializing SDLHandler"
 				<< std::endl;
-		return;
+		return false;
 
 	}
 
@@ -64,15 +65,22 @@ void Game::init() {
 	_mngr = new Manager();
 
 	// add the systems
-	_pacmanSys = _mngr->addSystem<PacManSystem>();
-	_startsSys = _mngr->addSystem<StarsSystem>();
-	_gameCtrlSys = _mngr->addSystem<GameCtrlSystem>();
-	_renderSys = _mngr->addSystem<RenderSystem>();
-	_collisionSys = _mngr->addSystem<CollisionsSystem>();
+	_mngr->addSystem<PacManSystem>();
+	_mngr->addSystem<StarsSystem>();
+	_mngr->addSystem<GameCtrlSystem>();
+	_mngr->addSystem<RenderSystem>();
+	_mngr->addSystem<CollisionsSystem>();
 	
 	// PRACTICA
 
-	_foodSys = _mngr->addSystem<FoodSystem>();
+	_mngr->addSystem<FoodSystem>();
+
+	// Game States
+	_running_state = new RunningState();
+
+	_state = _running_state;
+
+	return true;
 }
 
 void Game::start() {
@@ -93,17 +101,7 @@ void Game::start() {
 			continue;
 		}
 
-		_pacmanSys->update();
-		_startsSys->update();
-		_gameCtrlSys->update();
-		_collisionSys->update();
-		_foodSys->update();
-
-		_mngr->refresh();
-
-		sdlutils().clearRenderer();
-		_renderSys->update();
-		sdlutils().presentRenderer();
+		_state->update();
 
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 

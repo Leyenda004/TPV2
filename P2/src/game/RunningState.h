@@ -19,8 +19,12 @@ public:
 
 protected:
 
-	void checkCollisions();
+	ecs::System* _pacmanSys;
+	ecs::System* _gameCtrlSys;
+	ecs::System* _startsSys;
+	ecs::System* _renderSys;
+	ecs::System* _collisionSys;
+	ecs::System* _foodSys;
 
-	ecs::entity_t fighter;
 	ecs::Manager* _mngr;
 };

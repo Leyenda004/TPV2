@@ -5,11 +5,26 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Collisions.h"
 #include "../sdlutils/InputHandler.h"
+
+#include "../systems/CollisionsSystem.h"
+#include "../systems/GameCtrlSystem.h"
+#include "../systems/PacManSystem.h"
+#include "../systems/RenderSystem.h"
+#include "../systems/StarsSystem.h"
+#include "../systems/FoodSystem.h"
+
 #include <SDL.h>
 
 RunningState::RunningState()
 {
 	_mngr = Game::Instance()->getMngr();
+
+	_pacmanSys = _mngr->getSystem<PacManSystem>();
+	_startsSys = _mngr->getSystem<StarsSystem>();
+	_gameCtrlSys = _mngr->getSystem<GameCtrlSystem>();
+	_renderSys = _mngr->getSystem<RenderSystem>();
+	_collisionSys = _mngr->getSystem<CollisionsSystem>();
+	_foodSys = _mngr->getSystem<FoodSystem>();
 }
 
 void RunningState::enter()
@@ -24,10 +39,15 @@ void RunningState::leave()
 
 void RunningState::update()
 {
-	
-}
+	_pacmanSys->update();
+	_startsSys->update();
+	_gameCtrlSys->update();
+	_collisionSys->update();
+	_foodSys->update();
 
-void RunningState::checkCollisions() {
+	_mngr->refresh();
 
-
+	sdlutils().clearRenderer();
+	_renderSys->update();
+	sdlutils().presentRenderer();
 }
