@@ -8,10 +8,14 @@ struct Transform;
 struct Image;
 struct StarMotion;
 struct Points;
+struct ImageWithFrames;
+struct Milagrosa;
 
 #define _CMPS_LIST_ \
 	Transform, \
 	Image, \
+	ImageWithFrames, \
+	Milagrosa, \
 	StarMotion, \
 	Points
 

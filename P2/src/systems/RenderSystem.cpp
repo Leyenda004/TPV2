@@ -3,6 +3,7 @@
 #include "RenderSystem.h"
 
 #include "../components/Image.h"
+#include "../components/ImageWithFrames.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/macros.h"
@@ -41,8 +42,19 @@ void RenderSystem::drawFood() {
 	for (auto e : _mngr->getEntities(ecs::grp::FOOD)) {
 
 		auto tr = _mngr->getComponent<Transform>(e);
-		auto tex = _mngr->getComponent<Image>(e)->_tex;
-		draw(tr, tex);
+		//auto tex = _mngr->getComponent<Image>(e)->_tex;
+		auto iWFs = _mngr->getComponent<ImageWithFrames>(e);
+		auto tex = iWFs->_tex;
+
+		SDL_Rect dest = build_sdlrect(tr->_pos, tr->_width, tr->_height);
+		
+		int frameW = iWFs->_tex->width() / iWFs->_cols;
+		int frameH = iWFs->_tex->height() / iWFs->_rows;
+		
+		SDL_Rect src = { (int)(iWFs->getFrame() % iWFs->_cols) * frameH, (int)(iWFs->getFrame() / iWFs->_rows) * frameW, frameH, frameW};
+		//SDL_Rect src = { 4, 1, frameW, frameH};
+		tex->render(src, dest);
+		//if (tex != nullptr) draw(tr, tex);
 	}
 }
 

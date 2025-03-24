@@ -13,6 +13,9 @@ struct ImageWithFrames : public ecs::Component {
 
 	//void initComponent();
 
+	int getFrame() { return _frame; }
+	void setFrame(int frame) { _frame = frame; }
+
 	Transform* _tr;
 	Texture* _tex;
 
@@ -22,5 +25,4 @@ struct ImageWithFrames : public ecs::Component {
 	int _rows;
 	int _cols;
 };
-
 
