@@ -4,6 +4,7 @@
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Collisions.h"
+#include "../components/Transform.h"
 #include "../sdlutils/InputHandler.h"
 
 #include "../systems/CollisionsSystem.h"
@@ -50,7 +51,28 @@ void RunningState::update()
 
 	_mngr->refresh();
 
+	checkCollisions();
+
 	sdlutils().clearRenderer();
 	_renderSys->update();
 	sdlutils().presentRenderer();
+}
+
+void RunningState::checkCollisions()
+{
+	auto pacman = _mngr->getHandler(ecs::hdlr::PACMAN);
+	auto pacmanTr = _mngr->getComponent<Transform>(pacman);
+
+	auto foods = _mngr->getEntities(ecs::grp::FOOD);
+	for (int i = 0; i < foods.size(); i++) {
+		auto food = foods[i];
+		auto foodTr = _mngr->getComponent<Transform>(food);
+
+		if (Collisions::collides(
+			pacmanTr->_pos, pacmanTr->_width, pacmanTr->_height,
+			foodTr->_pos, foodTr->_width, foodTr->_height)) 
+			{
+				_mngr->setAlive(food, false);
+			}
+	}
 }

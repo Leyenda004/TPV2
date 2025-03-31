@@ -19,6 +19,8 @@ public:
 
 protected:
 
+	void checkCollisions();
+
 	ecs::System* _pacmanSys;
 	ecs::System* _gameCtrlSys;
 	ecs::System* _startsSys;

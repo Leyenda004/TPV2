@@ -17,6 +17,7 @@ struct Milagrosa: public ecs::Component {
 	virtual ~Milagrosa() {}
 
 	bool milagrosa = false;
+	bool fruitChanged = false;
 	float N = 0.0f;
 	float M = 0.0f;
 };
