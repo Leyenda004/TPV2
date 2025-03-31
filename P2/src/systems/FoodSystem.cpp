@@ -24,8 +24,8 @@ void FoodSystem::update() {
 	for (auto e : foods) {
 		auto milagrosa = _mngr->getComponent<Milagrosa>(e);
 		if (milagrosa->milagrosa){
-			std::cout << "N: " << milagrosa->N << " M: " << milagrosa->M << std::endl;
 			if (currTime > milagrosa->N && currTime < milagrosa->M){
+				std::cout << "N: " << milagrosa->N << " M: " << milagrosa->M << std::endl;
 				_mngr->getComponent<ImageWithFrames>(e)->setFrame(15);
 			}
 			else if (currTime > milagrosa->M) {
@@ -38,13 +38,13 @@ void FoodSystem::update() {
 
 void FoodSystem::spawnFood() {
 
-	int spaceBetweenX = sdlutils().width() / 8; //px
-	int spaceBetweenY = sdlutils().height() / 6; //px
+	float spaceBetweenX = sdlutils().width() / 8+2; //px
+	float spaceBetweenY = sdlutils().height() / 6+2; //px
 	// !! modificar para tamaño 25
-	int s = 50; //px
+	float s = 25; //px
 
 	for (int i = 0; i < 8; i++) {
-		auto x = (s / 2) + spaceBetweenX * i;
+		float x = s + spaceBetweenX * i;
 		for (int j = 0; j < 6; j++) {
 			
 			// ENTIDAD
@@ -52,7 +52,7 @@ void FoodSystem::spawnFood() {
 			
 			// TRANSFORM
 			auto tr = _mngr->addComponent<Transform>(e);
-			auto y = (s / 2) + spaceBetweenY * j;
+			float y = s + spaceBetweenY * j;
 			tr->init(Vector2D(x, y), Vector2D(0, 0), s, s, 0.0f);
 
 			// MILAGROSA
