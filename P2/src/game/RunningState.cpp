@@ -4,7 +4,6 @@
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Collisions.h"
-#include "../components/Transform.h"
 #include "../sdlutils/InputHandler.h"
 
 #include "../systems/CollisionsSystem.h"
@@ -14,6 +13,9 @@
 #include "../systems/StarsSystem.h"
 #include "../systems/FoodSystem.h"
 #include "../systems/GhostSystem.h"
+
+#include "../components/Transform.h"
+#include "../components/Milagrosa.h"
 
 #include <SDL.h>
 
@@ -73,6 +75,10 @@ void RunningState::checkCollisions()
 			foodTr->_pos, foodTr->_width, foodTr->_height)) 
 			{
 				_mngr->setAlive(food, false);
+
+				if (_mngr->getComponent<Milagrosa>(food)->fruitChanged) {
+					// mandar mensaje !!
+				}
 			}
 	}
 }

@@ -24,7 +24,7 @@ void RenderSystem::initSystem() {
 void RenderSystem::update() {
 	drawMsgs();
 	//drawStars();
-	drawFood(); // !!
+	drawFood();
 	drawPacMan();
 }
 

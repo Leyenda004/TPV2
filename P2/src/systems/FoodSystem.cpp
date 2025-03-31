@@ -40,7 +40,6 @@ void FoodSystem::spawnFood() {
 
 	float spaceBetweenX = sdlutils().width() / 8+2; //px
 	float spaceBetweenY = sdlutils().height() / 6+2; //px
-	// !! modificar para tamaño 25
 	float s = 25; //px
 
 	for (int i = 0; i < 8; i++) {
