@@ -6,11 +6,11 @@
 
 struct Milagrosa: public ecs::Component {
 
-	Milagrosa(bool _milagrosa = false) : milagrosa(_milagrosa)
+	Milagrosa(bool _milagrosa) : milagrosa(_milagrosa)
 	{
 		if (milagrosa){
-			N = 10 + (rand() % 1000) / 100; // 10 + n entre 0 y 1000 (ms) / 10 (s)
-			M = N + 1 + rand() % 5;
+			N = 10 + (rand() % 1000) / 100; // 10 (iniciales) + n entre 0 y 1000 (ms) / 10 (s)
+			M = N + (2 + rand() % 3); // N + 2 (al menos 2s en pantalla) + ran(0,1,2)s para llegar a 5
 		}
 	}
 
