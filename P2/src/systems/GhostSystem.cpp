@@ -10,7 +10,8 @@ void GhostSystem::initSystem()
 
 void GhostSystem::update()
 {
-	if (sdlutils().virtualTimer().currTime() - initTime % 5000 != 0) return;
+	std::cout << "Timer: " << sdlutils().virtualTimer().currTime() / 5000 << "\n";
+	if (sdlutils().virtualTimer().currTime() / 5000 < 5) return;
 	std::cout << 333 << "\n";
 }
 
