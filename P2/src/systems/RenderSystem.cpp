@@ -26,6 +26,7 @@ void RenderSystem::update() {
 	//drawStars();
 	drawFood();
 	drawPacMan();
+	drawGhosts();
 }
 
 void RenderSystem::drawStars() {
@@ -93,4 +94,23 @@ void RenderSystem::draw(Transform *tr, Texture *tex) {
 
 	assert(tex != nullptr);
 	tex->render(dest, tr->_rot);
+}
+
+void RenderSystem::drawGhosts()
+{
+	for (auto e : _mngr->getEntities(ecs::grp::GHOSTS)) 
+	{
+		auto tr = _mngr->getComponent<Transform>(e);
+		auto iWFs = _mngr->getComponent<ImageWithFrames>(e);
+		auto tex = iWFs->_tex;
+
+		SDL_Rect dest = build_sdlrect(tr->_pos, tr->_width, tr->_height);
+
+		int frameW = iWFs->_tex->width() / iWFs->_cols;
+		int frameH = iWFs->_tex->height() / iWFs->_rows;
+
+		SDL_Rect src = { (int)(iWFs->getFrame() % iWFs->_cols) * frameH, (int)(iWFs->getFrame() / iWFs->_rows) * frameW, frameH, frameW };
+
+		tex->render(src, dest);
+	}
 }

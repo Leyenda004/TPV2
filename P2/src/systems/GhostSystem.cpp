@@ -13,16 +13,24 @@ void GhostSystem::initSystem()
 
 void GhostSystem::update()
 {
-	if ((sdlutils().virtualTimer().currTime() / 1000) % 5 == 0 // Cada 5 segs
+	//if ((sdlutils().virtualTimer().currTime() / 1000) % 5 == 0 // Cada 5 segs
+	if(sdlutils().virtualTimer().currTime() - lastInstanceTime > generationWaitTime
 		&& _mngr->getEntities(ecs::grp::GHOSTS).size() < maxGhosts)
 	{
+		lastInstanceTime = sdlutils().virtualTimer().currTime();
 		createGhost();
+	}
+
+	for (auto ghost : _mngr->getEntities(ecs::grp::GHOSTS))
+	{
+		Transform* gstTr = _mngr->getComponent<Transform>(ghost);
+		gstTr->_pos = gstTr->_pos + gstTr->_vel;
 	}
 }
 
 void GhostSystem::startGeneration()
 {
-	initTime = sdlutils().virtualTimer().currTime();
+	lastInstanceTime = sdlutils().virtualTimer().currTime();
 }
 
 void GhostSystem::createGhost()
@@ -30,7 +38,7 @@ void GhostSystem::createGhost()
 	ecs::entity_t newGhost = _mngr->addEntity(ecs::grp::GHOSTS);
 
 	Vector2D position, velocity;
-	float size = 50.0f;
+	float size = 40.0f;
 
 	int cornerOp = sdlutils().rand().nextInt(0, 4);
 
@@ -42,7 +50,7 @@ void GhostSystem::createGhost()
 		default: position = Vector2D(sdlutils().width() - size, sdlutils().height() - size); break;
 	}
 	
-	if (position.getX() == 0) 
+	if (position.getY() == 0) 
 		velocity = Vector2D(0, 1);
 	else 
 		velocity = Vector2D(0, -1);

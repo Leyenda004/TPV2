@@ -18,6 +18,7 @@ private:
 	void drawPacMan();
 	void drawFood();
 	void drawMsgs();
+	void drawGhosts();
 	void draw(Transform *tr, Texture *tex);
 };
 

@@ -22,7 +22,7 @@ protected:
 	
 private:
 
-	Uint32 initTime;
-	int generationWaitTime = 5;
+	Uint32 lastInstanceTime;
+	int generationWaitTime = 5000;
 	int maxGhosts = 10;
 };
