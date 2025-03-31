@@ -22,6 +22,9 @@ protected:
 	
 private:
 
+	Transform* pmTr;
+	float ghostSize;
+
 	Uint32 lastInstanceTime;
 	int generationWaitTime = 5000;
 	int maxGhosts = 10;
