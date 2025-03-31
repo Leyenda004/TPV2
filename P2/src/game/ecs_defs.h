@@ -23,7 +23,8 @@ struct Milagrosa;
 //
 #define _GRPS_LIST_ \
 	STARS, \
-	FOOD
+	FOOD, \
+	GHOSTS
 
 // Handlers list - must have at least one element
 //

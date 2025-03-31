@@ -1,5 +1,6 @@
 #pragma once
 #include "../ecs/System.h"
+#include "../utils/Vector2D.h"
 
 #include <SDL.h>
 
@@ -14,12 +15,14 @@ public:
 	void update() override;
 
 	void startGeneration();
-	Vector2D getRandomCornerPosition();
+
+protected:
+
+	void createGhost();
 	
 private:
 
 	Uint32 initTime;
 	int generationWaitTime = 5;
-	int ghostsNum = 0;
 	int maxGhosts = 10;
 };
