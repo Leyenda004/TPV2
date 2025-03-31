@@ -17,21 +17,23 @@ void FoodSystem::initSystem()
 }
 
 void FoodSystem::update() {
-	auto currTime = sdlutils().virtualTimer().currTime();
+	auto currTime = sdlutils().virtualTimer().currTime() / 1000;
 	auto foods = _mngr->getEntities(ecs::grp::FOOD);
 	//auto n = foods.size();
 
+	int i = 0;
 	for (auto e : foods) {
 		auto milagrosa = _mngr->getComponent<Milagrosa>(e);
 		if (milagrosa->milagrosa){
 			if (currTime > milagrosa->N && currTime < milagrosa->M){
-				std::cout << "N: " << milagrosa->N << " M: " << milagrosa->M << std::endl;
+				std::cout << i << " -- N: " << milagrosa->N << " M: " << milagrosa->M << std::endl;
 				_mngr->getComponent<ImageWithFrames>(e)->setFrame(15);
 			}
 			else if (currTime > milagrosa->M) {
 				_mngr->getComponent<ImageWithFrames>(e)->setFrame(12);
 			}
 		}
+		i++;
 	}
 	
 }

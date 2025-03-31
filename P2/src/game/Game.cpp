@@ -91,7 +91,8 @@ void Game::start() {
 	auto &ihdlr = ih();
 
 	while (!exit) {
-		Uint32 startTime = sdlutils().currRealTime();
+		// Uint32 startTime = sdlutils().virtualTimer().currTime();
+		Uint32 startTime = sdlutils().virtualTimer().regCurrTime();
 
 		// refresh the input handler
 		ihdlr.refresh();
