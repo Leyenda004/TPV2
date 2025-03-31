@@ -2,7 +2,6 @@
 
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
-#include "../utils/Vector2D.h"
 
 void GhostSystem::initSystem()
 {
