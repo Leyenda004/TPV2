@@ -14,10 +14,12 @@ public:
 	void update() override;
 
 	void startGeneration();
+	Vector2D getRandomCornerPosition();
 	
 private:
 
 	Uint32 initTime;
-	int generationWaitTime;
+	int generationWaitTime = 5;
 	int ghostsNum = 0;
+	int maxGhosts = 10;
 };
