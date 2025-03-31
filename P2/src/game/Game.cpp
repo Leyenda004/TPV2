@@ -17,6 +17,7 @@
 #include "../game/RunningState.h"
 
 #include "../systems/FoodSystem.h"
+#include "../systems/GhostSystem.h"
 
 using ecs::Manager;
 
@@ -26,7 +27,9 @@ Game::Game() :
 		_gameCtrlSys(), //
 		_startsSys(), //
 		_renderSys(), //
-		_collisionSys() {
+		_collisionSys()//,
+//		_ghostSys()
+{
 
 }
 
@@ -74,6 +77,7 @@ bool Game::init() {
 	// PRACTICA
 
 	_mngr->addSystem<FoodSystem>();
+	_mngr->addSystem<GhostSystem>();
 
 	// Game States
 	_running_state = new RunningState();

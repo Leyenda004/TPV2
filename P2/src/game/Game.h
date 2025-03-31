@@ -60,6 +60,7 @@ private:
 	ecs::System *_renderSys;
 	ecs::System *_collisionSys;
 	ecs::System *_foodSys;
+	ecs::System *_ghostSys;
 
 	GameState* _state;
 	GameState* _paused_state;
