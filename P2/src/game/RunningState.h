@@ -25,6 +25,7 @@ protected:
 	ecs::System* _renderSys;
 	ecs::System* _collisionSys;
 	ecs::System* _foodSys;
+	ecs::System* _ghostSys;
 
 	ecs::Manager* _mngr;
 };

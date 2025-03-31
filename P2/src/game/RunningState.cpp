@@ -12,6 +12,7 @@
 #include "../systems/RenderSystem.h"
 #include "../systems/StarsSystem.h"
 #include "../systems/FoodSystem.h"
+#include "../systems/GhostSystem.h"
 
 #include <SDL.h>
 
@@ -25,6 +26,7 @@ RunningState::RunningState()
 	_renderSys = _mngr->getSystem<RenderSystem>();
 	_collisionSys = _mngr->getSystem<CollisionsSystem>();
 	_foodSys = _mngr->getSystem<FoodSystem>();
+	_ghostSys = _mngr->getSystem<GhostSystem>();
 }
 
 void RunningState::enter()
@@ -44,6 +46,7 @@ void RunningState::update()
 	_gameCtrlSys->update();
 	_collisionSys->update();
 	_foodSys->update();
+	_ghostSys->update();
 
 	_mngr->refresh();
 
