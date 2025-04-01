@@ -3,9 +3,9 @@
 #include "CollisionsSystem.h"
 
 #include "../components/Transform.h"
+#include "../components/Milagrosa.h"
 #include "../ecs/Manager.h"
 #include "../utils/Collisions.h"
-#include "StarsSystem.h"
 
 CollisionsSystem::CollisionsSystem() {
 	// TODO Auto-generated constructor stub
@@ -21,6 +21,11 @@ void CollisionsSystem::initSystem() {
 
 void CollisionsSystem::update() {
 
+	checkCollisionInFruits();
+}
+
+void CollisionsSystem::checkCollisionInFruits()
+{
 	// the PacMan's Transform
 	//
 	auto pm = _mngr->getHandler(ecs::hdlr::PACMAN);
@@ -30,29 +35,29 @@ void CollisionsSystem::update() {
 	// particular case we could use a for-each loop since the list stars is not
 	// modified.
 	//
-	auto &stars = _mngr->getEntities(ecs::grp::STARS);
-	auto n = stars.size();
-	for (auto i = 0u; i < n; i++) {
-		auto e = stars[i];
-		if (_mngr->isAlive(e)) { // if the star is active (it might have died in this frame)
+	auto& food = _mngr->getEntities(ecs::grp::FOOD);
+	auto n = food.size();
 
-			// the Star's Transform
+	for (auto i = 0u; i < n; i++)
+	{
+		auto e = food[i];
+		if (_mngr->isAlive(e)) { // if the fruit is active (it might have died in this frame)
+
+			// the Fruit's Transform
 			//
 			auto eTR = _mngr->getComponent<Transform>(e);
 
-			// check if PacMan collides with the Star (i.e., eat it)
+			// check if PacMan collides with the Fruit(i.e., eat it)
 			if (Collisions::collides(			//
-					pTR->_pos, pTR->_width, pTR->_height, //
-					eTR->_pos, eTR->_width, eTR->_height)) {
+				pTR->_pos, pTR->_width, pTR->_height, //
+				eTR->_pos, eTR->_width, eTR->_height)) {
 
 				Message m;
-				m.id = _m_STAR_EATEN;
-				m.star_eaten_data.e = e;
+				m.id = _m_PACMAN_FOOD_COLLISION;
+				m.food_eaten_data.e = e;
+				m.food_eaten_data.miraculous = _mngr->getComponent<Milagrosa>(e)->milagrosa;
 				_mngr->send(m);
-
 			}
 		}
 	}
-
 }
-

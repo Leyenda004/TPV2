@@ -11,5 +11,6 @@ public:
 	void initSystem() override;
 	void update() override;
 
+	void checkCollisionInFruits();
 };
 

@@ -10,6 +10,10 @@ public:
 	void initSystem() override;
 	void update() override;
 
+	void recieve(const Message&) override;
+
+	void onFoodEaten(ecs::entity_t e);
+
 private:
 	void spawnFood();
 };

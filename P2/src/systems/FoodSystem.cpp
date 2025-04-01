@@ -65,3 +65,26 @@ void FoodSystem::spawnFood() {
 		}
 	}
 }
+
+void FoodSystem::onFoodEaten(ecs::entity_t e)
+{
+	_mngr->setAlive(e, false);
+
+	/*if (alive fruits <= 0)
+	{
+		Message m;
+		m.game_over_data.playerWon = true;
+		_mngr->send(m);
+	}*/
+}
+
+void FoodSystem::recieve(const Message& m)
+{
+	switch (m.id) {
+	case _m_PACMAN_FOOD_COLLISION:
+		onFoodEaten(m.star_eaten_data.e);
+		break;
+	default:
+		break;
+	}
+}

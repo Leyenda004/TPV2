@@ -37,5 +37,11 @@ struct Message {
 		struct {
 			bool playerWon;
 		} game_over_data;
+
+		// _m_FOOD_EATEN
+		struct {
+			ecs::entity_t e;
+			bool miraculous;
+		} food_eaten_data;
 	};
 };
