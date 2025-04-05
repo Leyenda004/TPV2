@@ -1,5 +1,7 @@
 #include "GhostSystem.h"
 
+#include "ImmunitySystem.h"
+
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../game/Game.h"
@@ -14,7 +16,8 @@ void GhostSystem::initSystem()
 
 void GhostSystem::update()
 {
-	if(sdlutils().virtualTimer().currTime() - lastInstanceTime > generationWaitTime
+	if(!_mngr->getSystem<ImmunitySystem>()->pacmanIsImmune() &&
+		sdlutils().virtualTimer().currTime() - lastInstanceTime > generationWaitTime
 		&& _mngr->getEntities(ecs::grp::GHOSTS).size() < maxGhosts)
 	{
 		lastInstanceTime = sdlutils().virtualTimer().currTime();
@@ -39,7 +42,22 @@ void GhostSystem::update()
 		if (gstTr->_pos.getY() <= 0 || gstTr->_pos.getY() >= sdlutils().height() - ghostSize)
 		{
 			gstTr->_vel.setY(gstTr->_vel.getY() * -1);
-		}		
+		}
+
+		if (sdlutils().virtualTimer().currTime() % 1000 == 0)
+		{
+			ImageWithFrames* gstFrames = _mngr->getComponent<ImageWithFrames>(ghost);
+
+			if (_mngr->getSystem<ImmunitySystem>()->pacmanIsImmune())
+			{
+				 gstFrames->_frame = 48;
+			}
+			else
+			{
+				 gstFrames->_frame = 32;
+			}
+		}
+		
 	}
 }
 
