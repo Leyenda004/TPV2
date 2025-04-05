@@ -15,6 +15,8 @@ public:
 	void onFoodEaten(ecs::entity_t e);
 
 private:
+
 	void spawnFood();
+	int _aliveFruits;
 };
 

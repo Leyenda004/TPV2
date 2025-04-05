@@ -36,7 +36,9 @@ void FoodSystem::update() {
 	
 }
 
-void FoodSystem::spawnFood() {
+void FoodSystem::spawnFood() 
+{
+	_aliveFruits = 0;
 
 	float spaceBetweenX = sdlutils().width() / 8+2; //px
 	float spaceBetweenY = sdlutils().height() / 6+2; //px
@@ -62,6 +64,8 @@ void FoodSystem::spawnFood() {
 			auto foodImage = _mngr->addComponent<ImageWithFrames>(e, &sdlutils().images().at("sprites"), 48, 8, 8);
 			//foodImage->setFrame(milagrosa->milagrosa == false ? 12 : 15);
 			foodImage->setFrame(12);
+
+			++_aliveFruits;
 		}
 	}
 }
@@ -69,13 +73,15 @@ void FoodSystem::spawnFood() {
 void FoodSystem::onFoodEaten(ecs::entity_t e)
 {
 	_mngr->setAlive(e, false);
+	--_aliveFruits;
 
-	/*if (alive fruits <= 0)
+	if (_aliveFruits <= 0)
 	{
 		Message m;
+		m.id = _m_GAME_OVER;
 		m.game_over_data.playerWon = true;
 		_mngr->send(m);
-	}*/
+	}
 }
 
 void FoodSystem::recieve(const Message& m)
