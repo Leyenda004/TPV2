@@ -22,6 +22,7 @@ void CollisionsSystem::initSystem() {
 void CollisionsSystem::update() {
 
 	checkCollisionInFruits();
+	checkCollisionGhostPacman();
 }
 
 void CollisionsSystem::checkCollisionInFruits()
@@ -56,6 +57,43 @@ void CollisionsSystem::checkCollisionInFruits()
 				m.id = _m_PACMAN_FOOD_COLLISION;
 				m.food_eaten_data.e = e;
 				m.food_eaten_data.miraculous = _mngr->getComponent<Milagrosa>(e)->milagrosa;
+				_mngr->send(m);
+			}
+		}
+	}
+}
+
+void CollisionsSystem::checkCollisionGhostPacman()
+{
+	// the PacMan's Transform
+	//
+	auto pm = _mngr->getHandler(ecs::hdlr::PACMAN);
+	auto pTR = _mngr->getComponent<Transform>(pm);
+
+	// For safety, we traverse with a normal loop until the current size. In this
+	// particular case we could use a for-each loop since the list stars is not
+	// modified.
+	//
+	auto& ghosts = _mngr->getEntities(ecs::grp::GHOSTS);
+	auto n = ghosts.size();
+
+	for (auto i = 0u; i < n; i++)
+	{
+		auto e = ghosts[i];
+		if (_mngr->isAlive(e)) { // if the ghost is active (it might have died in this frame)
+
+			// the Ghost's Transform
+			//
+			auto eTR = _mngr->getComponent<Transform>(e);
+
+			// check if PacMan collides with the Ghost(i.e., eat it)
+			if (Collisions::collides(			//
+				pTR->_pos, pTR->_width, pTR->_height, //
+				eTR->_pos, eTR->_width, eTR->_height)) {
+
+				Message m;
+				m.id = _m_PACMAN_GHOST_COLLISION;
+				m.ghost_pacman_col_data.e = e;
 				_mngr->send(m);
 			}
 		}

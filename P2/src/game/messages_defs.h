@@ -38,10 +38,15 @@ struct Message {
 			bool playerWon;
 		} game_over_data;
 
-		// _m_FOOD_EATEN
+		// _m_PACMAN_FOOD_COLLISION
 		struct {
 			ecs::entity_t e;
 			bool miraculous;
 		} food_eaten_data;
+
+		// _m_PACMAN_GHOST_COLLISION
+		struct {
+			ecs::entity_t e;
+		} ghost_pacman_col_data;
 	};
 };

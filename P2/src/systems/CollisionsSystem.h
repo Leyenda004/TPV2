@@ -12,5 +12,6 @@ public:
 	void update() override;
 
 	void checkCollisionInFruits();
+	void checkCollisionGhostPacman();
 };
 
