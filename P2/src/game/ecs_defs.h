@@ -40,6 +40,7 @@ class GameCtrlSystem;
 class CollisionsSystem;
 class FoodSystem;
 class GhostSystem;
+class ImmunitySystem;
 
 #define _SYS_LIST_ \
     StarsSystem, \
@@ -48,5 +49,6 @@ class GhostSystem;
 	GameCtrlSystem, \
 	CollisionsSystem, \
 	FoodSystem, \
-	GhostSystem
+	GhostSystem, \
+	ImmunitySystem
 

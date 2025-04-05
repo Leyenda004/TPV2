@@ -18,6 +18,7 @@
 
 #include "../systems/FoodSystem.h"
 #include "../systems/GhostSystem.h"
+#include "../systems/ImmunitySystem.h"
 
 using ecs::Manager;
 
@@ -78,6 +79,7 @@ bool Game::init() {
 
 	_mngr->addSystem<FoodSystem>();
 	_mngr->addSystem<GhostSystem>();
+	_mngr->addSystem<ImmunitySystem>();
 
 	// Game States
 	_running_state = new RunningState();

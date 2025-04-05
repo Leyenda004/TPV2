@@ -13,6 +13,7 @@
 #include "../systems/StarsSystem.h"
 #include "../systems/FoodSystem.h"
 #include "../systems/GhostSystem.h"
+#include "../systems/ImmunitySystem.h"
 
 #include "../components/Transform.h"
 #include "../components/Milagrosa.h"
@@ -30,6 +31,7 @@ RunningState::RunningState()
 	_collisionSys = _mngr->getSystem<CollisionsSystem>();
 	_foodSys = _mngr->getSystem<FoodSystem>();
 	_ghostSys = _mngr->getSystem<GhostSystem>();
+	_immunitySys = _mngr->getSystem<ImmunitySystem>();
 }
 
 void RunningState::enter()
@@ -50,6 +52,7 @@ void RunningState::update()
 	_collisionSys->update();
 	_foodSys->update();
 	_ghostSys->update();
+	_immunitySys->update();
 
 	_mngr->refresh();
 
