@@ -47,6 +47,7 @@ void GhostSystem::update()
 		if (sdlutils().virtualTimer().currTime() % 1000 == 0)
 		{
 			ImageWithFrames* gstFrames = _mngr->getComponent<ImageWithFrames>(ghost);
+			++gstFrames->_frame;
 
 			if (_mngr->getSystem<ImmunitySystem>()->pacmanIsImmune())
 			{
