@@ -57,7 +57,6 @@ void GhostSystem::update()
 				 gstFrames->_frame = 32;
 			}
 		}
-		
 	}
 }
 
@@ -99,17 +98,26 @@ void GhostSystem::createGhost()
 
 void GhostSystem::onPlayerCollides(ecs::entity_t e)
 {
-	_mngr->setAlive(e, false);
+	if (!_mngr->getSystem<ImmunitySystem>()->pacmanIsImmune()){
+		// SI TIENE VIDAS !! ??
+		Game::Instance()->setState(Game::NEWROUND);
+		// SI NO TIENE VIDAS
+		// Game::Instance()->setState(Game::GAMEOVER);
+		// Message m;
+		// m.id = _m_GAME_OVER;
+		// m.game_over_data.playerWon = false;
+		// _mngr->send(m);
 
-	//--_aliveFruits;
+	}
+	else {
+		_mngr->setAlive(e, false);
 
-	//if (_aliveFruits <= 0)
-	//{
-	//	Message m;
-	//	m.id = _m_GAME_OVER;
-	//	m.game_over_data.playerWon = true;
-	//	_mngr->send(m);
-	//}
+		// SI NO QUEDAN FANTASMAS
+		// Message m;
+		// m.id = _m_GAME_OVER;
+		// m.game_over_data.playerWon = true;
+		// _mngr->send(m);
+	}
 }
 
 void GhostSystem::recieve(const Message& m)
