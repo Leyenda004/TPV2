@@ -88,7 +88,7 @@ void FoodSystem::recieve(const Message& m)
 {
 	switch (m.id) {
 	case _m_PACMAN_FOOD_COLLISION:
-		onFoodEaten(m.star_eaten_data.e);
+		onFoodEaten(m.food_eaten_data.e);
 		break;
 	default:
 		break;

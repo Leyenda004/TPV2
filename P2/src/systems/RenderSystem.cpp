@@ -22,7 +22,7 @@ void RenderSystem::initSystem() {
 }
 
 void RenderSystem::update() {
-	drawMsgs();
+	//drawMsgs();
 	//drawStars();
 	drawFood();
 	drawPacMan();

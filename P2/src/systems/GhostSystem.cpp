@@ -47,7 +47,6 @@ void GhostSystem::update()
 		if (sdlutils().virtualTimer().currTime() % 1000 == 0)
 		{
 			ImageWithFrames* gstFrames = _mngr->getComponent<ImageWithFrames>(ghost);
-			++gstFrames->_frame;
 
 			if (_mngr->getSystem<ImmunitySystem>()->pacmanIsImmune())
 			{
@@ -98,3 +97,28 @@ void GhostSystem::createGhost()
 	sprite->setFrame(32);
 }
 
+void GhostSystem::onPlayerCollides(ecs::entity_t e)
+{
+	_mngr->setAlive(e, false);
+
+	//--_aliveFruits;
+
+	//if (_aliveFruits <= 0)
+	//{
+	//	Message m;
+	//	m.id = _m_GAME_OVER;
+	//	m.game_over_data.playerWon = true;
+	//	_mngr->send(m);
+	//}
+}
+
+void GhostSystem::recieve(const Message& m)
+{
+	switch (m.id) {
+	case _m_PACMAN_GHOST_COLLISION:
+		onPlayerCollides(m.ghost_pacman_col_data.e);
+		break;
+	default:
+		break;
+	}
+}

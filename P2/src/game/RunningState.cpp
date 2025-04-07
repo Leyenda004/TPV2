@@ -25,8 +25,8 @@ RunningState::RunningState()
 	_mngr = Game::Instance()->getMngr();
 
 	_pacmanSys = _mngr->getSystem<PacManSystem>();
-	_startsSys = _mngr->getSystem<StarsSystem>();
-	_gameCtrlSys = _mngr->getSystem<GameCtrlSystem>();
+	//_startsSys = _mngr->getSystem<StarsSystem>();
+	//_gameCtrlSys = _mngr->getSystem<GameCtrlSystem>();
 	_renderSys = _mngr->getSystem<RenderSystem>();
 	_collisionSys = _mngr->getSystem<CollisionsSystem>();
 	_foodSys = _mngr->getSystem<FoodSystem>();
@@ -47,8 +47,8 @@ void RunningState::leave()
 void RunningState::update()
 {
 	_pacmanSys->update();
-	_startsSys->update();
-	_gameCtrlSys->update();
+	//_startsSys->update();
+	//_gameCtrlSys->update();
 	_collisionSys->update();
 	_foodSys->update();
 	_ghostSys->update();

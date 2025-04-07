@@ -70,8 +70,8 @@ bool Game::init() {
 
 	// add the systems
 	_mngr->addSystem<PacManSystem>();
-	_mngr->addSystem<StarsSystem>();
-	_mngr->addSystem<GameCtrlSystem>();
+	//_mngr->addSystem<StarsSystem>();
+	//_mngr->addSystem<GameCtrlSystem>();
 	_mngr->addSystem<RenderSystem>();
 	_mngr->addSystem<CollisionsSystem>();
 	

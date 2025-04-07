@@ -13,6 +13,7 @@ public:
 
 	void initSystem() override;
 	void update() override;
+	void recieve(const Message&) override;
 
 	void startGeneration();
 
@@ -21,6 +22,7 @@ protected:
 	void createGhost();
 	
 private:
+	void onPlayerCollides(ecs::entity_t e);
 
 	Transform* pmTr;
 	float ghostSize;
