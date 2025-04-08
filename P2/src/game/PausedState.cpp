@@ -5,23 +5,23 @@
 #include "../sdlutils/InputHandler.h"
 #include "Game.h"
 
-PausedSate::PausedSate()
+PausedState::PausedState()
 {
 	_continueMessage = new Texture(sdlutils().renderer(), "press any key to resume the game",
 		sdlutils().fonts().at("ARIAL24"), SDL_Color{255, 255, 255, 255}, SDL_Color{ 127, 127, 127, 230 });
 }
 
-void PausedSate::enter()
+void PausedState::enter()
 {
 	sdlutils().virtualTimer().pause();
 }
 
-void PausedSate::leave()
+void PausedState::leave()
 {
 	sdlutils().virtualTimer().resume();
 }
 
-void PausedSate::update()
+void PausedState::update()
 {
 	sdlutils().clearRenderer();
 

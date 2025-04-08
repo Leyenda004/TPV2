@@ -3,12 +3,12 @@
 
 class Texture;
 
-class PausedSate : public GameState
+class PausedState : public GameState
 {
 public:
 
-	PausedSate();
-	~PausedSate() {}
+	PausedState();
+	~PausedState() {}
 
 	void enter() override;
 	void leave() override;

@@ -46,6 +46,9 @@ void RunningState::leave()
 
 void RunningState::update()
 {
+	if (ih().keyDownEvent() && ih().isKeyDown(SDLK_p))
+		Game::Instance()->setState(Game::PAUSED);
+
 	_pacmanSys->update();
 	//_startsSys->update();
 	//_gameCtrlSys->update();
