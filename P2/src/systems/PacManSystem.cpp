@@ -2,8 +2,9 @@
 
 #include "PacManSystem.h"
 
-#include "../components/Image.h"
 #include "../components/Transform.h"
+#include "../components/Image.h"
+#include "../components/ImageWithFrames.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
@@ -26,7 +27,10 @@ void PacManSystem::initSystem() {
 	auto x = (sdlutils().width() - s) / 2.0f;
 	auto y = (sdlutils().height() - s) / 2.0f;
 	_pmTR->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
-	_mngr->addComponent<Image>(pacman, &sdlutils().images().at("pacman"));
+	//_mngr->addComponent<Image>(pacman, &sdlutils().images().at("pacman"));
+
+	ImageWithFrames* sprite = _mngr->addComponent<ImageWithFrames>(pacman, &sdlutils().images().at("sprites"), 48, 8, 8);
+	sprite->setFrame(1);
 }
 
 void PacManSystem::update() {
