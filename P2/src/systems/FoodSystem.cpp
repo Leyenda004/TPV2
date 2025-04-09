@@ -73,8 +73,8 @@ void FoodSystem::spawnFood()
 void FoodSystem::onFoodEaten(ecs::entity_t e)
 {
 	_mngr->setAlive(e, false);
-	// --_aliveFruits; // !!!!!
-	_aliveFruits -= 5;
+	--_aliveFruits; // !!!!!
+	// _aliveFruits -= 5;
 
 	if (_aliveFruits <= 0)
 	{
