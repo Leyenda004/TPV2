@@ -28,7 +28,7 @@ void GameOverState::update()
 {
 	sdlutils().clearRenderer();
 
-	if (ih().isKeyDown(SDLK_RETURN))
+	if (ih().keyDownEvent())
 	{
 
 		Game::Instance()->setState(Game::NEWGAME);

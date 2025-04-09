@@ -9,10 +9,13 @@
 #include "../sdlutils/macros.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
+
 #include "GameCtrlSystem.h"
+#include "ImmunitySystem.h"
 
-RenderSystem::RenderSystem() {
-
+RenderSystem::RenderSystem() 
+{
+	ghostFrameTime = sdlutils().virtualTimer().currTime();
 }
 
 RenderSystem::~RenderSystem() {
@@ -107,6 +110,9 @@ void RenderSystem::draw(Transform *tr, Texture *tex) {
 
 void RenderSystem::drawGhosts()
 {
+	auto pm = _mngr->getHandler(ecs::hdlr::PACMAN);
+	ImmunitySystem* pmImmunity = _mngr->getSystem<ImmunitySystem>();
+
 	for (auto e : _mngr->getEntities(ecs::grp::GHOSTS)) 
 	{
 		auto tr = _mngr->getComponent<Transform>(e);
@@ -117,6 +123,18 @@ void RenderSystem::drawGhosts()
 
 		int frameW = iWFs->_tex->width() / iWFs->_cols;
 		int frameH = iWFs->_tex->height() / iWFs->_rows;
+
+		int frameSet = 32;
+		if(pmImmunity->pacmanIsImmune()) frameSet = 48;
+
+		if (sdlutils().virtualTimer().currTime() - ghostFrameTime > 500)
+		{
+			++iWFs->_frame;
+			ghostFrameTime = sdlutils().virtualTimer().currTime();
+		}
+			
+		
+		iWFs->_frame = (iWFs->_frame % 8) + frameSet;
 
 		SDL_Rect src = { (int)(iWFs->getFrame() % iWFs->_cols) * frameH, (int)(iWFs->getFrame() / iWFs->_rows) * frameW, frameH, frameW };
 

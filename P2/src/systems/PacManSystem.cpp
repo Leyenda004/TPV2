@@ -82,7 +82,8 @@ void PacManSystem::update() {
 
 }
 
-void PacManSystem::reset(){
+void PacManSystem::reset()
+{
 	_pmTR->_pos = Vector2D(sdlutils().width()/2 - _pmTR->_width/2, sdlutils().height()/2 - _pmTR->_height/2);
 	_pmTR->_vel = Vector2D(0, 0);
 }

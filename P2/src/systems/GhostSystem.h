@@ -16,6 +16,7 @@ public:
 	void recieve(const Message&) override;
 
 	void startGeneration();
+	void reset();
 
 protected:
 

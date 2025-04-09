@@ -44,11 +44,11 @@ void GhostSystem::update()
 			gstTr->_vel.setY(gstTr->_vel.getY() * -1);
 		}
 
-		if (sdlutils().virtualTimer().currTime() % 1000 == 0)
+	/*	if (sdlutils().virtualTimer().currTime() % 1000 == 0)
 		{
 			ImageWithFrames* gstFrames = _mngr->getComponent<ImageWithFrames>(ghost);
 
-			if (_mngr->getSystem<ImmunitySystem>()->pacmanIsImmune())
+			if (_mngr->getSystem<ImmunitySystem >()->pacmanIsImmune())
 			{
 				 gstFrames->_frame = 48;
 			}
@@ -56,7 +56,7 @@ void GhostSystem::update()
 			{
 				 gstFrames->_frame = 32;
 			}
-		}
+		}*/
 	}
 }
 
@@ -117,5 +117,13 @@ void GhostSystem::recieve(const Message& m)
 		break;
 	default:
 		break;
+	}
+}
+
+void GhostSystem::reset()
+{
+	for (auto ghost : _mngr->getEntities(ecs::grp::GHOSTS))
+	{
+		_mngr->setAlive(ghost, false);
 	}
 }
