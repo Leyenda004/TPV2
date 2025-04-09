@@ -22,10 +22,12 @@ void NewGameState::leave()
 }
 
 void NewGameState::update()
-{
+{	
+	sdlutils().clearRenderer();
+
 	auto &ihldr = ih();
 	if (ihldr.keyDownEvent() && !ihldr.isKeyDown(SDLK_RETURN)) {
-		Game::Instance()->setState(Game::NEWGAME);
+		Game::Instance()->setState(Game::NEWROUND);
 		return;
 	}
 

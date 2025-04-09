@@ -106,16 +106,16 @@ void Game::start() {
 	// a boolean to exit the loop
 	bool exit = false;
 
-	auto &ihdlr = ih();
+	auto &ihldr = ih();
 
 	while (!exit) {
 		// Uint32 startTime = sdlutils().virtualTimer().currTime();
 		Uint32 startTime = sdlutils().virtualTimer().regCurrTime();
 
 		// refresh the input handler
-		ihdlr.refresh();
+		ihldr.refresh();
 
-		if (ihdlr.isKeyDown(SDL_SCANCODE_ESCAPE)) {
+		if (ihldr.isKeyDown(SDL_SCANCODE_ESCAPE)) {
 			exit = true;
 			continue;
 		}

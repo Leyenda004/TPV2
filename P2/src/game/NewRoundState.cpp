@@ -27,7 +27,7 @@ void NewRoundState::update()
 
 	auto &ihldr = ih();
 	if (ihldr.keyDownEvent()) {
-		Game::Instance()->setState(Game::NEWROUND);
+		Game::Instance()->setState(Game::RUNNING);
 		return;
 	}
 
