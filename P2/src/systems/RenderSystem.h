@@ -26,5 +26,6 @@ private:
 	void draw(Transform *tr, Texture *tex);
 
 	Uint32 ghostFrameTime;
+	Uint32 pacmanFrameTime;
 };
 

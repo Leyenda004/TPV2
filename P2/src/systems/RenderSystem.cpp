@@ -16,6 +16,7 @@
 RenderSystem::RenderSystem() 
 {
 	ghostFrameTime = sdlutils().virtualTimer().currTime();
+	pacmanFrameTime = sdlutils().virtualTimer().currTime();
 }
 
 RenderSystem::~RenderSystem() {
@@ -74,6 +75,14 @@ void RenderSystem::drawPacMan() {
 	
 	int frameW = iWFs->_tex->width() / iWFs->_cols;
 	int frameH = iWFs->_tex->height() / iWFs->_rows;
+
+	if (sdlutils().virtualTimer().currTime() - pacmanFrameTime > 100)
+	{
+		++iWFs->_frame;
+		pacmanFrameTime = sdlutils().virtualTimer().currTime();
+	}
+
+	iWFs->_frame = iWFs->_frame % 2;
 	
 	SDL_Rect src = { (int)(iWFs->getFrame() % iWFs->_cols) * frameH, (int)(iWFs->getFrame() / iWFs->_rows) * frameW, frameH, frameW};
 	tex->render(src, dest, tr->_rot);
