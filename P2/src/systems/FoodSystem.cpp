@@ -13,7 +13,7 @@
 
 void FoodSystem::initSystem()
 {
-	spawnFood();
+	
 }
 
 void FoodSystem::update() {
@@ -67,6 +67,14 @@ void FoodSystem::spawnFood()
 
 			++_aliveFruits;
 		}
+	}
+}
+
+void FoodSystem::reset()
+{
+	for(auto food : _mngr->getEntities(ecs::grp::FOOD))
+	{
+		_mngr->setAlive(food, false);
 	}
 }
 

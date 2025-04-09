@@ -13,10 +13,11 @@ public:
 	void recieve(const Message&) override;
 
 	void onFoodEaten(ecs::entity_t e);
+	void spawnFood();
+	void reset();
 
 private:
 
-	void spawnFood();
 	int _aliveFruits;
 };
 

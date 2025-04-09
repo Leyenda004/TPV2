@@ -5,7 +5,7 @@
 #include "../sdlutils/InputHandler.h"
 #include "Game.h"
 #include "../ecs/Manager.h"
-
+#include "../systems/FoodSystem.h"
 #include "../game/messages_defs.h"
 
 NewGameState::NewGameState()
@@ -30,6 +30,9 @@ void NewGameState::update()
 
 	if (ih().keyDownEvent()) 
 	{
+		Game::Instance()->getMngr()->getSystem<FoodSystem>()->reset();
+		Game::Instance()->getMngr()->getSystem<FoodSystem>()->spawnFood();
+
 		Message m;
 		m.id = _m_NEW_GAME;
 		Game::Instance()->getMngr()->send(m);
