@@ -25,7 +25,7 @@ void NewGameState::leave()
 }
 
 void NewGameState::update()
-{
+{	
 	sdlutils().clearRenderer();
 
 	if (ih().keyDownEvent()) 

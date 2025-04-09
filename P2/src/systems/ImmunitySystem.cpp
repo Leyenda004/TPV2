@@ -17,7 +17,8 @@ void ImmunitySystem::update()
 		Message m;
 		m.id = _m_IMMUNITY_END;
 		_mngr->send(m);
-	}std::cout << _pacmanIsImmune << "\n";
+	}
+	// std::cout << _pacmanIsImmune << "\n";
 }
 
 void ImmunitySystem::recieve(const Message& m)

@@ -2,11 +2,15 @@
 
 #include "PacManSystem.h"
 
-#include "../components/Image.h"
-#include "../components/Transform.h"
+#include "ImmunitySystem.h"
+
 #include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
+#include "../components/Transform.h"
+#include "../components/Image.h"
+#include "../components/ImageWithFrames.h"
+#include "../components/Health.h"
 
 PacManSystem::PacManSystem() :
 		_pmTR(nullptr) {
@@ -26,7 +30,13 @@ void PacManSystem::initSystem() {
 	auto x = (sdlutils().width() - s) / 2.0f;
 	auto y = (sdlutils().height() - s) / 2.0f;
 	_pmTR->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
-	_mngr->addComponent<Image>(pacman, &sdlutils().images().at("pacman"));
+
+	//_mngr->addComponent<Image>(pacman, &sdlutils().images().at("pacman"));
+
+	sprite = _mngr->addComponent<ImageWithFrames>(pacman, &sdlutils().images().at("sprites"), 48, 8, 8);
+	sprite->setFrame(1);
+
+	health = _mngr->addComponent<Health>(pacman, 3);
 }
 
 void PacManSystem::update() {
@@ -36,10 +46,10 @@ void PacManSystem::update() {
 	if (ihldr.keyDownEvent()) {
 
 		if (ihldr.isKeyDown(SDL_SCANCODE_RIGHT)) { // rotate right
-			_pmTR->_rot = _pmTR->_rot + 90.0f;
+			_pmTR->_rot += 90.0f;
 			_pmTR->_vel = _pmTR->_vel.rotate(90.0f);
 		} else if (ihldr.isKeyDown(SDL_SCANCODE_LEFT)) { // rotate left
-			_pmTR->_rot = _pmTR->_rot - 90.0f;
+			_pmTR->_rot -= 90.0f;
 			_pmTR->_vel = _pmTR->_vel.rotate(-90.0f);
 		} else if (ihldr.isKeyDown(SDL_SCANCODE_UP)) { // speed
 			float speed = 3.0f;
@@ -47,7 +57,6 @@ void PacManSystem::update() {
 		} else if (ihldr.isKeyDown(SDL_SCANCODE_DOWN)) { // stop
 			_pmTR->_vel = Vector2D(0, 0);
 		}
-
 	}
 
 	// move the pacman
@@ -71,4 +80,44 @@ void PacManSystem::update() {
 		_pmTR->_vel.set(0.0f, 0.0f);
 	}
 
+}
+
+void PacManSystem::reset(){
+	_pmTR->_pos = Vector2D(sdlutils().width()/2 - _pmTR->_width/2, sdlutils().height()/2 - _pmTR->_height/2);
+	_pmTR->_vel = Vector2D(0, 0);
+}
+
+void PacManSystem::onGhostCollides() {
+	if (!_mngr->getSystem<ImmunitySystem>()->pacmanIsImmune()){
+		// recibir mensaje en el estado
+		if (health->vida > 0){
+			health->healthUpdate(-1);
+
+			// Message m;
+			// m.id = _m_STATE_CHANGE;
+			// m.state_change_data.state = Game::NEWROUND;
+			// _mngr->send(m);
+
+			Game::Instance()->setState(Game::NEWROUND);
+		}
+		else{
+			// Message m;
+			// m.id = _m_STATE_CHANGE;
+			// m.state_change_data.state = Game::GAMEOVERBAD;
+			// _mngr->send(m);
+
+			Game::Instance()->setState(Game::GAMEOVERBAD);
+		}
+	}
+}
+
+void PacManSystem::recieve(const Message& m)
+{
+	switch (m.id) {
+	case _m_PACMAN_GHOST_COLLISION:
+		onGhostCollides();
+		break;
+	default:
+		break;
+	}
 }

@@ -16,6 +16,7 @@
 // PRACTICA
 #include "../game/RunningState.h"
 #include "../game/PausedState.h"
+#include "../game/GameOverState.h"
 #include "../game/NewGameState.h"
 #include "../game/NewRoundState.h"
 
@@ -91,6 +92,10 @@ bool Game::init() {
 	_newround_state = new NewRoundState();
 	// GameState* _gameover_state;
 
+
+	_gameovergood_state = new GameOverState(1);
+	_gameoverbad_state = new GameOverState(0);
+
 	_state = _newgame_state;
 
 	return true;
@@ -101,16 +106,16 @@ void Game::start() {
 	// a boolean to exit the loop
 	bool exit = false;
 
-	auto &ihdlr = ih();
+	auto &ihldr = ih();
 
 	while (!exit) {
 		// Uint32 startTime = sdlutils().virtualTimer().currTime();
 		Uint32 startTime = sdlutils().virtualTimer().regCurrTime();
 
 		// refresh the input handler
-		ihdlr.refresh();
+		ihldr.refresh();
 
-		if (ihdlr.isKeyDown(SDL_SCANCODE_ESCAPE)) {
+		if (ihldr.isKeyDown(SDL_SCANCODE_ESCAPE)) {
 			exit = true;
 			continue;
 		}

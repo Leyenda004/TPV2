@@ -5,8 +5,12 @@
 #include "../sdlutils/InputHandler.h"
 #include "Game.h"
 
-GameOverState::GameOverState()
+GameOverState::GameOverState(int n) // 0 you lost, 1 you won
 {
+	if (n == 0)
+		_gameOverMessage = new Texture(sdlutils().renderer(), "Game Over. You Lost", sdlutils().fonts().at("ARIAL24"), build_sdlcolor(0xFF0000FF));
+	else
+		_gameOverMessage = new Texture(sdlutils().renderer(), "Game Over. You Won", sdlutils().fonts().at("ARIAL24"), build_sdlcolor(0x00FF00FF));
 	
 }
 

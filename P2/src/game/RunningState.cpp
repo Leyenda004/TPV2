@@ -46,7 +46,9 @@ void RunningState::leave()
 
 void RunningState::update()
 {
-	if (ih().keyDownEvent() && ih().isKeyDown(SDLK_p))
+	auto &ihldr = ih();
+
+	if (ihldr.keyDownEvent() && ihldr.isKeyDown(SDLK_p))
 		Game::Instance()->setState(Game::PAUSED);
 
 	_pacmanSys->update();
@@ -83,8 +85,17 @@ void RunningState::checkCollisions()
 				_mngr->setAlive(food, false);
 
 				if (_mngr->getComponent<Milagrosa>(food)->fruitChanged) {
-					// mandar mensaje !!
+					Message m;
+					m.id = _m_IMMUNITY_START;
+					_mngr->send(m);
 				}
 			}
 	}
 }
+
+//void recieve(const Message& m)
+//{
+//	if (m.id == _m_STATE_CHANGE) {
+//		Game::Instance()->setState(m.state_change_data.state);
+//	}
+//}

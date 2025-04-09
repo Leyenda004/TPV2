@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "../game/messages_defs.h"
 #include "../ecs/Manager.h"
+#include "../systems/PacManSystem.h"
 
 NewRoundState::NewRoundState()
 {
@@ -32,6 +33,9 @@ void NewRoundState::update()
 		Message m;
 		m.id = _m_ROUND_START;
 		Game::Instance()->getMngr()->send(m);
+
+		ecs::Manager* _mngr = Game::Instance()->getMngr();
+		_mngr->getSystem<PacManSystem>()->reset();
 
 		Game::Instance()->setState(Game::RUNNING);
 

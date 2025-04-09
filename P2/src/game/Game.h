@@ -18,7 +18,7 @@ public:
 	ecs::Manager* getMngr() { return _mngr; }
 
 	enum State {
-		RUNNING, PAUSED, NEWGAME, NEWROUND, GAMEOVER
+		RUNNING, PAUSED, NEWGAME, NEWROUND, GAMEOVERGOOD, GAMEOVERBAD
 	};
 
 	inline void setState(State s) {
@@ -36,8 +36,11 @@ public:
 		case NEWROUND:
 			_state = _newround_state;
 			break;
-		case GAMEOVER:
-			_state = _gameover_state;
+		case GAMEOVERGOOD:
+			_state = _gameovergood_state;
+			break;
+		case GAMEOVERBAD:
+			_state = _gameoverbad_state;
 			break;
 		default:
 			break;
@@ -68,6 +71,7 @@ private:
 	GameState* _running_state;
 	GameState* _newgame_state;
 	GameState* _newround_state;
-	GameState* _gameover_state;
+	GameState* _gameovergood_state;
+	GameState* _gameoverbad_state;
 };
 

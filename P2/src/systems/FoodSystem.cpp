@@ -73,14 +73,17 @@ void FoodSystem::spawnFood()
 void FoodSystem::onFoodEaten(ecs::entity_t e)
 {
 	_mngr->setAlive(e, false);
-	--_aliveFruits;
+	--_aliveFruits; // !!!!!
+	// _aliveFruits -= 5;
 
 	if (_aliveFruits <= 0)
 	{
-		Message m;
-		m.id = _m_GAME_OVER;
-		m.game_over_data.playerWon = true;
-		_mngr->send(m);
+		// Message m;
+		// m.id = _m_STATE_CHANGE;
+		// m.state_change_data.state = Game::GAMEOVERGOOD;
+		// _mngr->send(m);
+
+		Game::Instance()->setState(Game::GAMEOVERGOOD);
 	}
 }
 

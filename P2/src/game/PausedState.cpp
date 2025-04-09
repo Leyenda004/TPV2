@@ -25,7 +25,9 @@ void PausedState::update()
 {
 	sdlutils().clearRenderer();
 
-	if (ih().keyDownEvent()) {
+	auto &ihldr = ih();
+
+	if (ihldr.keyDownEvent()) {
 		Game::Instance()->setState(Game::RUNNING);
 		return;
 	}

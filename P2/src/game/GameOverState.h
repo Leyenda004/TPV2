@@ -6,7 +6,7 @@ class Texture;
 class GameOverState : public GameState
 {
 public:
-	GameOverState();
+	GameOverState(int);
 	~GameOverState() {}
 
 	void enter() override;

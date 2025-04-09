@@ -5,6 +5,8 @@
 #include "../ecs/System.h"
 
 struct Transform;
+struct Health;
+struct ImageWithFrames;
 
 class PacManSystem: public ecs::System {
 public:
@@ -13,7 +15,15 @@ public:
 	virtual ~PacManSystem();
 	void initSystem() override;
 	void update() override;
+	void recieve(const Message& m) override;
+
+	void reset();
 private:
+
+	void onGhostCollides();
+
 	Transform *_pmTR;
+	Health* health;
+	ImageWithFrames* sprite;
 };
 
