@@ -88,16 +88,20 @@ void PacManSystem::onGhostCollides() {
 		if (health->vida > 0){
 			health->healthUpdate(-1);
 
-			Message m;
-			m.id = _m_STATE_CHANGE;
-			m.state_change_data.state = Game::NEWROUND;
-			_mngr->send(m);
+			// Message m;
+			// m.id = _m_STATE_CHANGE;
+			// m.state_change_data.state = Game::NEWROUND;
+			// _mngr->send(m);
+
+			Game::Instance()->setState(Game::NEWROUND);
 		}
 		else{
-			Message m;
-			m.id = _m_STATE_CHANGE;
-			m.state_change_data.state = Game::GAMEOVERBAD;
-			_mngr->send(m);
+			// Message m;
+			// m.id = _m_STATE_CHANGE;
+			// m.state_change_data.state = Game::GAMEOVERBAD;
+			// _mngr->send(m);
+
+			Game::Instance()->setState(Game::GAMEOVERBAD);
 		}
 	}
 }

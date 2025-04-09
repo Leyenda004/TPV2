@@ -77,10 +77,12 @@ void FoodSystem::onFoodEaten(ecs::entity_t e)
 
 	if (_aliveFruits <= 0)
 	{
-		Message m;
-		m.id = _m_STATE_CHANGE;
-		m.state_change_data.state = Game::GAMEOVERGOOD;
-		_mngr->send(m);
+		// Message m;
+		// m.id = _m_STATE_CHANGE;
+		// m.state_change_data.state = Game::GAMEOVERGOOD;
+		// _mngr->send(m);
+
+		Game::Instance()->setState(Game::GAMEOVERGOOD);
 	}
 }
 
