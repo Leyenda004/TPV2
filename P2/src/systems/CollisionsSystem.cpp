@@ -53,10 +53,12 @@ void CollisionsSystem::checkCollisionInFruits()
 				pTR->_pos, pTR->_width, pTR->_height, //
 				eTR->_pos, eTR->_width, eTR->_height)) {
 
+				Milagrosa* miracl = _mngr->getComponent<Milagrosa>(e);
+
 				Message m;
 				m.id = _m_PACMAN_FOOD_COLLISION;
 				m.food_eaten_data.e = e;
-				m.food_eaten_data.miraculous = _mngr->getComponent<Milagrosa>(e)->milagrosa;
+				m.food_eaten_data.miraculous = miracl->milagrosa && miracl->fruitChanged;
 				_mngr->send(m);
 			}
 		}
