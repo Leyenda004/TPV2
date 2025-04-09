@@ -88,8 +88,11 @@ void PacManSystem::reset()
 	_pmTR->_vel = Vector2D(0, 0);
 }
 
-void PacManSystem::onGhostCollides() {
-	if (!_mngr->getSystem<ImmunitySystem>()->pacmanIsImmune()){
+void PacManSystem::onGhostCollides() 
+{
+	if (!_mngr->getSystem<ImmunitySystem>()->pacmanIsImmune())
+	{
+		sdlutils().soundEffects().at("pacman_death").play();
 		// recibir mensaje en el estado
 		if (health->vida > 0){
 			health->healthUpdate(-1);

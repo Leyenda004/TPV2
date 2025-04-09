@@ -72,7 +72,10 @@ void FoodSystem::spawnFood()
 
 void FoodSystem::onFoodEaten(ecs::entity_t e)
 {
+	sdlutils().soundEffects().at("pacman_eat").play();
+	
 	_mngr->setAlive(e, false);
+
 	--_aliveFruits; // !!!!!
 	// _aliveFruits -= 5;
 
