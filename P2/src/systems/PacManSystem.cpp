@@ -47,11 +47,9 @@ void PacManSystem::update() {
 
 		if (ihldr.isKeyDown(SDL_SCANCODE_RIGHT)) { // rotate right
 			_pmTR->_rot += 90.0f;
-			// sprite->_tr->_rot += 90.0f;
 			_pmTR->_vel = _pmTR->_vel.rotate(90.0f);
 		} else if (ihldr.isKeyDown(SDL_SCANCODE_LEFT)) { // rotate left
 			_pmTR->_rot -= 90.0f;
-			// sprite->_tr->_rot -= 90.0f;
 			_pmTR->_vel = _pmTR->_vel.rotate(-90.0f);
 		} else if (ihldr.isKeyDown(SDL_SCANCODE_UP)) { // speed
 			float speed = 3.0f;

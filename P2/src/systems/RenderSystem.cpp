@@ -73,7 +73,7 @@ void RenderSystem::drawPacMan() {
 	int frameH = iWFs->_tex->height() / iWFs->_rows;
 	
 	SDL_Rect src = { (int)(iWFs->getFrame() % iWFs->_cols) * frameH, (int)(iWFs->getFrame() / iWFs->_rows) * frameW, frameH, frameW};
-	tex->render(src, dest);
+	tex->render(src, dest, tr->_rot);
 }
 
 
