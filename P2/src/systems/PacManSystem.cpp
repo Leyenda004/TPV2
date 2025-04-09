@@ -82,6 +82,11 @@ void PacManSystem::update() {
 
 }
 
+void reset(){
+	_pmTR->_pos = Vector2D(sdlutils().width()/2 - _pmTR->_width/2, sdlutils().height()/2 - _pmTR->_height/2);
+	_pmTR->_vel = Vector2D(0, 0);
+}
+
 void PacManSystem::onGhostCollides() {
 	if (!_mngr->getSystem<ImmunitySystem>()->pacmanIsImmune()){
 		// recibir mensaje en el estado

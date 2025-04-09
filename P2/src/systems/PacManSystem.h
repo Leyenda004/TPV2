@@ -16,6 +16,8 @@ public:
 	void initSystem() override;
 	void update() override;
 	void recieve(const Message& m) override;
+
+	void reset();
 private:
 
 	void onGhostCollides();

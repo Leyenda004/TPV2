@@ -4,7 +4,8 @@
 #include "../sdlutils/Texture.h"
 #include "../sdlutils/InputHandler.h"
 #include "Game.h"
-//#include "../ecs/Manager.h"
+#include "../ecs/Manager.h"
+#include "../systems/PacManSystem.h"
 
 NewRoundState::NewRoundState()
 {
@@ -28,8 +29,8 @@ void NewRoundState::update()
 
 	auto &ihldr = ih();
 	if (ihldr.keyDownEvent()) {
-		//ecs::Manager* _mngr = Game::Instance()->getMngr();
-		//_mngr->getComponent<Transform>(_mngr->getHandler(ecs::hdlr::PACMAN))->reset();
+		ecs::Manager* _mngr = Game::Instance()->getMngr();
+		_mngr->getSystem<PacManSystem>()->reset();
 		Game::Instance()->setState(Game::RUNNING);
 		return;
 	}
