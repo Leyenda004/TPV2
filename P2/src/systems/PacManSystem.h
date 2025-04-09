@@ -18,7 +18,7 @@ public:
 	void recieve(const Message& m) override;
 private:
 
-	void onGhostCollides(ecs::entity_t e);
+	void onGhostCollides();
 
 	Transform *_pmTR;
 	Health* health;

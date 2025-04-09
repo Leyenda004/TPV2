@@ -84,7 +84,7 @@ void PacManSystem::update() {
 
 }
 
-void PacManSystem::onGhostCollides(ecs::entity_t e) {
+void PacManSystem::onGhostCollides() {
 	if (!_mngr->getSystem<ImmunitySystem>()->pacmanIsImmune()){
 		// recibir mensaje en el estado
 		if (health->vida > 0){
@@ -108,7 +108,7 @@ void PacManSystem::recieve(const Message& m)
 {
 	switch (m.id) {
 	case _m_PACMAN_GHOST_COLLISION:
-		onGhostCollides(m.ghost_pacman_col_data.e);
+		onGhostCollides();
 		break;
 	default:
 		break;
