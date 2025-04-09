@@ -23,12 +23,8 @@ void NewGameState::leave()
 
 void NewGameState::update()
 {
-	sdlutils().clearRenderer();
-
-	if (ih().keyDownEvent() && !ih().isKeyDown(SDLK_RETURN)) 
-	{
-
-		Game::Instance()->setState(Game::NEWROUND);
+	if (ih().keyDownEvent() && !ih().isKeyDown(SDLK_RETURN)) {
+		Game::Instance()->setState(Game::NEWGAME);
 		return;
 	}
 

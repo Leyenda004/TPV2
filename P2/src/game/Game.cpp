@@ -17,6 +17,8 @@
 #include "../game/RunningState.h"
 #include "../game/PausedState.h"
 #include "../game/GameOverState.h"
+#include "../game/NewGameState.h"
+#include "../game/NewRoundState.h"
 
 #include "../systems/FoodSystem.h"
 #include "../systems/GhostSystem.h"
@@ -86,6 +88,10 @@ bool Game::init() {
 	// Game States
 	_running_state = new RunningState();
 	_paused_state = new PausedState();
+
+	_newgame_state = new NewGameState();
+	_newround_state = new NewRoundState();
+
 	_gameovergood_state = new GameOverState(1);
 	_gameoverbad_state = new GameOverState(0);
 

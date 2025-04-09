@@ -25,5 +25,15 @@ void NewRoundState::update()
 {
 	sdlutils().clearRenderer();
 
+	if (ih().keyDownEvent()) {
+		Game::Instance()->setState(Game::NEWROUND);
+		return;
+	}
+
+	int x = sdlutils().width() / 2 - _startMessage->width() / 2;
+	int y = sdlutils().height() / 2 - _startMessage->height() / 2;
+	_startMessage ->render(x, y);
+
+	sdlutils().presentRenderer();
 
 }
