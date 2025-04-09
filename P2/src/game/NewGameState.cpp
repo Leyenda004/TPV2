@@ -23,7 +23,8 @@ void NewGameState::leave()
 
 void NewGameState::update()
 {
-	if (ih().keyDownEvent() && !ih().isKeyDown(SDLK_RETURN)) {
+	auto &ihldr = ih();
+	if (ihldr.keyDownEvent() && !ihldr.isKeyDown(SDLK_RETURN)) {
 		Game::Instance()->setState(Game::NEWGAME);
 		return;
 	}

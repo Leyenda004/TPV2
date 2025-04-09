@@ -96,6 +96,7 @@ bool Game::init() {
 	_gameoverbad_state = new GameOverState(0);
 
 	_state = _running_state;
+	//_state = _newgame_state;
 
 	return true;
 }

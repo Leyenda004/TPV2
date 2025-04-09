@@ -25,7 +25,8 @@ void NewRoundState::update()
 {
 	sdlutils().clearRenderer();
 
-	if (ih().keyDownEvent()) {
+	auto &ihldr = ih();
+	if (ihldr.keyDownEvent()) {
 		Game::Instance()->setState(Game::NEWROUND);
 		return;
 	}
