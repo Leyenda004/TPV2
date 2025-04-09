@@ -98,18 +98,7 @@ void GhostSystem::createGhost()
 
 void GhostSystem::onPlayerCollides(ecs::entity_t e)
 {
-	if (!_mngr->getSystem<ImmunitySystem>()->pacmanIsImmune()){
-		// SI TIENE VIDAS !! ??
-		Game::Instance()->setState(Game::NEWROUND);
-		// SI NO TIENE VIDAS
-		// Game::Instance()->setState(Game::GAMEOVER);
-		// Message m;
-		// m.id = _m_GAME_OVER;
-		// m.game_over_data.playerWon = false;
-		// _mngr->send(m);
-
-	}
-	else {
+	if (_mngr->getSystem<ImmunitySystem>()->pacmanIsImmune()){
 		_mngr->setAlive(e, false);
 
 		// SI NO QUEDAN FANTASMAS

@@ -21,4 +21,3 @@ struct Milagrosa: public ecs::Component {
 	float N = 0.0f;
 	float M = 0.0f;
 };
-

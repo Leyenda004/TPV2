@@ -16,6 +16,7 @@
 // PRACTICA
 #include "../game/RunningState.h"
 #include "../game/PausedState.h"
+#include "../game/GameOverState.h"
 
 #include "../systems/FoodSystem.h"
 #include "../systems/GhostSystem.h"
@@ -85,6 +86,8 @@ bool Game::init() {
 	// Game States
 	_running_state = new RunningState();
 	_paused_state = new PausedState();
+	_gameovergood_state = new GameOverState(1);
+	_gameoverbad_state = new GameOverState(0);
 
 	_state = _running_state;
 

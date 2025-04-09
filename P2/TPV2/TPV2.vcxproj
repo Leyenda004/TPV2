@@ -49,6 +49,7 @@
     <ClCompile Include="..\SRC\utils\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\components\Health.h" />
     <ClInclude Include="..\src\components\Image.h" />
     <ClInclude Include="..\src\components\ImageWithFrames.h" />
     <ClInclude Include="..\src\components\Milagrosa.h" />
