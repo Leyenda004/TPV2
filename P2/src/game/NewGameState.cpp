@@ -4,6 +4,9 @@
 #include "../sdlutils/Texture.h"
 #include "../sdlutils/InputHandler.h"
 #include "Game.h"
+#include "../ecs/Manager.h"
+
+#include "../game/messages_defs.h"
 
 NewGameState::NewGameState()
 {
@@ -25,10 +28,14 @@ void NewGameState::update()
 {
 	sdlutils().clearRenderer();
 
-	if (ih().keyDownEvent() && !ih().isKeyDown(SDLK_RETURN)) 
+	if (ih().keyDownEvent()) 
 	{
+		Message m;
+		m.id = _m_NEW_GAME;
+		Game::Instance()->getMngr()->send(m);
 
 		Game::Instance()->setState(Game::NEWROUND);
+		
 		return;
 	}
 

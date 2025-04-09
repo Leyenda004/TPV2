@@ -4,6 +4,8 @@
 #include "../sdlutils/Texture.h"
 #include "../sdlutils/InputHandler.h"
 #include "Game.h"
+#include "../game/messages_defs.h"
+#include "../ecs/Manager.h"
 
 NewRoundState::NewRoundState()
 {
@@ -25,5 +27,20 @@ void NewRoundState::update()
 {
 	sdlutils().clearRenderer();
 
+	if (ih().keyDownEvent() && ih().isKeyDown(SDLK_RETURN))
+	{
+		Message m;
+		m.id = _m_ROUND_START;
+		Game::Instance()->getMngr()->send(m);
 
+		Game::Instance()->setState(Game::RUNNING);
+
+		return;
+	}
+
+	int x = sdlutils().width() / 2 - _startMessage->width() / 2;
+	int y = sdlutils().height() / 2 - _startMessage->height() / 2;
+	_startMessage->render(x, y);
+
+	sdlutils().presentRenderer();
 }
