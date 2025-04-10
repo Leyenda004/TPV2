@@ -5,6 +5,7 @@
 #include "../components/Image.h"
 #include "../components/ImageWithFrames.h"
 #include "../components/Transform.h"
+#include "../components/Health.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/macros.h"
 #include "../sdlutils/SDLUtils.h"
@@ -31,6 +32,7 @@ void RenderSystem::update() {
 	drawFood();
 	drawPacMan();
 	drawGhosts();
+	drawLives();
 }
 
 void RenderSystem::drawFood() {
@@ -116,5 +118,17 @@ void RenderSystem::drawGhosts()
 		SDL_Rect src = { (int)(iWFs->getFrame() % iWFs->_cols) * frameH, (int)(iWFs->getFrame() / iWFs->_rows) * frameW, frameH, frameW };
 
 		tex->render(src, dest);
+	}
+}
+
+void RenderSystem::drawLives()
+{
+	auto lives = _mngr->getComponent<Health>(_mngr->getHandler(ecs::hdlr::PACMAN));
+	for (int i = 0; i < lives->vida; ++i)
+	{
+		auto tex = &sdlutils().images().at("heart");
+		Vector2D pos = Vector2D(10 + i * (tex->width()/4 + 10), 10);
+		SDL_Rect dest = build_sdlrect(pos, tex->width()/4, tex->height()/4);
+		tex->render(dest);
 	}
 }

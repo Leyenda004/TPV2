@@ -94,13 +94,13 @@ void PacManSystem::onGhostCollides()
 	{
 		sdlutils().soundEffects().at("pacman_death").play();
 		// recibir mensaje en el estado
-		if (health->vida > 0)
+		if (health->vida > 1)
 		{
 			health->healthUpdate(-1);
 
 			Game::Instance()->setState(Game::NEWROUND);
 		}
-		else
+		else if (health->vida <= 1)
 		{
 			 Message m;
 			 m.id = _m_GAME_OVER;

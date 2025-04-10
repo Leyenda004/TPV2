@@ -21,6 +21,7 @@ private:
 	void drawPacMan();
 	void drawFood();
 	void drawGhosts();
+	void drawLives();
 	void draw(Transform *tr, Texture *tex);
 
 	Uint32 ghostFrameTime;
