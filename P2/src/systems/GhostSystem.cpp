@@ -43,20 +43,6 @@ void GhostSystem::update()
 		{
 			gstTr->_vel.setY(gstTr->_vel.getY() * -1);
 		}
-
-	/*	if (sdlutils().virtualTimer().currTime() % 1000 == 0)
-		{
-			ImageWithFrames* gstFrames = _mngr->getComponent<ImageWithFrames>(ghost);
-
-			if (_mngr->getSystem<ImmunitySystem >()->pacmanIsImmune())
-			{
-				 gstFrames->_frame = 48;
-			}
-			else
-			{
-				 gstFrames->_frame = 32;
-			}
-		}*/
 	}
 }
 
@@ -100,12 +86,6 @@ void GhostSystem::onPlayerCollides(ecs::entity_t e)
 {
 	if (_mngr->getSystem<ImmunitySystem>()->pacmanIsImmune()){
 		_mngr->setAlive(e, false);
-
-		// SI NO QUEDAN FANTASMAS
-		// Message m;
-		// m.id = _m_GAME_OVER;
-		// m.game_over_data.playerWon = true;
-		// _mngr->send(m);
 	}
 }
 
