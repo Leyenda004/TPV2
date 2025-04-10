@@ -33,16 +33,6 @@ void RenderSystem::update() {
 	drawGhosts();
 }
 
-void RenderSystem::drawStars() {
-	// draw stars
-	for (auto e : _mngr->getEntities(ecs::grp::STARS)) {
-
-		auto tr = _mngr->getComponent<Transform>(e);
-		auto tex = _mngr->getComponent<Image>(e)->_tex;
-		draw(tr, tex);
-	}
-}
-
 void RenderSystem::drawFood() {
 	for (auto e : _mngr->getEntities(ecs::grp::FOOD)) {
 
@@ -86,28 +76,6 @@ void RenderSystem::drawPacMan() {
 	
 	SDL_Rect src = { (int)(iWFs->getFrame() % iWFs->_cols) * frameH, (int)(iWFs->getFrame() / iWFs->_rows) * frameW, frameH, frameW};
 	tex->render(src, dest, tr->_rot);
-}
-
-
-void RenderSystem::drawMsgs() {
-	// draw the score
-	//
-	auto score = _mngr->getSystem<GameCtrlSystem>()->getScore();
-
-	Texture scoreTex(sdlutils().renderer(), std::to_string(score),
-			sdlutils().fonts().at("ARIAL24"), build_sdlcolor(0x444444ff));
-
-	SDL_Rect dest = build_sdlrect( //
-			(sdlutils().width() - scoreTex.width()) / 2.0f, //
-			10.0f, //
-			scoreTex.width(), //
-			scoreTex.height());
-
-	scoreTex.render(dest);
-
-	// draw add stars message
-	sdlutils().msgs().at("addstars").render(10, 10);
-
 }
 
 void RenderSystem::draw(Transform *tr, Texture *tex) {

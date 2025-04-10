@@ -6,8 +6,7 @@
 #include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
 
-GameCtrlSystem::GameCtrlSystem() :
-		_score() {
+GameCtrlSystem::GameCtrlSystem() {
 	// TODO Auto-generated constructor stub
 
 }
