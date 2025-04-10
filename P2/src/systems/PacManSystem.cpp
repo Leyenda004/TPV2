@@ -105,12 +105,12 @@ void PacManSystem::onGhostCollides()
 			Game::Instance()->setState(Game::NEWROUND);
 		}
 		else{
-			// Message m;
-			// m.id = _m_STATE_CHANGE;
-			// m.state_change_data.state = Game::GAMEOVERBAD;
-			// _mngr->send(m);
+			 Message m;
+			 m.id = _m_GAME_OVER;
+			 m.game_over_data.playerWon = false;
+			 _mngr->send(m);
 
-			Game::Instance()->setState(Game::GAMEOVERBAD);
+			Game::Instance()->setState(Game::GAMEOVER);
 		}
 	}
 }

@@ -25,7 +25,14 @@ public:
 	void update() override;
 	void recieve(const Message &m) override;
 
+	bool gameOverWin() {
+		return _gameOverWin;
+	}
+
 private:
-	unsigned int _score;
+
+	unsigned int _score; //old
+	
+	bool _gameOverWin = true;
 };
 

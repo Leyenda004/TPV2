@@ -74,8 +74,7 @@ bool Game::init() {
 
 	// add the systems
 	_mngr->addSystem<PacManSystem>();
-	//_mngr->addSystem<StarsSystem>();
-	//_mngr->addSystem<GameCtrlSystem>();
+	_mngr->addSystem<GameCtrlSystem>();
 	_mngr->addSystem<RenderSystem>();
 	_mngr->addSystem<CollisionsSystem>();
 	
@@ -90,11 +89,7 @@ bool Game::init() {
 	_paused_state = new PausedState();
 	_newgame_state = new NewGameState();
 	_newround_state = new NewRoundState();
-	// GameState* _gameover_state;
-
-
-	_gameovergood_state = new GameOverState(1);
-	_gameoverbad_state = new GameOverState(0);
+	_gameover_state = new GameOverState();
 
 	_state = _newgame_state;
 

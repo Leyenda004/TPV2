@@ -40,5 +40,10 @@ struct Message {
 		struct {
 			Game::State state;
 		} state_change_data;
+
+		// _m_GAME_OVER
+		struct {
+			bool playerWon;
+		} game_over_data;
 	};
 };

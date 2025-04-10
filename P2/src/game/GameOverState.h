@@ -1,12 +1,14 @@
 #pragma once
 #include "GameState.h"
 
+#include <string>
+
 class Texture;
 
 class GameOverState : public GameState
 {
 public:
-	GameOverState(int);
+	GameOverState();
 	~GameOverState() {}
 
 	void enter() override;
@@ -16,4 +18,5 @@ public:
 protected:
 
 	Texture* _gameOverMessage = nullptr;
+	std::string _message;
 };

@@ -4,18 +4,20 @@
 #include "../sdlutils/Texture.h"
 #include "../sdlutils/InputHandler.h"
 #include "Game.h"
+#include "../ecs/Manager.h"
+#include "../systems/GameCtrlSystem.h"
 
-GameOverState::GameOverState(int n) // 0 you lost, 1 you won
+GameOverState::GameOverState()
 {
-	if (n == 0)
-		_gameOverMessage = new Texture(sdlutils().renderer(), "Game Over. You Lost", sdlutils().fonts().at("ARIAL24"), build_sdlcolor(0xFF0000FF));
-	else
-		_gameOverMessage = new Texture(sdlutils().renderer(), "Game Over. You Won", sdlutils().fonts().at("ARIAL24"), build_sdlcolor(0x00FF00FF));
 	
 }
 
 void GameOverState::enter()
 {
+	if (Game::Instance()->getMngr()->getSystem<GameCtrlSystem>()->gameOverWin())
+		_gameOverMessage = new Texture(sdlutils().renderer(), "Game Over Champion! Press ENTER to continue.", sdlutils().fonts().at("ARIAL24"), build_sdlcolor(0x00FF00FF));
+	else
+		_gameOverMessage = new Texture(sdlutils().renderer(), "Game Over Loser! Press ENTER to continue.", sdlutils().fonts().at("ARIAL24"), build_sdlcolor(0xFF0000FF));
 
 }
 
