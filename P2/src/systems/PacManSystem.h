@@ -17,9 +17,9 @@ public:
 	void update() override;
 	void recieve(const Message& m) override;
 
-	void reset();
 private:
 
+	void reset();
 	void onGhostCollides();
 
 	Transform *_pmTR;

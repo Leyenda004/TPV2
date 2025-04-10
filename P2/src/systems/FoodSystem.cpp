@@ -104,6 +104,10 @@ void FoodSystem::recieve(const Message& m)
 	case _m_PACMAN_FOOD_COLLISION:
 		onFoodEaten(m.food_eaten_data.e);
 		break;
+	case _m_NEW_GAME:
+		reset();
+		spawnFood();
+		break;
 	default:
 		break;
 	}

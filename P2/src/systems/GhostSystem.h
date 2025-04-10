@@ -16,10 +16,10 @@ public:
 	void recieve(const Message&) override;
 
 	void startGeneration();
-	void reset();
 
 protected:
 
+	void reset();
 	void createGhost();
 	
 private:

@@ -138,6 +138,20 @@ public:
 	inline bool inRange(float x0, float x2, float y0, float y1) {
 		return _x >= x0 && _x <= x2 && _y >= y0 && _y <= y1;
 	}
+
+	inline bool isZeroX() {
+		return _x > -0.001f && _x < 0.001f;
+	}
+
+	inline bool isZeroY() {
+		return _y > -0.001f && _y < 0.001f;
+	}
+
+	void adjust() {
+		if (isZeroX()) _x = 0.0f;
+		if (isZeroY()) _y = 0.0f;
+	}
+
 private:
 	float _x;  // first coordinate
 	float _y;  // second coordinate

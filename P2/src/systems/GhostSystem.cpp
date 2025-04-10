@@ -115,6 +115,9 @@ void GhostSystem::recieve(const Message& m)
 	case _m_PACMAN_GHOST_COLLISION:
 		onPlayerCollides(m.ghost_pacman_col_data.e);
 		break;
+	case _m_ROUND_START:
+		reset();
+		break;
 	default:
 		break;
 	}

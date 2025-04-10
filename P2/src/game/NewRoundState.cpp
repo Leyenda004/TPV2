@@ -35,11 +35,6 @@ void NewRoundState::update()
 		m.id = _m_ROUND_START;
 		Game::Instance()->getMngr()->send(m);
 
-		ecs::Manager* _mngr = Game::Instance()->getMngr();
-		
-		_mngr->getSystem<PacManSystem>()->reset();
-		_mngr->getSystem<GhostSystem>()->reset();
-
 		Game::Instance()->setState(Game::RUNNING);
 
 		return;

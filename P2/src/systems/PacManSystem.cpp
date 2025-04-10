@@ -121,6 +121,12 @@ void PacManSystem::recieve(const Message& m)
 	case _m_PACMAN_GHOST_COLLISION:
 		onGhostCollides();
 		break;
+	case _m_ROUND_START:
+		reset();
+		break;
+	case _m_NEW_GAME:
+		health->vida = 3;
+		break;
 	default:
 		break;
 	}
