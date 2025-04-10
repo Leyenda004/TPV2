@@ -6,7 +6,6 @@
 //
 struct Transform;
 struct Image;
-struct StarMotion;
 struct Points;
 struct ImageWithFrames;
 struct Milagrosa;
@@ -17,7 +16,6 @@ struct Health;
 	Image, \
 	ImageWithFrames, \
 	Milagrosa, \
-	StarMotion, \
 	Points, \
 	Health
 

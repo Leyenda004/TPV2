@@ -203,9 +203,6 @@
     <ClInclude Include="..\src\components\Points.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\components\StarMotion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\components\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
