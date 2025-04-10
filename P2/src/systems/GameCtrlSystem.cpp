@@ -5,7 +5,7 @@
 #include "../components/Points.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
-#include "StarsSystem.h"
+
 GameCtrlSystem::GameCtrlSystem() :
 		_score() {
 	// TODO Auto-generated constructor stub

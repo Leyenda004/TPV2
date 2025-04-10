@@ -10,7 +10,6 @@
 #include "../systems/GameCtrlSystem.h"
 #include "../systems/PacManSystem.h"
 #include "../systems/RenderSystem.h"
-#include "../systems/StarsSystem.h"
 #include "../systems/FoodSystem.h"
 #include "../systems/GhostSystem.h"
 #include "../systems/ImmunitySystem.h"

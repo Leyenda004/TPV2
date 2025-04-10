@@ -44,7 +44,6 @@
     <ClCompile Include="..\src\systems\ImmunitySystem.cpp" />
     <ClCompile Include="..\src\systems\PacManSystem.cpp" />
     <ClCompile Include="..\src\systems\RenderSystem.cpp" />
-    <ClCompile Include="..\src\systems\StarsSystem.cpp" />
     <ClCompile Include="..\SRC\utils\Collisions.cpp" />
     <ClCompile Include="..\SRC\utils\Vector2D.cpp" />
   </ItemGroup>
@@ -95,7 +94,6 @@
     <ClInclude Include="..\src\systems\ImmunitySystem.h" />
     <ClInclude Include="..\src\systems\PacManSystem.h" />
     <ClInclude Include="..\src\systems\RenderSystem.h" />
-    <ClInclude Include="..\src\systems\StarsSystem.h" />
     <ClInclude Include="..\SRC\utils\Collisions.h" />
     <ClInclude Include="..\SRC\utils\DynamicBitSet.h" />
     <ClInclude Include="..\SRC\utils\GenID.h" />

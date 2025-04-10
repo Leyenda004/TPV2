@@ -35,7 +35,6 @@ struct Health;
 
 // Systems list - must have at least one element
 //
-class StarsSystem;
 class RenderSystem;
 class PacManSystem;
 class GameCtrlSystem;
@@ -45,7 +44,6 @@ class GhostSystem;
 class ImmunitySystem;
 
 #define _SYS_LIST_ \
-    StarsSystem, \
 	RenderSystem, \
 	PacManSystem, \
 	GameCtrlSystem, \
