@@ -48,9 +48,9 @@ int main(int argc, char **argv) {
 
 	try {
 		//start(argc, argv);
-		Game g;
-		g.init("resources/maps/little_wolf/map_0.json");
-		g.start();
+		Game::Init();
+		Game::Instance()->initGame("resources/maps/little_wolf/map_0.json");
+		Game::Instance()->start();
 
 	} catch (const std::string &e) { // catch exceptions thrown as strings
 		std::cerr << e << std::endl;

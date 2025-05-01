@@ -25,7 +25,11 @@ Game::~Game() {
 	delete _little_wolf;
 }
 
-void Game::init(const char *map) {
+bool Game::init() {
+	return true;
+}
+
+void Game::initGame(const char *map) {
 	
 	/*
 	net_ = new Networking();
