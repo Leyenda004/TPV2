@@ -587,7 +587,7 @@ bool LittleWolf::shoot(Player &p) {
 	return false;
 }
 
-void LittleWolf::switchToNextPlayer() {
+void LittleWolf::switchToNextPlayer() { // DELETE THIS METHOD
 
 	// search the next player in the palyer's array
 	int j = (_curr_player_id + 1) % _max_player;

@@ -8,6 +8,7 @@
 
 Game::Game() :
 		_little_wolf() //
+		//net_(nullptr)
 {
 }
 
@@ -25,8 +26,17 @@ Game::~Game() {
 }
 
 void Game::init(const char *map) {
+	
+	/*
+	net_ = new Networking();
 
-
+	if (!net_->init(host, port)) {
+		SDLNetUtils::print_SDLNet_error();
+		return false;
+	}
+	std::cout << "Connected as client " << (int) net_->client_id() << std::endl;
+	*/
+	
 	_little_wolf = new LittleWolf();
 
 	// load a map
@@ -58,6 +68,11 @@ void Game::init(const char *map) {
 	_little_wolf->addPlayer(1);
 	_little_wolf->addPlayer(2);
 	_little_wolf->addPlayer(3);
+
+	/*
+	// add some players
+	fighters_->addPlayer(net_->client_id());
+	*/
 }
 
 void Game::start() {
@@ -84,6 +99,7 @@ void Game::start() {
 		}
 
 		_little_wolf->update();
+		//net_->update(); // Handles the messages that the client could have reicived
 
 		// the clear is not necessary since the texture we copy to the window occupies the whole screen
 		// sdlutils().clearRenderer();

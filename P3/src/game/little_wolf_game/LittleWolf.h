@@ -156,7 +156,7 @@ private:
 	// mark all (used) player alive
 	void bringAllToLife();
 
-	// switch to the view of the next player
+	// DELETE THIS METHOD
 	void switchToNextPlayer();
 
 	// Calculates wall size using the <corrected> ray to the wall.

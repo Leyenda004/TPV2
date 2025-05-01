@@ -1,0 +1,40 @@
+TPV2 PRÁCTICA 3 - CÓMO NO MORIR EN LA PRÁCTICA
+-------------------------------------------------------------------------------
+
+Programa único que recibe parámetros para ejecutarse como servidor o como cliente:
+
+  [programa] server [Access port](2000)
+  en el main -> void server(int port)
+
+  [programa] client [server addr](localhost) [server Access port](2000)
+  en el main -> void client(char* host, int port)
+
+
+El flujo del programa es el siguiente según la opción que se escoja:
+
+SERVER
+
+La función servidor utiliza la clase UDPServer para hacer todo lo relacionado con el servidor.
+
+Para inicializarlo se le para el puerto por el que escuchar y se llama a la función listen() para esperar conexiones y hacer la gestión hasta que se cierre el servidor.
+
+Principalmente el servidor realiza 3 acciones:
+
+ - Conectar nuevos clientes, buscándoles sitio en el array de clientes
+ - Desconectar clientes, desactivándolos y cambiando el master si es necesario
+ - Hacer de espejo distribuidor, reenviando los mensajes de un cliente para todos y que lo gestione el master
+
+
+CLIENT
+
+Cada cliente ejecuta su juego de manera normal pero corrige posiciones y otros atributos de estado según lo que reciban del master (a través del mensaje distribuido por el servidor servidor), además envía, después de actualizar su local, su estado al servidor para que este le llegue al master (que en su uso de la clase Networking sabe que es él), que en su instancia del LitteWolf calcula las colisiones y envía el mensaje correspondiente para que el servidor lo distribuya al resto de clientes y que estos integren la información en su local.
+
+En la clase Networking hay por cada elemento que se necesite transferir un método para enviar y otro para gestionar la misma información pero recibida.
+
+Los métodos de LitteWolf que debemos modificar para que envíen información a través de la clase Networking a los demás jugadores (que tendrán una instancia de esta misma clase) son:
+
+ - update() // Después de todo, con el movimiento ya calculado
+ - addPlayer()
+ - shoot() // Solo informa de que ha habido diparo
+
+En resumen, el modo cliente instancia Game, que usa a LitteWolf para tener el juego y que a su vez utiliza la clase Networking para gestionar el recibimiento y envío de las actualizaciones en el juego local y remoto.
