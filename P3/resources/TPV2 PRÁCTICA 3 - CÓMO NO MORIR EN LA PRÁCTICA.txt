@@ -34,7 +34,7 @@ En la clase Networking hay por cada elemento que se necesite transferir un méto
 Los métodos de LitteWolf que debemos modificar para que envíen información a través de la clase Networking a los demás jugadores (que tendrán una instancia de esta misma clase) son:
 
  - update() // Después de todo, con el movimiento ya calculado
- - addPlayer()
+ - addPlayer() // Hay que usar el send_my_info()
  - shoot() // Solo informa de que ha habido diparo
 
 En resumen, el modo cliente instancia Game, que usa a LitteWolf para tener el juego y que a su vez utiliza la clase Networking para gestionar el recibimiento y envío de las actualizaciones en el juego local y remoto.
