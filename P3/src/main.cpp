@@ -8,17 +8,17 @@
 #include "sdlutils/SDLNetUtils.h"
 
 void server(Uint16 port) {
-	UDPServer s(port, 10);
-	s.listen();
+/*	UDPServer s(port, 10);
+	s.listen();*/
 }
 
 void client(char *host, Uint16 port) {
-	if (Game::Init()) {
+/*	if (Game::Init()) {
 		if (Game::Instance()->initGame(host, port)) {
 			Game::Instance()->start();
 		}
 		Game::Release();
-	}
+	}*/
 }
 
 void start(int argc, char **argv) {
@@ -47,7 +47,10 @@ void start(int argc, char **argv) {
 int main(int argc, char **argv) {
 
 	try {
-		start(argc, argv);
+		//start(argc, argv);
+		Game g;
+		g.init("resources/maps/little_wolf/map_0.json");
+		g.start();
 
 	} catch (const std::string &e) { // catch exceptions thrown as strings
 		std::cerr << e << std::endl;

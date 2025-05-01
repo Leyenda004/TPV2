@@ -22,6 +22,7 @@
     <ClCompile Include="..\src\game\Bullets.cpp" />
     <ClCompile Include="..\src\game\Fighter.cpp" />
     <ClCompile Include="..\src\game\Game.cpp" />
+    <ClCompile Include="..\src\game\LittleWolf.cpp" />
     <ClCompile Include="..\src\game\Networking.cpp" />
     <ClCompile Include="..\src\game\UDPServer.cpp" />
     <ClCompile Include="..\SRC\json\JSON.cpp" />
@@ -42,6 +43,7 @@
     <ClInclude Include="..\src\game\BulletsManager.h" />
     <ClInclude Include="..\src\game\Fighter.h" />
     <ClInclude Include="..\src\game\Game.h" />
+    <ClInclude Include="..\src\game\LittleWolf.h" />
     <ClInclude Include="..\src\game\Networking.h" />
     <ClInclude Include="..\src\game\netwrok_messages.h" />
     <ClInclude Include="..\src\game\UDPServer.h" />
