@@ -12,6 +12,10 @@
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
+#include "../utils/Vector2D.h"
+
+#include "Game.h"
+#include "Networking.h"
 
 LittleWolf::LittleWolf() :
 		_show_help(true), //
@@ -70,6 +74,44 @@ void LittleWolf::update() {
 	spin(p);  // handle spinning
 	move(p);  // handle moving
 	shoot(p); // handle shooting
+
+	Game::Instance()->get_networking().send_state(
+		Vector2D(p.where.x, p.where.y),
+		Vector2D(p.fov.a.x, p.fov.a.y), Vector2D(p.fov.b.x, p.fov.b.y),
+		p.theta);
+}
+
+void LittleWolf::send_my_info()
+{
+	Player& p = _players[_curr_player_id];
+
+	Game::Instance()->get_networking().send_my_info(
+		Vector2D(p.where.x, p.where.y), 
+		Vector2D(p.fov.a.x, p.fov.a.y), Vector2D(p.fov.b.x, p.fov.b.y),
+		p.theta, p.state);
+}
+
+void LittleWolf::update_player_info(Uint8 id, float posX, float posY, float fovPointAX, float fovPointAY, float fovPointBX, float fovPointBY, float rot, Uint8 state)
+{
+	Player& p = _players[id];
+
+	p.where = { posX, posY };
+	p.id = id;
+	p.fov.a = { fovPointAX, fovPointAY };
+	p.fov.b = { fovPointBX, fovPointBY };
+	p.theta = rot;
+	p.state = static_cast<PlayerState>(state);
+}
+
+void LittleWolf::update_player_state(Uint8 id, float posX, float posY, float fovPointAX, float fovPointAY, float fovPointBX, float fovPointBY, float rot)
+{
+	Player& p = _players[id];
+
+	p.where = { posX, posY };
+	p.id = id;
+	p.fov.a = { fovPointAX, fovPointAY };
+	p.fov.b = { fovPointBX, fovPointBY };
+	p.theta = rot;
 }
 
 void LittleWolf::load(std::string filename) {
@@ -262,6 +304,8 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 	_players[id] = p;
 
 	_curr_player_id = id;
+
+	send_my_info(); // Send to the server this new player to the rest to process it
 
 	return true;
 }

@@ -6,6 +6,7 @@
 
 #include "../sdlutils/SDLNetUtils.h"
 #include "Game.h"
+#include "LittleWolf.h"
 #include "Fighter.h"
 #include "Bullets.h"
 
@@ -103,9 +104,9 @@ void Networking::update() {
 
 		switch (m0._type) {
 		case _NEW_CLIENT_CONNECTED:
-			/*m1.deserialize(_p->data);
+			m1.deserialize(_p->data);
 			_masterId = m1._master_id;
-			handle_new_client(m1._client_id);*/
+			handle_new_client(m1._client_id);
 			break;
 
 		case _DISCONNECTED:
@@ -115,13 +116,13 @@ void Networking::update() {
 			break;
 
 		case _PLAYER_STATE:
-			/*m2.deserialize(_p->data);
-			handle_player_state(m2);*/
+			m2.deserialize(_p->data);
+			handle_player_state(m2);
 			break;
 
 		case _PLAYER_INFO:
-			/*m5.deserialize(_p->data);
-			handle_player_info(m5);*/
+			m5.deserialize(_p->data);
+			handle_player_info(m5);
 			break;
 
 		case _SHOOT:
@@ -144,35 +145,37 @@ void Networking::update() {
 	}
 }
 
-//void Networking::handle_new_client(Uint8 id) {
-//	if (id != _clientId)
-//		Game::Instance()->get_fighters().send_my_info();
-//}
+void Networking::handle_new_client(Uint8 id) {
+	if (id != _clientId)
+		Game::Instance()->get_little_wolf().send_my_info();
+}
 //
 //void Networking::handle_disconnet(Uint8 id) {
 //	Game::Instance()->get_fighters().removePlayer(id);
 //}
-//
-//void Networking::send_state(const Vector2D &pos, float w, float h, float rot) {
-//	PlayerStateMsg m;
-//	m._type = _PLAYER_STATE;
-//	m._client_id = _clientId;
-//	m.x = pos.getX();
-//	m.y = pos.getY();
-//	m.w = w;
-//	m.h = h;
-//	m.rot = rot;
-//	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
-//}
-//
-//void Networking::handle_player_state(const PlayerStateMsg &m) {
-//
-//	if (m._client_id != _clientId) {
-//		Game::Instance()->get_fighters().update_player_state(m._client_id, m.x,
-//				m.y, m.w, m.h, m.rot);
-//	}
-//}
-//
+
+void Networking::send_state(const Vector2D& pos, const Vector2D& fovPointA, const Vector2D& fovPointB, float rot) {
+	PlayerStateMsg m;
+	m._type = _PLAYER_STATE;
+	m._client_id = _clientId;
+	m.x = pos.getX();
+	m.y = pos.getY();
+	m.fvPAx = fovPointA.getX();
+	m.fvPAy = fovPointA.getY();
+	m.fvPBx = fovPointA.getX();
+	m.fvPBy = fovPointA.getY();
+	m.rot = rot;
+	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
+}
+
+void Networking::handle_player_state(const PlayerStateMsg &m) {
+
+	if (m._client_id != _clientId) {
+		Game::Instance()->get_little_wolf().update_player_state(m._client_id, m.x,
+			m.y, m.fvPAx, m.fvPAy, m.fvPBx, m.fvPBy, m.rot);
+	}
+}
+
 //void Networking::send_shoot(Vector2D p, Vector2D v, int width, int height,
 //		float r) {
 //	ShootMsg m;
@@ -205,26 +208,28 @@ void Networking::update() {
 //	Game::Instance()->get_fighters().killPlayer(m._client_id);
 //}
 //
-//void Networking::send_my_info(const Vector2D &pos, float w, float h, float rot,
-//		Uint8 state) {
-//	PlayerInfoMsg m;
-//	m._type = _PLAYER_INFO;
-//	m._client_id = _clientId;
-//	m.x = pos.getX();
-//	m.y = pos.getY();
-//	m.w = w;
-//	m.h = h;
-//	m.rot = rot;
-//	m.state = state;
-//	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
-//}
-//
-//void Networking::handle_player_info(const PlayerInfoMsg &m) {
-//	if (m._client_id != _clientId) {
-//		Game::Instance()->get_fighters().update_player_info(m._client_id, m.x,
-//				m.y, m.w, m.h, m.rot, m.state);
-//	}
-//}
+void Networking::send_my_info(const Vector2D &pos, const Vector2D& fovPointA, const Vector2D& fovPointB, float rot,
+		Uint8 state) {
+	PlayerInfoMsg m;
+	m._type = _PLAYER_INFO;
+	m._client_id = _clientId;
+	m.x = pos.getX();
+	m.y = pos.getY();
+	m.fvPAx = fovPointA.getX();
+	m.fvPAy = fovPointA.getY();
+	m.fvPBx = fovPointA.getX();
+	m.fvPBy = fovPointA.getY();
+	m.rot = rot;
+	m.state = state;
+	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
+}
+
+void Networking::handle_player_info(const PlayerInfoMsg &m) {
+	if (m._client_id != _clientId) {
+		Game::Instance()->get_little_wolf().update_player_info(m._client_id, m.x,
+				m.y, m.fvPAx, m.fvPAy, m.fvPBx, m.fvPBy, m.rot, m.state);
+	}
+}
 //
 //void Networking::send_restart() {
 //	Msg m;

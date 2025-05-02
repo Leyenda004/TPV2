@@ -3,6 +3,7 @@
 #pragma once
 
 #include "../utils/Singleton.h"
+#include <SDL.h>
 
 class Networking;
 class LittleWolf;
@@ -13,11 +14,15 @@ class Game : public Singleton<Game> {
 
 public:
 	
-	void initGame(const char *map);
+	bool initGame(char* host, Uint16 port, const char *map);
 	void start();
 
 	Networking& get_networking() {
 		return *net_;
+	}
+
+	LittleWolf& get_little_wolf() {
+		return *_little_wolf;
 	}
 
 private:

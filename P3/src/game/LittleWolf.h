@@ -143,6 +143,14 @@ public:
 	// update the world, etc
 	void update();
 
+	void send_my_info();
+
+	void update_player_info(Uint8 id, float posX, float posY, float fovPointAX, float fovPointAY,
+		float fovPointBX, float fovPointBY, float rot, Uint8 state);
+
+	void update_player_state(Uint8 id, float posX, float posY, float fovPointAX, float fovPointAY,
+		float fovPointBX, float fovPointBY, float rot);
+
 	int get_xres() {
 		return _xres;
 	}

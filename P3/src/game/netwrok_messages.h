@@ -41,11 +41,13 @@ struct PlayerStateMsg: MsgWithId {
 
 	float x;
 	float y;
-	int w;
-	int h;
+	float fvPAx;
+	float fvPAy;
+	float fvPBx;
+	float fvPBy;
 	float rot;
 
-	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x,y,w,h,rot)
+	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x,y, fvPAx, fvPAy, fvPBx, fvPBy, rot)
 
 };
 
@@ -53,12 +55,14 @@ struct PlayerInfoMsg: MsgWithId {
 
 	float x;
 	float y;
-	int w;
-	int h;
+	float fvPAx;
+	float fvPAy;
+	float fvPBx;
+	float fvPBy;
 	float rot;
 	Uint8 state;
 
-	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x,y,w,h,rot,state)
+	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x,y, fvPAx, fvPAy, fvPBx, fvPBy,rot,state)
 
 };
 struct ShootMsg: MsgWithId {
