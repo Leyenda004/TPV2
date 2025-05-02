@@ -68,11 +68,6 @@ bool Game::initGame(char* host, Uint16 port, const char *map) {
 	}
 
 	_little_wolf->init(sdlutils().window(), sdlutils().renderer());
-
-	// add some players
-	/*_little_wolf->addPlayer(0);
-	_little_wolf->addPlayer(1);*/
-
 	
 	// add player
 	_little_wolf->addPlayer(net_->client_id());
@@ -104,7 +99,7 @@ void Game::start() {
 		}
 
 		_little_wolf->update();
-		//net_->update(); // Handles the messages that the client could have reicived
+		net_->update(); // Handles the messages that the client could have reicived
 
 		// the clear is not necessary since the texture we copy to the window occupies the whole screen
 		// sdlutils().clearRenderer();

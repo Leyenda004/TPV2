@@ -95,23 +95,31 @@ void LittleWolf::update_player_info(Uint8 id, float posX, float posY, float fovP
 {
 	Player& p = _players[id];
 
+	_map.walling[(int)p.where.y][(int)p.where.x] = 0; // Leaving free the old player's position in the Tilemap
+
 	p.where = { posX, posY };
 	p.id = id;
 	p.fov.a = { fovPointAX, fovPointAY };
 	p.fov.b = { fovPointBX, fovPointBY };
 	p.theta = rot;
 	p.state = static_cast<PlayerState>(state);
+
+	_map.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id); // Setting the player in the Tilemap
 }
 
 void LittleWolf::update_player_state(Uint8 id, float posX, float posY, float fovPointAX, float fovPointAY, float fovPointBX, float fovPointBY, float rot)
 {
 	Player& p = _players[id];
 
+	_map.walling[(int)p.where.y][(int)p.where.x] = 0; // Leaving free the old player's position in the Tilemap
+
 	p.where = { posX, posY };
 	p.id = id;
 	p.fov.a = { fovPointAX, fovPointAY };
 	p.fov.b = { fovPointBX, fovPointBY };
 	p.theta = rot;
+
+	_map.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id); // Setting the player in the Tilemap
 }
 
 void LittleWolf::load(std::string filename) {
