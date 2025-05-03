@@ -1,7 +1,7 @@
 :: cambiar a la carpeta donde está la carpeta resources
 
-c:
-cd c:\hlocal\TPV2
+d:
+cd D:\Main\Clase\Uni\Segundo\TPV2\RepoLab\TPV2\P3
  
 :: ejecutar el servidor en el puerto 2000
 

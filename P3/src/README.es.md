@@ -5,7 +5,7 @@
 
 - Vamos a suponer que tu proyecto está en la carpeta `C:\hlocal\TPV2`, y las carpetas `src`, `resources` y `bin` están directamente en `C:\hlocal\TPV2`.
 
-- Copia las carpetas y archivos que están dentro de `fighters/net` a tu proyecto, dentro de la carpeta `src`, y añade todos los archivos `.cpp` y `.h`` a tu proyecto.
+- Copia las carpetas y archivos que están dentro de `fighters/net` a tu proyecto, dentro de la carpeta `src`, y añade todos los archivos `.cpp` y `.h` a tu proyecto.
 
 
 
