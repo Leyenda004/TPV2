@@ -66,6 +66,8 @@ void LittleWolf::update() {
 	if (p.state != ALIVE)
 		return;
 
+	Vector2D last = { p.where.x, p.where.y };
+
 	spin(p);  // handle spinning
 	move(p);  // handle moving
 	shoot(p); // handle shooting
@@ -103,6 +105,14 @@ void LittleWolf::update_player_state(Uint8 id, float posX, float posY, float rot
 {
 	Player& p = _players[id];
 
+	if (Game::Instance()->get_networking().is_master() 
+		&& (posX != p.where.x || posY != p.where.y)
+		&& _map.walling[(int)posY][(int)posX] != 0)
+	{
+		Game::Instance()->get_networking().send_state(id, Vector2D(p.where.x, p.where.y), p.theta);
+		return;
+	}
+
 	_map.walling[(int)p.where.y][(int)p.where.x] = 0; // Leaving free the old player's position in the Tilemap
 
 	p.where = { posX, posY };
@@ -110,19 +120,7 @@ void LittleWolf::update_player_state(Uint8 id, float posX, float posY, float rot
 	p.theta = rot;
 
 	_map.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id); // Setting the player in the Tilemap
-}
 
-void LittleWolf::check_player_collision(Uint8 id, float pastX, float pastY, float actX, float actY, float vel, float rot)
-{
-	Player& p = _players[id];
-
-	if ((pastX != actX || pastY != actY) &&
-		_map.walling[(int)actX][(int)actX] == 0) {
-		p.where = { actX, actY };
-		p.theta = rot;
-	}
-
-	Game::Instance()->get_networking().send_state(id, Vector2D(p.where.x, p.where.y), p.theta);
 }
 
 void LittleWolf::load(std::string filename) {

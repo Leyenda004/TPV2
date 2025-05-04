@@ -159,9 +159,6 @@ public:
 
 	void update_player_state(Uint8 id, float posX, float posY, float rot);
 
-	void check_player_collision(Uint8 id, float pastX, float pastY, float actX, float actY,
-		float vel, float rot);
-
 	int get_xres() {
 		return _xres;
 	}

@@ -38,7 +38,6 @@ private:
 	void handle_disconnet(Uint8 id);
 	void handle_player_state(const PlayerStateMsg &m);
 	void handle_player_info(const PlayerInfoMsg &m);
-	void handle_player_move(const PlayerMoveMsg &m);
 	void handle_shoot(const ShootMsg &m);
 	void handle_dead(const MsgWithId &m);
 	/*void handle_restart();*/
