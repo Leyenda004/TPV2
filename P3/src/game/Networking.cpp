@@ -99,6 +99,7 @@ void Networking::update() {
 	ShootMsg m3;
 	MsgWithId m4;
 	PlayerInfoMsg m5;
+	DeathMsg m6;
 
 	while (SDLNetUtils::deserializedReceive(m0, _p, _sock) > 0) {
 
@@ -131,8 +132,8 @@ void Networking::update() {
 			break;
 
 		case _DEAD:
-			m4.deserialize(_p->data);
-			handle_dead(m4);
+			m6.deserialize(_p->data);
+			handle_dead(m6);
 			break;
 
 		case _RESTART:
@@ -154,13 +155,17 @@ void Networking::handle_disconnet(Uint8 id) {
 	Game::Instance()->get_little_wolf().removePlayer(id);
 }
 
-void Networking::send_state(Uint8 id, const Vector2D& pos, float rot) {
+void Networking::send_state(Uint8 id, const Vector2D& pos, const Vector2D& fovPointA, const Vector2D& fovPointB, float rot) {
 	PlayerStateMsg m;
 	m._type = _PLAYER_STATE;
 	m._client_id = _clientId;
 	m._player_id = id;
 	m.x = pos.getX();
 	m.y = pos.getY();
+	m.fvPAx = fovPointA.getX();
+	m.fvPAy = fovPointA.getY();
+	m.fvPBx = fovPointA.getX();
+	m.fvPBy = fovPointA.getY();
 	m.rot = rot;
 	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
 }
@@ -168,32 +173,35 @@ void Networking::send_state(Uint8 id, const Vector2D& pos, float rot) {
 void Networking::handle_player_state(const PlayerStateMsg &m) {
 
 	if (m._player_id != _clientId) {
-		Game::Instance()->get_little_wolf().update_player_state(m._player_id, m.x, m.y, m.rot);
+		Game::Instance()->get_little_wolf().update_player_state(m._player_id, m.x, m.y, m.fvPAx, m.fvPAy, m.fvPBx, m.fvPBy, m.rot);
 	}
 }
 
 void Networking::send_shoot() {
 	ShootMsg m;
 	m._type = _SHOOT;
+	m._client_id = _clientId;
 	m._gunner_id = _clientId;
-
+	
 	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
 }
 
 void Networking::handle_shoot(const ShootMsg &m) {
+	
 	Game::Instance()->get_little_wolf().handle_shoot(m._gunner_id);
-
 }
 
 void Networking::send_dead(Uint8 id) {
-	MsgWithId m;
+	DeathMsg m;
 	m._type = _DEAD;
-	m._client_id = id;
+	m._client_id = _clientId;
+	m._death_id = id;
 	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
 }
 
-void Networking::handle_dead(const MsgWithId &m) {
-	Game::Instance()->get_little_wolf().killPlayer(m._client_id);
+void Networking::handle_dead(const DeathMsg& m) {
+	
+	Game::Instance()->get_little_wolf().killPlayer(m._death_id);
 }
 
 void Networking::send_my_info(const Vector2D &pos, const Vector2D& fovPointA, const Vector2D& fovPointB, float rot,

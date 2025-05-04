@@ -43,9 +43,13 @@ struct PlayerStateMsg: MsgWithId {
 	Uint8 _player_id;
 	float x;
 	float y;
+	float fvPAx;
+	float fvPAy;
+	float fvPBx;
+	float fvPBy;
 	float rot;
 
-	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, _player_id, x,y, rot)
+	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, _player_id, x,y, fvPAx, fvPAy, fvPBx, fvPBy, rot)
 
 };
 
@@ -69,5 +73,13 @@ struct ShootMsg: MsgWithId {
 	Uint8 _gunner_id;
 
 	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, _gunner_id)
+
+};
+
+struct DeathMsg : MsgWithId {
+
+	Uint8 _death_id;
+
+	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, _death_id)
 
 };
