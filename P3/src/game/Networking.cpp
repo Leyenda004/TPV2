@@ -99,6 +99,7 @@ void Networking::update() {
 	ShootMsg m3;
 	MsgWithId m4;
 	PlayerInfoMsg m5;
+	PlayerMoveMsg m6;
 
 	while (SDLNetUtils::deserializedReceive(m0, _p, _sock) > 0) {
 
@@ -123,6 +124,11 @@ void Networking::update() {
 		case _PLAYER_INFO:
 			m5.deserialize(_p->data);
 			handle_player_info(m5);
+			break;
+
+		case _PLAYER_MOVED:
+			m6.deserialize(_p->data);
+
 			break;
 
 		case _SHOOT:
@@ -154,16 +160,13 @@ void Networking::handle_disconnet(Uint8 id) {
 	Game::Instance()->get_little_wolf().removePlayer(id);
 }
 
-void Networking::send_state(const Vector2D& pos, const Vector2D& fovPointA, const Vector2D& fovPointB, float rot) {
+void Networking::send_state(Uint8 id, const Vector2D& pos, float rot) {
 	PlayerStateMsg m;
 	m._type = _PLAYER_STATE;
 	m._client_id = _clientId;
+	m._player_id = id;
 	m.x = pos.getX();
 	m.y = pos.getY();
-	m.fvPAx = fovPointA.getX();
-	m.fvPAy = fovPointA.getY();
-	m.fvPBx = fovPointA.getX();
-	m.fvPBy = fovPointA.getY();
 	m.rot = rot;
 	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
 }
@@ -171,8 +174,7 @@ void Networking::send_state(const Vector2D& pos, const Vector2D& fovPointA, cons
 void Networking::handle_player_state(const PlayerStateMsg &m) {
 
 	if (m._client_id != _clientId) {
-		Game::Instance()->get_little_wolf().update_player_state(m._client_id, m.x,
-			m.y, m.fvPAx, m.fvPAy, m.fvPBx, m.fvPBy, m.rot);
+		Game::Instance()->get_little_wolf().update_player_state(m._client_id, m.x, m.y, m.rot);
 	}
 }
 
@@ -221,6 +223,10 @@ void Networking::handle_player_info(const PlayerInfoMsg &m) {
 		Game::Instance()->get_little_wolf().update_player_info(m._client_id, m.x,
 				m.y, m.fvPAx, m.fvPAy, m.fvPBx, m.fvPBy, m.rot, m.state);
 	}
+}
+void Networking::handle_player_move(const PlayerMoveMsg& m)
+{
+
 }
 //
 //void Networking::send_restart() {

@@ -70,10 +70,7 @@ void LittleWolf::update() {
 	move(p);  // handle moving
 	shoot(p); // handle shooting
 
-	Game::Instance()->get_networking().send_state(
-		Vector2D(p.where.x, p.where.y),
-		Vector2D(p.fov.a.x, p.fov.a.y), Vector2D(p.fov.b.x, p.fov.b.y),
-		p.theta);
+	Game::Instance()->get_networking().send_state(_curr_player_id, Vector2D(p.where.x, p.where.y), p.theta); // This will be move request
 }
 
 void LittleWolf::send_my_info()
@@ -102,7 +99,7 @@ void LittleWolf::update_player_info(Uint8 id, float posX, float posY, float fovP
 	_map.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id); // Setting the player in the Tilemap
 }
 
-void LittleWolf::update_player_state(Uint8 id, float posX, float posY, float fovPointAX, float fovPointAY, float fovPointBX, float fovPointBY, float rot)
+void LittleWolf::update_player_state(Uint8 id, float posX, float posY, float rot)
 {
 	Player& p = _players[id];
 
@@ -110,11 +107,22 @@ void LittleWolf::update_player_state(Uint8 id, float posX, float posY, float fov
 
 	p.where = { posX, posY };
 	p.id = id;
-	p.fov.a = { fovPointAX, fovPointAY };
-	p.fov.b = { fovPointBX, fovPointBY };
 	p.theta = rot;
 
 	_map.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id); // Setting the player in the Tilemap
+}
+
+void LittleWolf::check_player_collision(Uint8 id, float pastX, float pastY, float actX, float actY, float vel, float rot)
+{
+	Player& p = _players[id];
+
+	if ((pastX != actX || pastY != actY) &&
+		_map.walling[(int)actX][(int)actX] == 0) {
+		p.where = { actX, actY };
+		p.theta = rot;
+	}
+
+	Game::Instance()->get_networking().send_state(id, Vector2D(p.where.x, p.where.y), p.theta);
 }
 
 void LittleWolf::load(std::string filename) {

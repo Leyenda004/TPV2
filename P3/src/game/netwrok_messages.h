@@ -14,6 +14,7 @@ enum MsgType : Uint8 {
 	_NEW_CLIENT_CONNECTED, //
 	_PLAYER_STATE, // sent frequently to boradcast the state
 	_PLAYER_INFO, // sent only the first time the player connects
+	_PLAYER_MOVED,
 	_SHOOT, //
 	_DEAD, //
 	_RESTART
@@ -39,15 +40,12 @@ struct MsgWithMasterId: MsgWithId {
 
 struct PlayerStateMsg: MsgWithId {
 
+	Uint8 _player_id;
 	float x;
 	float y;
-	float fvPAx;
-	float fvPAy;
-	float fvPBx;
-	float fvPBy;
 	float rot;
 
-	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x,y, fvPAx, fvPAy, fvPBx, fvPBy, rot)
+	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x,y, rot)
 
 };
 
@@ -65,6 +63,20 @@ struct PlayerInfoMsg: MsgWithId {
 	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x,y, fvPAx, fvPAy, fvPBx, fvPBy,rot,state)
 
 };
+
+struct PlayerMoveMsg : MsgWithId {
+
+	float past_x;
+	float past_y;
+	float actual_x;
+	float actual_y;
+	float vel;
+	float rot;
+
+	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, past_x, past_y, actual_x, actual_y, vel, rot)
+
+};
+
 struct ShootMsg: MsgWithId {
 
 	Uint8 _gunner_id;
