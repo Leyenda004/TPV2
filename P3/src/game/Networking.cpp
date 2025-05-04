@@ -227,6 +227,6 @@ void Networking::send_restart() {
 
 void Networking::handle_restart() {
 	Game::Instance()->get_little_wolf().bringAllToLife();
-	Game::Instance()->get_little_wolf().randomizePlayerPosition(_clientId);
+	Game::Instance()->get_little_wolf().randomizePlayerPositions();
 
 }
