@@ -390,10 +390,11 @@ void LittleWolf::killPlayer(std::uint8_t id)
 	sdlutils().soundEffects().at("pain").play();
 
 	_players[id].state = DEAD;
-
-	checkRestart();
-
+	
 	sdlutils().clearRenderer();
+
+	if (Game::Instance()->get_networking().is_master())	checkRestart();
+
 }
 
 void LittleWolf::render() {
@@ -415,6 +416,25 @@ void LittleWolf::render() {
 			auto &t = sdlutils().msgs().at(s);
 			y = y - t.height() - 10;
 			t.render(0, y);
+		}
+	}
+
+	if (restarting) {
+		
+		int actual_time = SDL_GetTicks() - start_time;
+
+		if (actual_time < 5000){
+			sdlutils().clearRenderer();
+
+			std::cout << "Restarting in " << 5 - actual_time / 1000 << std::endl;
+			Texture restartText(sdlutils().renderer(), "The game will restart in " + std::to_string(5 - actual_time / 1000), sdlutils().fonts().at("MFR12"), build_sdlcolor(0xFFFFFFFF));
+			restartText.render(restartText.width() / 2, restartText.height() / 2);
+		}
+		
+		else {
+			sdlutils().clearRenderer();
+			restarting = false;
+			Game::Instance()->get_networking().send_restart();
 		}
 	}
 }
@@ -728,12 +748,14 @@ void LittleWolf::randomizePlayerPosition(std::uint8_t id) {
 void LittleWolf::checkRestart()
 {
 	// Comprobar si quedan mas de 2 jugadores vivos
-	if (getPlayersAlive() < 2){
+	if (getPlayersAlive() < 2 && !restarting) {
+		restarting = true;
+		start_time = SDL_GetTicks();
 		// !! Esperar 5 segundos y reflejarlo en pantalla. Detener acciones de jugadores
 		std::cout << "Restarting game..." << std::endl;
 
 		// Notify all players about the restart
-		Game::Instance()->get_networking().send_restart();
+		// Game::Instance()->get_networking().send_restart();
 	}
 
 }

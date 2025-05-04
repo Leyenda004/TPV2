@@ -183,6 +183,10 @@ public:
 
 private:
 
+	// Checks if the game is restarting, for the render
+	bool restarting = false;
+	int start_time;
+
 	// Calculates wall size using the <corrected> ray to the wall.
 	Wall project(const int xres, const int yres, const float focal,
 			const Point corrected);
