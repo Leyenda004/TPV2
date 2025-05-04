@@ -31,6 +31,8 @@ private:
 	virtual ~Game();
 
 	bool init();
+
+	void checkAndRestartGame();
 	
 	LittleWolf *_little_wolf;
 	Networking* net_;

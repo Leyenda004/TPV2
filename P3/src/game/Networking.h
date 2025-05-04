@@ -30,7 +30,7 @@ public:
 	
 	void send_shoot();
 	void send_dead(Uint8 id);
-	/*void send_restart();*/
+	void send_restart();
 
 private:
 
@@ -41,7 +41,7 @@ private:
 	void handle_player_move(const PlayerMoveMsg &m);
 	void handle_shoot(const ShootMsg &m);
 	void handle_dead(const MsgWithId &m);
-	/*void handle_restart();*/
+	void handle_restart();
 
 	UDPsocket _sock;
 	SDLNet_SocketSet _socketSet;

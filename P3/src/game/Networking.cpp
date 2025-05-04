@@ -142,7 +142,7 @@ void Networking::update() {
 			break;
 
 		case _RESTART:
-			//handle_restart();
+			handle_restart();
 			break;
 
 		default:
@@ -228,14 +228,15 @@ void Networking::handle_player_move(const PlayerMoveMsg& m)
 {
 
 }
-//
-//void Networking::send_restart() {
-//	Msg m;
-//	m._type = _RESTART;
-//	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
-//}
-//
-//void Networking::handle_restart() {
-//	Game::Instance()->get_fighters().bringAllToLife();
-//
-//}
+
+void Networking::send_restart() {
+	Msg m;
+	m._type = _RESTART;
+	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
+}
+
+void Networking::handle_restart() {
+	Game::Instance()->get_little_wolf().bringAllToLife();
+	Game::Instance()->get_little_wolf().randomizePlayerPosition(_clientId);
+
+}
