@@ -53,7 +53,7 @@ void LittleWolf::update() {
 		if (ihdlr.isKeyDown(SDL_SCANCODE_T)) {
 			_show_help = !_show_help;
 		}
-/*
+		/*
 		// R brings deads to life
 		if (ihdlr.isKeyDown(SDL_SCANCODE_R)) {
 			bringAllToLife();
@@ -695,4 +695,8 @@ void LittleWolf::bringAllToLife() {
 			_players[i].state = ALIVE;
 		}
 	}
+}
+
+void LittleWolf::randomizePlayerPosition(std::uint8_t id) {
+
 }

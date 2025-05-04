@@ -167,10 +167,12 @@ public:
 		return _yres;
 	}
 
-private:
-
 	// mark all (used) player alive
 	void bringAllToLife();
+
+	void randomizePlayerPosition(std::uint8_t id);
+
+private:
 
 	// Calculates wall size using the <corrected> ray to the wall.
 	Wall project(const int xres, const int yres, const float focal,
