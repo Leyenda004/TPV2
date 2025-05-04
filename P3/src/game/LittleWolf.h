@@ -173,9 +173,6 @@ private:
 	// mark all (used) player alive
 	void bringAllToLife();
 
-	// DELETE THIS METHOD
-	void switchToNextPlayer();
-
 	// Calculates wall size using the <corrected> ray to the wall.
 	Wall project(const int xres, const int yres, const float focal,
 			const Point corrected);

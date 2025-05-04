@@ -53,16 +53,11 @@ void LittleWolf::update() {
 		if (ihdlr.isKeyDown(SDL_SCANCODE_T)) {
 			_show_help = !_show_help;
 		}
-
-		// N switches to the next player view
-		if (ihdlr.isKeyDown(SDL_SCANCODE_N)) {
-			switchToNextPlayer();
-		}
-
+/*
 		// R brings deads to life
 		if (ihdlr.isKeyDown(SDL_SCANCODE_R)) {
 			bringAllToLife();
-		}
+		}*/
 	}
 
 	Player &p = _players[_curr_player_id];
@@ -685,18 +680,6 @@ bool LittleWolf::shoot(Player &p) {
 		Game::Instance()->get_networking().send_shoot();
 	}
 	return false;
-}
-
-void LittleWolf::switchToNextPlayer() { // DELETE THIS METHOD
-
-	// search the next player in the palyer's array
-	int j = (_curr_player_id + 1) % _max_player;
-	while (j != _curr_player_id && _players[j].state == NOT_USED)
-		j = (j + 1) % _max_player;
-
-	// move to the next player view
-	_curr_player_id = j;
-
 }
 
 void LittleWolf::bringAllToLife() {
