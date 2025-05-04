@@ -171,9 +171,22 @@ public:
 	// mark all (used) player alive
 	void bringAllToLife();
 
+	void randomizePlayerPositions();
 	void randomizePlayerPosition(std::uint8_t id);
 
+	inline int getPlayersAlive() {
+		int count = 0;
+		for (int i = 0; i < _max_player; i++) if (_players[i].state == ALIVE) count++;
+		return count;
+	}
+
+	void checkRestart();
+
 private:
+
+	// Checks if the game is restarting, for the render
+	bool restarting = false;
+	int start_time;
 
 	// Calculates wall size using the <corrected> ray to the wall.
 	Wall project(const int xres, const int yres, const float focal,
@@ -417,6 +430,5 @@ private:
 
 	// constant to convert from radians to degrees
 	static constexpr float _rd = 180 / 3.14159265358979323846264338327950288f;
-
 };
 

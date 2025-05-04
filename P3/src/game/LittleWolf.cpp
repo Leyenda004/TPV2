@@ -397,8 +397,11 @@ void LittleWolf::killPlayer(std::uint8_t id)
 	sdlutils().soundEffects().at("pain").play();
 
 	_players[id].state = DEAD;
-
+	
 	sdlutils().clearRenderer();
+
+	if (Game::Instance()->get_networking().is_master())	checkRestart();
+
 }
 
 void LittleWolf::render() {
@@ -420,6 +423,25 @@ void LittleWolf::render() {
 			auto &t = sdlutils().msgs().at(s);
 			y = y - t.height() - 10;
 			t.render(0, y);
+		}
+	}
+
+	if (restarting) {
+		
+		int actual_time = SDL_GetTicks() - start_time;
+
+		if (actual_time < 5000){
+			sdlutils().clearRenderer();
+
+			std::cout << "Restarting in " << 5 - actual_time / 1000 << std::endl;
+			Texture restartText(sdlutils().renderer(), "The game will restart in " + std::to_string(5 - actual_time / 1000), sdlutils().fonts().at("MFR12"), build_sdlcolor(0xFFFFFFFF));
+			restartText.render(restartText.width() / 2, restartText.height() / 2);
+		}
+		
+		else {
+			sdlutils().clearRenderer();
+			restarting = false;
+			Game::Instance()->get_networking().send_restart();
 		}
 	}
 }
@@ -704,6 +726,43 @@ void LittleWolf::bringAllToLife() {
 	}
 }
 
+void LittleWolf::randomizePlayerPositions()
+{
+	for (auto player : _players) {
+		randomizePlayerPosition(player.id);
+	}
+}
+
 void LittleWolf::randomizePlayerPosition(std::uint8_t id) {
+	Player& p = _players[id];
+	int row, col;
+	
+	_map.walling[(int)p.where.y][(int)p.where.x] = 0; // Limpiar antigua posición del jugador
+	
+	// Encontrar una celda vacía
+	while (true){
+		row = sdlutils().rand().nextInt(0, _map.walling_height);
+		col = sdlutils().rand().nextInt(0, _map.walling_width);
+
+		if (_map.walling[row][col] == 0) break;
+	}
+
+	// Actualizar jugador y mapa
+	p.where = { col + 0.5f, row + 0.5f };
+	_map.walling[row][col] = player_to_tile(id);
+}
+
+void LittleWolf::checkRestart()
+{
+	// Comprobar si quedan mas de 2 jugadores vivos
+	if (getPlayersAlive() < 2 && !restarting) {
+		restarting = true;
+		start_time = SDL_GetTicks();
+		// !! Esperar 5 segundos y reflejarlo en pantalla. Detener acciones de jugadores
+		std::cout << "Restarting game..." << std::endl;
+
+		// Notify all players about the restart
+		// Game::Instance()->get_networking().send_restart();
+	}
 
 }

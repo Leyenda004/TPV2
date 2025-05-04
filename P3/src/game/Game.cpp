@@ -101,8 +101,6 @@ void Game::start() {
 		_little_wolf->update();
 		net_->update(); // Handles the messages that the client could have reicived
 
-		checkAndRestartGame();
-
 		// the clear is not necessary since the texture we copy to the window occupies the whole screen
 		// sdlutils().clearRenderer();
 
@@ -117,10 +115,5 @@ void Game::start() {
 	}
 
 	net_->disconnect();
-}
-
-void Game::checkAndRestartGame() {
-    int alivePlayers = 0;
-	
 }
 
