@@ -318,6 +318,81 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 	return true;
 }
 
+bool LittleWolf::removePlayer(std::uint8_t id)
+{
+	Player& p = _players[id];
+
+	_map.walling[(int)p.where.y][(int)p.where.x] = 0; // Borra al jugador del mapa
+
+	_players[id].state = NOT_USED;
+
+	return true;
+}
+
+void LittleWolf::handle_shoot(std::uint8_t id)
+{
+	Player& p = _players[id];
+
+	Vector2D gunnerPos = { p.where.x, p.where.y };
+	Vector2D selfPos = { _players[_curr_player_id].where.x, _players[_curr_player_id].where.y };
+
+	float distVolFactor = 0.3;
+	float shootVolume = 128 - (gunnerPos - selfPos).magnitude() * distVolFactor;
+
+	// play gun shot sound
+	sdlutils().soundEffects().at("gunshot").setVolume(shootVolume);
+	sdlutils().soundEffects().at("gunshot").play();
+
+	if (!Game::Instance()->get_networking().is_master())
+		return;
+	
+	// we shoot in several directions, because with projection what you see is not exact
+	for (float d = -0.05; d <= 0.05; d += 0.005) {
+
+		// search which tile was hit
+		const Line camera = rotate(p.fov, p.theta + d);
+		Point direction = lerp(camera, 0.5f);
+		direction.x = direction.x / mag(direction);
+		direction.y = direction.y / mag(direction);
+		const Hit hit = cast(p.where, direction, _map.walling, false, true);
+
+#ifdef _DEBUG
+		printf(
+			"Shoot by player %d hit a tile with value %d! at distance %f\n",
+			p.id, hit.tile, mag(sub(p.where, hit.where)));
+#endif
+
+		// if we hit a tile with a player id and the distance from that tile is smaller
+		// than shoot_distace, we mark the player as dead
+		if (hit.tile > 9 && mag(sub(p.where, hit.where)) < _shoot_distace) {
+			uint8_t dead_id = tile_to_player(hit.tile);
+			
+			Game::Instance()->get_networking().send_dead(dead_id); // Send the message to all
+		
+			return;
+		}
+	}
+}
+
+void LittleWolf::killPlayer(std::uint8_t id)
+{
+	Player& p = _players[id];
+
+	Vector2D deadPos = { p.where.x, p.where.y };
+	Vector2D selfPos = { _players[_curr_player_id].where.x, _players[_curr_player_id].where.y };
+
+	float distVolFactor = 0.3;
+	float deathVolume = 128 - (deadPos - selfPos).magnitude() * distVolFactor;
+
+	// play gun shot sound
+	sdlutils().soundEffects().at("pain").setVolume(deathVolume);
+	sdlutils().soundEffects().at("pain").play();
+
+	_players[id].state = DEAD;
+
+	sdlutils().clearRenderer();
+}
+
 void LittleWolf::render() {
 
 	// if the player is dead we only render upper view, otherwise the normal view
@@ -607,34 +682,7 @@ bool LittleWolf::shoot(Player &p) {
 	// Space shoot -- we use keyDownEvent to force a complete press/release for each bullet
 	if (ihdlr.keyDownEvent() && ihdlr.isKeyDown(SDL_SCANCODE_SPACE)) {
 
-		// play gun shot sound
-		sdlutils().soundEffects().at("gunshot").play();
-
-		// we shoot in several directions, because with projection what you see is not exact
-		for (float d = -0.05; d <= 0.05; d += 0.005) {
-
-			// search which tile was hit
-			const Line camera = rotate(p.fov, p.theta + d);
-			Point direction = lerp(camera, 0.5f);
-			direction.x = direction.x / mag(direction);
-			direction.y = direction.y / mag(direction);
-			const Hit hit = cast(p.where, direction, _map.walling, false, true);
-
-#ifdef _DEBUG
-			printf(
-					"Shoot by player %d hit a tile with value %d! at distance %f\n",
-					p.id, hit.tile, mag(sub(p.where, hit.where)));
-#endif
-
-			// if we hit a tile with a player id and the distance from that tile is smaller
-			// than shoot_distace, we mark the player as dead
-			if (hit.tile > 9 && mag(sub(p.where, hit.where)) < _shoot_distace) {
-				uint8_t id = tile_to_player(hit.tile);
-				_players[id].state = DEAD;
-				sdlutils().soundEffects().at("pain").play();
-				return true;
-			}
-		}
+		Game::Instance()->get_networking().send_shoot();
 	}
 	return false;
 }

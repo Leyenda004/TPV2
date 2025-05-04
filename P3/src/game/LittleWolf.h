@@ -24,6 +24,7 @@ public:
 		float y;
 	};
 
+
 	// Used to represent a position where a ray hits, and which tile
 	struct Hit {
 		int tile;
@@ -133,6 +134,14 @@ public:
 
 	// add a new player with identifier <id>, returns false if the id is already occupied
 	bool addPlayer(std::uint8_t id);
+
+	// removes a new player with identifier <id>
+	bool removePlayer(std::uint8_t id);
+
+	// as master handles whether another player has been shoot or not
+	void handle_shoot(std::uint8_t id);
+
+	void killPlayer(std::uint8_t id);
 
 	// initialize the SDL window information
 	void init(SDL_Window *window, SDL_Renderer *render);

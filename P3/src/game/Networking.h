@@ -28,19 +28,19 @@ public:
 	void send_my_info(const Vector2D& pos, const Vector2D& fovPointA, const Vector2D& fovPointB, float rot,
 			Uint8 state);
 	
-	//void send_shoot(Vector2D p, Vector2D v, int width, int height, float r);
-	/*void send_dead(Uint8 id);
-	void send_restart();*/
+	void send_shoot();
+	void send_dead(Uint8 id);
+	/*void send_restart();*/
 
 private:
 
 	void handle_new_client(Uint8 id);
-	/*void handle_disconnet(Uint8 id);*/
+	void handle_disconnet(Uint8 id);
 	void handle_player_state(const PlayerStateMsg &m);
 	void handle_player_info(const PlayerInfoMsg &m);
-	/*void handle_shoot(const ShootMsg &m);
+	void handle_shoot(const ShootMsg &m);
 	void handle_dead(const MsgWithId &m);
-	void handle_restart();*/
+	/*void handle_restart();*/
 
 	UDPsocket _sock;
 	SDLNet_SocketSet _socketSet;

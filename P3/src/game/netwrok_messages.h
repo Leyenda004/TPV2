@@ -67,14 +67,8 @@ struct PlayerInfoMsg: MsgWithId {
 };
 struct ShootMsg: MsgWithId {
 
-	float x;
-	float y;
-	float vx;
-	float vy;
-	int w;
-	int h;
-	float rot;
+	Uint8 _gunner_id;
 
-	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x,y,vx,vy,w,h,rot)
+	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, _gunner_id)
 
 };
