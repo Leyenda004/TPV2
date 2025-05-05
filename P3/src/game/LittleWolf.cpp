@@ -431,15 +431,13 @@ void LittleWolf::render() {
 		int actual_time = SDL_GetTicks() - start_time;
 
 		if (actual_time < 5000){
-			sdlutils().clearRenderer();
 
 			std::cout << "Restarting in " << 5 - actual_time / 1000 << std::endl;
 			Texture restartText(sdlutils().renderer(), "The game will restart in " + std::to_string(5 - actual_time / 1000), sdlutils().fonts().at("MFR12"), build_sdlcolor(0xFFFFFFFF));
-			restartText.render(restartText.width() / 2, restartText.height() / 2);
+			restartText.render((sdlutils().width() - restartText.width()) / 2, (sdlutils().height() - restartText.height()) / 2);
 		}
 		
 		else {
-			sdlutils().clearRenderer();
 			restarting = false;
 			Game::Instance()->get_networking().send_restart();
 		}
