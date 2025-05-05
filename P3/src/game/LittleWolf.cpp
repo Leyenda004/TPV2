@@ -428,19 +428,31 @@ void LittleWolf::render() {
 
 	if (restarting) {
 		
-		int actual_time = SDL_GetTicks() - start_time;
+		if (Game::Instance()->get_networking().is_master())
+		{
+			int actual_time = SDL_GetTicks() - start_time;
 
-		if (actual_time < 5000){
+			if (actual_time < 5000){
+				int count = 5 - actual_time / 1000;
+				std::cout << "Restarting in " << count << std::endl;
+				Texture restartText(sdlutils().renderer(), "The game will restart in " + std::to_string(count), sdlutils().fonts().at("MFR12"), build_sdlcolor(0xFFFFFFFF));
+				restartText.render((sdlutils().width() - restartText.width()) / 2, (sdlutils().height() - restartText.height()) / 2);
 
-			std::cout << "Restarting in " << 5 - actual_time / 1000 << std::endl;
-			Texture restartText(sdlutils().renderer(), "The game will restart in " + std::to_string(5 - actual_time / 1000), sdlutils().fonts().at("MFR12"), build_sdlcolor(0xFFFFFFFF));
+				Game::Instance()->get_networking().send_countdown_info(true, count);
+			}
+		
+			else {
+				restarting = false;
+				Game::Instance()->get_networking().send_countdown_info(false, 0);
+				Game::Instance()->get_networking().send_restart();
+			}
+		}
+		else
+		{
+			Texture restartText(sdlutils().renderer(), "The game will restart in " + std::to_string(countdown_val), sdlutils().fonts().at("MFR12"), build_sdlcolor(0xFFFFFFFF));
 			restartText.render((sdlutils().width() - restartText.width()) / 2, (sdlutils().height() - restartText.height()) / 2);
 		}
-		
-		else {
-			restarting = false;
-			Game::Instance()->get_networking().send_restart();
-		}
+
 	}
 }
 
@@ -563,7 +575,7 @@ void LittleWolf::render_upper_view() {
 
 	for (int x = 0; x < _gpu.xres; x++)
 		for (int y = 0; y < _gpu.yres; y++)
-			put(display, y, x, 0x00000000);
+			put(display, x, y, 0x00000000);
 
 	for (auto x = 0u; x < _map.walling_height; x++)
 		for (auto y = 0u; y < _map.walling_width; y++) {
@@ -763,4 +775,10 @@ void LittleWolf::checkRestart()
 		// Game::Instance()->get_networking().send_restart();
 	}
 
+}
+
+void LittleWolf::set_countdown_params(bool active, int count_val)
+{
+	restarting = active;
+	countdown_val = count_val;
 }

@@ -182,11 +182,15 @@ public:
 
 	void checkRestart();
 
+	void set_countdown_params(bool active, int count_val);
+
 private:
 
 	// Checks if the game is restarting, for the render
 	bool restarting = false;
 	int start_time;
+
+	int countdown_val;
 
 	// Calculates wall size using the <corrected> ray to the wall.
 	Wall project(const int xres, const int yres, const float focal,

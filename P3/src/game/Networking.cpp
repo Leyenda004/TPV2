@@ -100,6 +100,7 @@ void Networking::update() {
 	MsgWithId m4;
 	PlayerInfoMsg m5;
 	DeathMsg m6;
+	CountdownMsg m7;
 
 	while (SDLNetUtils::deserializedReceive(m0, _p, _sock) > 0) {
 
@@ -138,6 +139,11 @@ void Networking::update() {
 
 		case _RESTART:
 			handle_restart();
+			break;
+
+		case _COUNTDOWN:
+			m7.deserialize(_p->data);
+			handle_countdown(m7);
 			break;
 
 		default:
@@ -233,7 +239,25 @@ void Networking::send_restart() {
 	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
 }
 
+
 void Networking::handle_restart() {
 	Game::Instance()->get_little_wolf().bringAllToLife();
 	Game::Instance()->get_little_wolf().randomizePlayerPositions();
+}
+
+
+void Networking::send_countdown_info(bool active, int count_val)
+{
+	CountdownMsg m;
+	m._type = _COUNTDOWN;
+	m._active = (Uint8)active;
+	m._countdown_val = (float)count_val;
+	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
+}
+
+void Networking::handle_countdown(const CountdownMsg& m)
+{
+	if (is_master()) return;
+	
+	Game::Instance()->get_little_wolf().set_countdown_params(m._active, m._countdown_val);
 }

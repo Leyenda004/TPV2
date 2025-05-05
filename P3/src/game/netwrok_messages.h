@@ -17,7 +17,8 @@ enum MsgType : Uint8 {
 	_PLAYER_MOVED,
 	_SHOOT, //
 	_DEAD, //
-	_RESTART
+	_RESTART,
+	_COUNTDOWN
 };
 
 struct Msg {
@@ -82,4 +83,11 @@ struct DeathMsg : MsgWithId {
 
 	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, _death_id)
 
+};
+
+struct CountdownMsg : Msg{
+	Uint8 _active;
+	float _countdown_val;
+
+	_IMPL_SERIALIAZION_WITH_BASE_(Msg, _active, _countdown_val)
 };

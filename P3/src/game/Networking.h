@@ -31,6 +31,7 @@ public:
 	void send_shoot();
 	void send_dead(Uint8 id);
 	void send_restart();
+	void send_countdown_info(bool active, int count_val);
 
 private:
 
@@ -41,6 +42,7 @@ private:
 	void handle_shoot(const ShootMsg &m);
 	void handle_dead(const DeathMsg &m);
 	void handle_restart();
+	void handle_countdown(const CountdownMsg& m);
 
 	UDPsocket _sock;
 	SDLNet_SocketSet _socketSet;
