@@ -75,6 +75,7 @@ public:
 		float acceleration;  // acceleration
 		float theta;         // rotation (in rad)
 		PlayerState state;   // the state
+float health;        // health of the player
 	};
 
 	// Representing a map, the user_walling is the walling provided by the user, and
@@ -160,6 +161,8 @@ public:
 	void update_player_state(Uint8 id, float posX, float posY, float fovPointAX, float fovPointAY,
 		float fovPointBX, float fovPointBY, float rot);
 
+	void update_player_health(Uint8 id, float health);
+
 	int get_xres() {
 		return _xres;
 	}
@@ -191,6 +194,8 @@ private:
 	int start_time;
 
 	int countdown_val;
+
+	float _max_health = 100.0f;
 
 	// Calculates wall size using the <corrected> ray to the wall.
 	Wall project(const int xres, const int yres, const float focal,

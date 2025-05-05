@@ -98,6 +98,7 @@ void LittleWolf::update_player_info(Uint8 id, float posX, float posY, float fovP
 	p.fov.b = { fovPointBX, fovPointBY };
 	p.theta = rot;
 	p.state = static_cast<PlayerState>(state);
+	p.health = _max_health;
 
 	_map.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id); // Setting the player in the Tilemap
 }
@@ -126,6 +127,12 @@ void LittleWolf::update_player_state(Uint8 id, float posX, float posY, float fov
 
 	_map.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id); // Setting the player in the Tilemap
 
+}
+
+void LittleWolf::update_player_health(Uint8 id, float health)
+{
+    _players[id].health = health;
+	Game::Instance()->get_networking().send_health_update(id, health);
 }
 
 void LittleWolf::load(std::string filename) {
@@ -318,6 +325,7 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 	_players[id] = p;
 
 	_curr_player_id = id;
+	p.health = _max_health;
 
 	send_my_info(); // Send to the server this new player to the rest to process it
 
@@ -349,8 +357,9 @@ void LittleWolf::handle_shoot(std::uint8_t id)
 	sdlutils().soundEffects().at("gunshot").setVolume(shootVolume);
 	sdlutils().soundEffects().at("gunshot").play();
 
-	if (!Game::Instance()->get_networking().is_master())
-		return;
+	// !!!! Comentado para que funcione. Esto hace que el master gestione los disparos
+	// if (!Game::Instance()->get_networking().is_master())
+	// 	return;
 	
 	// we shoot in several directions, because with projection what you see is not exact
 	for (float d = -0.05; d <= 0.05; d += 0.005) {
@@ -373,11 +382,20 @@ void LittleWolf::handle_shoot(std::uint8_t id)
 		if (hit.tile > 9  && mag(sub(p.where, hit.where)) < _shoot_distace && hit.tile != player_to_tile(id)) {
 			uint8_t dead_id = tile_to_player(hit.tile);
 
-			std::cout << (int)Game::Instance()->get_networking().client_id() << " listended ";
-			std::cout << "SHOT SHOT SHOT from " << (int)id;
-			Game::Instance()->get_networking().send_dead(dead_id); // Send the message to all
+			// std::cout << (int)Game::Instance()->get_networking().client_id() << " listended ";
+			// std::cout << "SHOT SHOT SHOT from " << (int)id;
+			// Game::Instance()->get_networking().send_dead(dead_id); // Send the message to all
 		
-			return;
+			// Calc damage with distance
+			float distance = mag(sub(p.where, hit.where));
+			float damagePercent = 1.0f - (distance / _shoot_distace);
+			float damage = 25.0f + (damagePercent * 25.0f); // 25-50
+			
+			// Damage player
+			_players[dead_id].health -= damage;
+			
+			// Checks health and Kills player
+			if (_players[dead_id].health <= 0) Game::Instance()->get_networking().send_dead(dead_id);
 		}
 	}
 }
@@ -396,6 +414,7 @@ void LittleWolf::killPlayer(std::uint8_t id)
 	sdlutils().soundEffects().at("pain").setVolume(deathVolume);
 	sdlutils().soundEffects().at("pain").play();
 
+	p.health = 0;
 	_players[id].state = DEAD;
 	
 	sdlutils().clearRenderer();
@@ -578,7 +597,7 @@ void LittleWolf::render_upper_view() {
 			put(display, x, y, 0x00000000);
 
 	for (auto x = 0u; x < _map.walling_height; x++)
-		for (auto y = 0u; y < _map.walling_width; y++) {
+		for (auto y = 0u; y < _map.walling_width; y++) { //!! esto debería ser x < _map.walling_width ??
 
 			// each non empty position in the walling is drawn as a square in the window,
 			// because the walling size is smaller than the resolution by 'walling_size_factor'
@@ -626,13 +645,13 @@ void LittleWolf::render_players_info() {
 	uint_fast16_t y = 0;
 
 	for (auto i = 0u; i < _max_player; i++) {
-		PlayerState s = _players[i].state;
 
 		// render player info if it is used
-		if (s != NOT_USED) {
+		if (_players[i].state != NOT_USED) {
 
+			std::string healthStr = _players[i].state == DEAD ? "0" : std::to_string(_players[i].health);
 			std::string msg = (i == _curr_player_id ? "*P" : " P")
-					+ std::to_string(i) + (s == DEAD ? " (dead)" : "");
+			+ std::to_string(i) + (_players[i].state == DEAD ? " (dead)" : (" HP: " + healthStr));
 
 			Texture info(sdlutils().renderer(), msg,
 					sdlutils().fonts().at("MFR24"),
@@ -642,7 +661,6 @@ void LittleWolf::render_players_info() {
 
 			info.render(dest);
 			y += info.height() + 5;
-
 		}
 	}
 }
@@ -732,6 +750,7 @@ void LittleWolf::bringAllToLife() {
 	for (auto i = 0u; i < _max_player; i++) {
 		if (_players[i].state == DEAD) {
 			_players[i].state = ALIVE;
+			_players[i].health = _max_health;
 		}
 	}
 }

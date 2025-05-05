@@ -101,6 +101,7 @@ void Networking::update() {
 	PlayerInfoMsg m5;
 	DeathMsg m6;
 	CountdownMsg m7;
+	HealthUpdateMsg m8;
 
 	while (SDLNetUtils::deserializedReceive(m0, _p, _sock) > 0) {
 
@@ -145,6 +146,12 @@ void Networking::update() {
 			m7.deserialize(_p->data);
 			handle_countdown(m7);
 			break;
+
+		case _HEALTH_UPDATE: {
+			m8.deserialize(_p->data);
+			handle_health_update(m8);
+			break;
+		}
 
 		default:
 			break;
@@ -260,4 +267,17 @@ void Networking::handle_countdown(const CountdownMsg& m)
 	if (is_master()) return;
 	
 	Game::Instance()->get_little_wolf().set_countdown_params(m._active, m._countdown_val);
+}
+
+void Networking::send_health_update(Uint8 id, float health) {
+    HealthUpdateMsg m;
+    m._type = _HEALTH_UPDATE;
+    m._client_id = _clientId;
+    m._player_id = id;
+    m._health = health;
+	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
+}
+
+void Networking::handle_health_update(const HealthUpdateMsg &m) {
+    Game::Instance()->get_little_wolf().update_player_health(m._player_id, m._health);
 }

@@ -32,6 +32,7 @@ public:
 	void send_dead(Uint8 id);
 	void send_restart();
 	void send_countdown_info(bool active, int count_val);
+	void send_health_update(Uint8 id, float health);
 
 private:
 
@@ -43,6 +44,7 @@ private:
 	void handle_dead(const DeathMsg &m);
 	void handle_restart();
 	void handle_countdown(const CountdownMsg& m);
+	void handle_health_update(const HealthUpdateMsg& m);
 
 	UDPsocket _sock;
 	SDLNet_SocketSet _socketSet;

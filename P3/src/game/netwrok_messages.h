@@ -18,7 +18,8 @@ enum MsgType : Uint8 {
 	_SHOOT, //
 	_DEAD, //
 	_RESTART,
-	_COUNTDOWN
+	_COUNTDOWN,
+	_HEALTH_UPDATE
 };
 
 struct Msg {
@@ -64,8 +65,9 @@ struct PlayerInfoMsg: MsgWithId {
 	float fvPBy;
 	float rot;
 	Uint8 state;
+	float health;
 
-	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x,y, fvPAx, fvPAy, fvPBx, fvPBy,rot,state)
+	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x,y, fvPAx, fvPAy, fvPBx, fvPBy,rot,state,health)
 
 };
 
@@ -90,4 +92,11 @@ struct CountdownMsg : Msg{
 	float _countdown_val;
 
 	_IMPL_SERIALIAZION_WITH_BASE_(Msg, _active, _countdown_val)
+};
+
+struct HealthUpdateMsg: MsgWithId {
+    Uint8 _player_id;
+    float _health;
+
+    _IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, _player_id, _health)
 };
