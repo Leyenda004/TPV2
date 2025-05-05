@@ -358,8 +358,8 @@ void LittleWolf::handle_shoot(std::uint8_t id)
 	sdlutils().soundEffects().at("gunshot").play();
 
 	// !!!! Comentado para que funcione. Esto hace que el master gestione los disparos
-	// if (!Game::Instance()->get_networking().is_master())
-	// 	return;
+	 if (!Game::Instance()->get_networking().is_master())
+	 	return;
 	
 	// we shoot in several directions, because with projection what you see is not exact
 	for (float d = -0.05; d <= 0.05; d += 0.005) {
