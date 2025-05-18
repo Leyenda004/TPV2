@@ -47,6 +47,12 @@ Game::~Game() {
 	// release SLDUtil if the instance was created correctly.
 	if (SDLUtils::HasInstance())
 		SDLUtils::Release();
+
+	delete _running_state;
+	delete _paused_state;
+	delete _newgame_state;
+	delete _newround_state;
+	delete _gameover_state;
 }
 
 bool Game::init() {
@@ -119,7 +125,7 @@ void Game::start() {
 
 		_state->update();
 
-		Uint32 frameTime = sdlutils().currRealTime() - startTime;
+		Uint32 frameTime = sdlutils().virtualTimer().currRealTime() - startTime;
 
 		if (frameTime < 10)
 			SDL_Delay(10 - frameTime);
