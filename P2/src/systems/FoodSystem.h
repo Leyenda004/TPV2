@@ -18,6 +18,7 @@ private:
 
 	void spawnFood();
 	void reset();
+	void resetMilagrosasTimers();
 
 	int _aliveFruits;
 };

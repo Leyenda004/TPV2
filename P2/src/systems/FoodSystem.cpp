@@ -17,23 +17,35 @@ void FoodSystem::initSystem()
 }
 
 void FoodSystem::update() {
-	auto currTime = sdlutils().virtualTimer().currTime() / 1000;
+	auto currTime = sdlutils().virtualTimer().currTime() / 1000; // tiempo actual en segundos
 	auto foods = _mngr->getEntities(ecs::grp::FOOD);
 
 	for (auto e : foods) {
 		auto milagrosa = _mngr->getComponent<Milagrosa>(e);
-		if (milagrosa->milagrosa){
-			if (currTime > milagrosa->N && currTime < milagrosa->M){
-				milagrosa->fruitChanged = true;
-				_mngr->getComponent<ImageWithFrames>(e)->setFrame(15);
-			}
-			else if (currTime > milagrosa->M) {
-				milagrosa->fruitChanged = false;
-				_mngr->getComponent<ImageWithFrames>(e)->setFrame(12);
+		if (milagrosa->milagrosa) {
+			if (!milagrosa->isActive) {
+				if ((currTime - milagrosa->timer) >= milagrosa->N) {
+					milagrosa->isActive = true;
+					milagrosa->timer = currTime; // reinicia el timer al activarse
+					milagrosa->fruitChanged = true;
+					_mngr->getComponent<ImageWithFrames>(e)->setFrame(15);
+				} else {
+					milagrosa->fruitChanged = false;
+					_mngr->getComponent<ImageWithFrames>(e)->setFrame(12);
+				}
+			} else {
+				if ((currTime - milagrosa->timer) >= milagrosa->M) {
+					milagrosa->isActive = false;
+					milagrosa->fruitChanged = false;
+					milagrosa->timer = currTime; // empieza a contar para la siguiente aparición
+					_mngr->getComponent<ImageWithFrames>(e)->setFrame(12);
+				} else {
+					milagrosa->fruitChanged = true;
+					_mngr->getComponent<ImageWithFrames>(e)->setFrame(15);
+				}
 			}
 		}
 	}
-	
 }
 
 void FoodSystem::spawnFood() 
@@ -98,6 +110,21 @@ void FoodSystem::onFoodEaten(ecs::entity_t e)
 	}
 }
 
+void FoodSystem::resetMilagrosasTimers() {
+	auto currTime = sdlutils().virtualTimer().currTime() / 1000; // tiempo actual
+	auto foods = _mngr->getEntities(ecs::grp::FOOD);
+	for (auto e : foods) {
+		auto milagrosa = _mngr->getComponent<Milagrosa>(e);
+		if (milagrosa && milagrosa->milagrosa) {
+			milagrosa->resetTimer();
+			milagrosa->timer = currTime; // reinicia el timer al tiempo actual
+			milagrosa->isActive = false;
+			milagrosa->fruitChanged = false;
+			_mngr->getComponent<ImageWithFrames>(e)->setFrame(12);
+		}
+	}
+}
+
 void FoodSystem::recieve(const Message& m)
 {
 	switch (m.id) {
@@ -107,6 +134,9 @@ void FoodSystem::recieve(const Message& m)
 	case _m_NEW_GAME:
 		reset();
 		spawnFood();
+		break;
+	case _m_ROUND_START:
+		resetMilagrosasTimers();
 		break;
 	default:
 		break;

@@ -6,22 +6,27 @@
 #include <cstdint>
 
 struct Milagrosa: public ecs::Component {
+	bool milagrosa;
+	bool fruitChanged;
+	bool isActive;
+	uint32_t N; // tiempo hasta aparecer
+	uint32_t M; // tiempo visible
+	uint32_t timer; // timer interno
 
-	Milagrosa(bool _milagrosa) : milagrosa(_milagrosa)
+	Milagrosa(bool _milagrosa)
+		: milagrosa(_milagrosa), fruitChanged(false), isActive(false), N(0), M(0), timer(0)
 	{
 		if (milagrosa){
-			// N = 10 + (rand() % 1000) / 100; // 10 (iniciales) + n entre 0 y 1000 (ms) / 10 (s)
-			// M = N + (2 + rand() % 3); // N + 2 (al menos 2s en pantalla) + ran(0,1,2)s para llegar a 5
-
-			N = 10 + (rand() % 1000) / 100; // N entre 10 y 20 (segundos)
-			M = N + 1 + (rand() % 5); // M entre 1 y 5 (segundos)
-
+			resetTimer();
 		}
 	}
 	virtual ~Milagrosa() {}
 
-	bool milagrosa = false;
-	bool fruitChanged = false;
-	uint32_t N = 0;
-	uint32_t M = 0;
+	void resetTimer() {
+		N = 10 + (rand() % 1000) / 100; // entre 10 y 20 segundos
+		M = 1 + (rand() % 5); // entre 1 y 5 segundos
+		timer = 0;
+		fruitChanged = false;
+		isActive = false;
+	}
 };
