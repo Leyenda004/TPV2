@@ -7,8 +7,14 @@
 int main(int, char**) {
 
 	try {
-		Game::Init();
-		Game::Instance()->start();
+		if (Game::Init()) {
+			Game::Instance()->initGame();
+			Game::Instance()->start();
+		}
+		else {
+			std::cout << "Error initializing the Game\n";
+		}
+		
 	} catch (const std::string &e) { // catch exceptions thrown as strings
 		std::cerr << e << std::endl;
 	} catch (const char *e) { // catch exceptions thrown as char*

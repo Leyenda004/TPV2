@@ -13,6 +13,7 @@ class Game : public Singleton<Game>
 public:
 	
 	bool init();
+	void initGame();
 	void start();
 
 	ecs::Manager* getMngr() { return _mngr; }

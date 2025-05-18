@@ -64,11 +64,13 @@ public:
 	template<typename ...Targs>
 	inline static bool Init(Targs &&...args) {
 		assert(!_instance);
-		_instance = new T();
-		if (_instance->init(std::forward<Targs>(args)...)) {
+		T* tmp = new T();
+		if (tmp->init(std::forward<Targs>(args)...)) {
+			_instance = tmp;
 			return true; // all OK
-		} else { // Something went wrong
-			delete _instance;
+		}
+		else { // Something went wrong
+			delete tmp;
 			return false;
 		}
 	}
@@ -92,5 +94,5 @@ private:
 	static T *_instance;
 };
 
-template<typename T> T *Singleton<T>::_instance;
+template<typename T> T *Singleton<T>::_instance = nullptr;
 

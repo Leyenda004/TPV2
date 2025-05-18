@@ -68,6 +68,11 @@ bool Game::init() {
 
 	}
 
+	return true;
+}
+
+void Game::initGame()
+{
 	// Create the manager
 	_mngr = new Manager();
 
@@ -76,7 +81,7 @@ bool Game::init() {
 	_mngr->addSystem<GameCtrlSystem>();
 	_mngr->addSystem<RenderSystem>();
 	_mngr->addSystem<CollisionsSystem>();
-	
+
 	// PRACTICA
 
 	_mngr->addSystem<FoodSystem>();
@@ -91,8 +96,6 @@ bool Game::init() {
 	_gameover_state = new GameOverState();
 
 	_state = _newgame_state;
-
-	return true;
 }
 
 void Game::start() {
